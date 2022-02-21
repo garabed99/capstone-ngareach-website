@@ -1,0 +1,14 @@
+.meta-details {
+    padding: 0px;
+    margin-left: 10px;
+}
+.navbar {
+    display: flex;
+    flex-wrap: inherit;
+    align-items: center;
+    justify-content: left;
+}
+
+.login-register {
+justify-content: right;
+}
