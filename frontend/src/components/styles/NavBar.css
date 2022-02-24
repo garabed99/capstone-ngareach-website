@@ -1,14 +1,27 @@
-.meta-details {
-    padding: 0px;
-    margin-left: 10px;
-}
-.navbar {
-    display: flex;
-    flex-wrap: inherit;
-    align-items: center;
-    justify-content: left;
+.navbar-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
 }
 
-.login-register {
-justify-content: right;
+.metaData-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
+}
+
+.page-route {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+}
+
+.registration-container {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+  justify-content: space-between;
 }
