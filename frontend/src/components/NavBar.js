@@ -11,7 +11,7 @@ import "./styles/NavBar.css";
 
 export default function NavBar() {
   return (
-    <> 
+    <>
       <div className="main-container">
         <AppBar position="sticky">
           <Toolbar>
@@ -72,8 +72,22 @@ export default function NavBar() {
             </div>
 
             <div className="registration-container">
-              <Button>Login</Button>
-              <Button>Register</Button>
+              <Button>
+                <Link
+                  to="/Login"
+                  style={{ color: "inherit", textDecoration: "inherit" }}
+                >
+                  Login
+                </Link>
+              </Button>
+              <Button>
+                <Link
+                  to="/Register"
+                  style={{ color: "inherit", textDecoration: "inherit" }}
+                >
+                  Register
+                </Link>
+              </Button>
             </div>
           </Toolbar>
         </AppBar>

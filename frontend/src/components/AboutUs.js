@@ -1,12 +1,12 @@
 import NavBar from "./NavBar";
 import Footer from "./Footer";
 
-export default function Reviews() {
+export default function AboutUs() {
   return (
     <div>
       <NavBar />
       <div style={{ marginLeft: "30px", marginRight: "30px" }}>
-        <h1>this is Reviews</h1>
+        <h1>this is AboutUs</h1>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime
           mollitia, molestiae quas vel sint commodi repudiandae consequuntur
