@@ -6,7 +6,6 @@ const mongoPath = process.env.MONGO_PATH;
 console.log("mongoPath: => ", mongoPath);
 
 const app = express();
-connectDB();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

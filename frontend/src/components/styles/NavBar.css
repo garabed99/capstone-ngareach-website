@@ -25,4 +25,5 @@
   justify-content: flex-end;
   flex-wrap: nowrap;
   justify-content: space-between;
+  float: right;
 }

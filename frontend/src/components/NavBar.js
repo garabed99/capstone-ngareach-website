@@ -1,6 +1,11 @@
 import {
   AppBar,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Tab,
   Tabs,
   Toolbar,
@@ -8,8 +13,18 @@ import {
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import "./styles/NavBar.css";
+import { useState } from "react";
 
 export default function NavBar() {
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <>
       <div className="main-container">
@@ -80,14 +95,51 @@ export default function NavBar() {
                   Login
                 </Link>
               </Button>
-              <Button>
+              {/* <Button>
                 <Link
                   to="/Register"
                   style={{ color: "inherit", textDecoration: "inherit" }}
                 >
                   Register
                 </Link>
+              </Button> */}
+              <Button
+                style={{ color: "inherit", textDecoration: "inherit" }}
+                onClick={handleClickOpen}
+              >
+                Register
               </Button>
+              <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+              >
+                <DialogTitle id="alert-dialog-title">
+                  {"Register as Client or Photographer?"}
+                </DialogTitle>
+                <DialogContent>
+
+                </DialogContent>
+                <DialogActions style={{justifyContent: "center", alignItems: "center"}}>
+                  <Button onClick={handleClose} color="primary">
+                  <Link
+                  to="/Register"
+                  style={{ color: "inherit", textDecoration: "inherit" }}
+                >
+                  Client
+                </Link>
+                  </Button>
+                  <Button onClick={handleClose} color="primary" autoFocus>
+                  <Link
+                  to="/Register"
+                  style={{ color: "inherit", textDecoration: "inherit" }}
+                >
+                  Photographer
+                </Link>
+                  </Button>
+                </DialogActions>
+              </Dialog>
             </div>
           </Toolbar>
         </AppBar>
@@ -95,33 +147,3 @@ export default function NavBar() {
     </>
   );
 }
-
-// import { Nav, Navbar, NavDropdown, Container } from "react-bootstrap";
-// import "bootstrap/dist/css/bootstrap.css";
-// import "./styles/NavBar.css";
-// function NavBar() {
-//   return (
-//     <>
-//       <Navbar bg="info " variant="light" sticky="top" expand="sm">
-//         <Container >
-//           <Navbar.Brand className="navbar" href="/" >
-//             Ngareach
-//           </Navbar.Brand>
-//           <Nav className="meta-details">
-//             <Nav.Link href="/Home">Home</Nav.Link>
-//             <Nav.Link href="/HowItWorks">How It Works</Nav.Link>
-//             <Nav.Link href="/Reviews">Reviews</Nav.Link>
-//             <Nav.Link href="/Pricing">Pricing</Nav.Link>
-//             <Nav.Link href="/PhotographersList">Our Photographers</Nav.Link>
-//           </Nav>
-//           <Navbar.Collapse className="login-register">
-//             <Nav.Link href="/Login">Login</Nav.Link>
-//             <Nav.Link href="/Register">Register</Nav.Link>
-//           </Navbar.Collapse>
-//         </Container>
-//       </Navbar>
-//     </>
-//   );
-// }
-
-// export default NavBar;
