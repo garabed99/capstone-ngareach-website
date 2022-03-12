@@ -60,7 +60,7 @@ export default function Register() {
     <>
       <Button>
         <Link
-          to="/Home"
+          to="/home"
           style={{ color: "inherit", textDecoration: "inherit" }}
         >
           Home
@@ -81,11 +81,22 @@ export default function Register() {
         {activeStep === steps.length ? (
           "The Steps Completed:"
         ) : (
+          // <>
+          // <div>
+
+          // </div>
+          // </>
           <>
             {getStepsContent(activeStep)}
 
             <Button onClick={handleNext}>
-              {activeStep === steps.length ? "FINISH" : "NEXT"}
+            {activeStep === steps.length - 1 ? "FINISH" : "NEXT"}
+              <Link
+                to="/home"
+                style={{ color: "inherit", textDecoration: "inherit" }}
+              >
+                
+              </Link>
             </Button>
           </>
         )}

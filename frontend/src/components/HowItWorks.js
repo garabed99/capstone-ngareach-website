@@ -6,7 +6,7 @@ export default function HowItWorks() {
     <div>
       <NavBar />
       <div style={{ marginLeft: "30px", marginRight: "30px" }}>
-        <h1>this is HowItWorks</h1>
+        <h1>this is How It Works</h1>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime
           mollitia, molestiae quas vel sint commodi repudiandae consequuntur

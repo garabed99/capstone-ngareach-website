@@ -19,18 +19,18 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/Home" element={<Home />} />
-        <Route path="/HowItWorks" element={<HowItWorks />} />
-        <Route path="/Reviews" element={<Reviews />} />
-        <Route path="/Pricing" element={<Pricing />} />
-        <Route path="/PhotographersList" element={<PhotographersList />} />
-        <Route path="/Login" element={<Login />} />
-        <Route path="/Register" element={<Register />} />
-        <Route path="/AboutUs" element={<AboutUs />} />
-        <Route path="/ContactUs" element={<ContactUs />} />
-        <Route path="/FAQ" element={<FAQ />} />
-        <Route path="/TermsAndConditions" element={<TermsAndConditions />} />
-        <Route path="/PrivacyPolicy" element={<PrivacyPolicy />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/howitworks" element={<HowItWorks />} />
+        <Route path="/reviews" element={<Reviews />} />
+        <Route path="/pricing" element={<Pricing />} />
+        <Route path="/photographerslist" element={<PhotographersList />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/aboutus" element={<AboutUs />} />
+        <Route path="/contactus" element={<ContactUs />} />
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/termsandconditions" element={<TermsAndConditions />} />
+        <Route path="/privacypolicy" element={<PrivacyPolicy />} />
       </Routes>
     </BrowserRouter>
   );

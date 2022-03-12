@@ -37,7 +37,7 @@ export default function NavBar() {
               <div className="page-route">
                 <Button>
                   <Link
-                    to="/Home"
+                    to="/home"
                     style={{ color: "inherit", textDecoration: "inherit" }}
                   >
                     Home
@@ -47,17 +47,17 @@ export default function NavBar() {
               <div className="page-route">
                 <Button>
                   <Link
-                    to="/HowItWorks"
+                    to="/howitworks"
                     style={{ color: "inherit", textDecoration: "inherit" }}
                   >
-                    HowItWorks
+                    How It Works
                   </Link>
                 </Button>
               </div>
               <div className="page-route">
                 <Button>
                   <Link
-                    to="/Reviews"
+                    to="/reviews"
                     style={{ color: "inherit", textDecoration: "inherit" }}
                   >
                     Reviews
@@ -67,7 +67,7 @@ export default function NavBar() {
               <div className="page-route">
                 <Button>
                   <Link
-                    to="/Pricing"
+                    to="/pricing"
                     style={{ color: "inherit", textDecoration: "inherit" }}
                   >
                     Pricing
@@ -77,7 +77,7 @@ export default function NavBar() {
               <div className="page-route">
                 <Button>
                   <Link
-                    to="/PhotographersList"
+                    to="/photographerslist"
                     style={{ color: "inherit", textDecoration: "inherit" }}
                   >
                     Our Photographers
@@ -89,7 +89,7 @@ export default function NavBar() {
             <div className="registration-container">
               <Button>
                 <Link
-                  to="/Login"
+                  to="/login"
                   style={{ color: "inherit", textDecoration: "inherit" }}
                 >
                   Login
@@ -124,7 +124,7 @@ export default function NavBar() {
                 <DialogActions style={{justifyContent: "center", alignItems: "center"}}>
                   <Button onClick={handleClose} color="primary">
                   <Link
-                  to="/Register"
+                  to="/register"
                   style={{ color: "inherit", textDecoration: "inherit" }}
                 >
                   Client
@@ -132,7 +132,7 @@ export default function NavBar() {
                   </Button>
                   <Button onClick={handleClose} color="primary" autoFocus>
                   <Link
-                  to="/Register"
+                  to="/register"
                   style={{ color: "inherit", textDecoration: "inherit" }}
                 >
                   Photographer

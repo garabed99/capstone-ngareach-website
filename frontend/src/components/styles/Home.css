@@ -2,7 +2,10 @@
     border: 10px solid #eee;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 
     0 6px 20px 0 rgba(0, 0, 0, 0.19);  
-    margin:10px;
+    margin-left: 200px;
+    margin-right: 200px;
+    margin-top: 60px;
+    margin-bottom: 180px;
   }
   
   .flex-form button {
@@ -27,6 +30,7 @@
     outline:0;
     border-right:1px solid rgba(0,0,0,0.2);
     -webkit-appearance:none;
+    
   }
   
   /* .flex-form > *:last-child {

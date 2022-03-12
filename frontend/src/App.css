@@ -1,9 +1,27 @@
 .intl-tel-input.allow-dropdown input,
 .intl-tel-input.allow-dropdown input[type="text"],
 .intl-tel-input.allow-dropdown input[type="tel"] {
-    height: 3.5rem;
-    width: 28rem;
-    margin-bottom: 1rem !important;
-    border-radius: 5px;
-    border: 1px solid rgb(182, 181, 181);
+  height: 3.5rem;
+  width: 28rem;
+  border-radius: 5px;
+  border: 1px solid rgb(182, 181, 181);
+}
+
+.intl-tel-input {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 20px;
+  margin-top: 3px;
+}
+
+.intl-tel-input input,
+.intl-tel-input input[type="text"],
+.intl-tel-input input[type="tel"] {
+  position: relative;
+  z-index: 0;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-right: 36px;
+  margin-right: 0;
+  font-size: 16px;
 }

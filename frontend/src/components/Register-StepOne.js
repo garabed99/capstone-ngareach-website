@@ -2,9 +2,9 @@
 
 import {
   Button,
-  Checkbox,
+  // Checkbox,
   FormControl,
-  Grid,
+  // Grid,
   IconButton,
   InputAdornment,
   InputLabel,
@@ -40,23 +40,18 @@ const useStyles = makeStyles({
 });
 
 export default function StepOne() {
-  const [_firstName, setFirstName] = useState("");
-  const [_lasttName, setLastName] = useState("");
   const [_email, setEmail] = useState("");
   const [_password, setPassword] = useState("");
   const [_confirmPassword, setconfirmPassword] = useState("");
 
-  const registerData = {
-    firstName: _firstName,
-    lastName: _lasttName,
-    email: _email,
-    password: _password,
-    confirmPassword: _confirmPassword,
-  };
+  // const registerData = {
+  //   email: _email,
+  //   password: _password,
+  //   confirmPassword: _confirmPassword,
+  // };
 
-  useEffect(() => {
+  // useEffect(() => {}, [registerData]);
 
-  }, [registerData])
   const [showCreatePasswordValue, setCreatePasswordValue] = useState({
     showCreatePassword: false,
   });
@@ -86,18 +81,7 @@ export default function StepOne() {
       </Typography>
       <div className={classes.formContainer}>
         <form>
-          <TextField
-            className={classes.inputField}
-            required
-            label="First Name"
-            variant="outlined"
-          />
-          <TextField
-            className={classes.inputField}
-            required
-            label="Last Name"
-            variant="outlined"
-          />
+
           <TextField
             className={classes.inputField}
             required
