@@ -9,10 +9,10 @@ import {
 
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import StepOne from "./Register-StepOne";
-import StepTwo from "./Register-StepTwo";
-import StepThree from "./Register-StepThree";
-import StepFour from "./Register-StepFour";
+import StepOne from "./Register-StepOne-ph";
+import StepTwo from "./Register-StepTwo-ph";
+import StepThree from "./Register-StepThree-ph";
+import StepFour from "./Register-StepFour-ph";
 
 const useStyles = makeStyles({
   root: {
@@ -90,13 +90,11 @@ export default function Register() {
             {getStepsContent(activeStep)}
 
             <Button onClick={handleNext}>
-            {activeStep === steps.length - 1 ? "FINISH" : "NEXT"}
+              {activeStep === steps.length - 1 ? "FINISH" : "NEXT"}
               <Link
                 to="/home"
                 style={{ color: "inherit", textDecoration: "inherit" }}
-              >
-                
-              </Link>
+              ></Link>
             </Button>
           </>
         )}

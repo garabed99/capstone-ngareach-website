@@ -13,6 +13,7 @@ import {
   Radio,
   RadioGroup,
   TextField,
+  TextareaAutosize,
   Typography,
 } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
@@ -59,18 +60,31 @@ export default function StepThree() {
       </Typography>
       <div className={classes.formContainer}>
         <form>
+
+          {/* <div className={classes.inputField}> */}
+            <Autocomplete
+            className={classes.inputField}
+              id="tags-standard"
+              options={yearsOfExperience}
+              getOptionLabel={(option) => option.year}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  variant="outlined"
+                  label="Years of Experience"
+                  placeholder="Add Years"
+                />
+              )}
+            />
+          {/* </div> */}
+
           <TextField
             className={classes.inputField}
-            required
-            label="First Name"
+            multiline
+            label="Biography"
             variant="outlined"
           />
-          <TextField
-            className={classes.inputField}
-            required
-            label="Last Name"
-            variant="outlined"
-          />
+
           <div className={classes.root}>
             <Autocomplete
               multiple
@@ -82,7 +96,6 @@ export default function StepThree() {
                 <TextField
                   {...params}
                   variant="outlined"
-                  required
                   label="Photography Types"
                   placeholder="Add More"
                 />
@@ -119,6 +132,13 @@ export default function StepThree() {
     </div>
   );
 }
+const yearsOfExperience = [
+  { year: "Less than a year" },
+  { year: "One to three years" },
+  { year: "Three to five years" },
+  { year: "More than five years" },
+];
+
 const photographyTypes = [
   { title: "Pet" },
   { title: "Wildlife" },
@@ -144,8 +164,8 @@ const photographyTypes = [
   { title: "Street" },
   { title: "Wedding" },
   { title: "Birthday" },
-  { title: "Baptism " },
-  { title: "Travel " },
+  { title: "Baptism" },
+  { title: "Travel" },
   { title: "Photojournalism" },
   { title: "Press" },
   { title: "Stock" },
@@ -154,4 +174,6 @@ const photographyTypes = [
   { title: "Micro" },
   { title: "Film" },
   { title: "Astrophotography" },
+  { title: "Graduation" },
+
 ];

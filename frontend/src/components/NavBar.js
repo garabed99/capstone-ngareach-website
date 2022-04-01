@@ -25,6 +25,7 @@ export default function NavBar() {
   const handleClose = () => {
     setOpen(false);
   };
+  
   return (
     <>
       <div className="main-container">
@@ -95,14 +96,7 @@ export default function NavBar() {
                   Login
                 </Link>
               </Button>
-              {/* <Button>
-                <Link
-                  to="/Register"
-                  style={{ color: "inherit", textDecoration: "inherit" }}
-                >
-                  Register
-                </Link>
-              </Button> */}
+
               <Button
                 style={{ color: "inherit", textDecoration: "inherit" }}
                 onClick={handleClickOpen}
@@ -124,7 +118,7 @@ export default function NavBar() {
                 <DialogActions style={{justifyContent: "center", alignItems: "center"}}>
                   <Button onClick={handleClose} color="primary">
                   <Link
-                  to="/register"
+                  to="/register-cl"
                   style={{ color: "inherit", textDecoration: "inherit" }}
                 >
                   Client
@@ -132,7 +126,7 @@ export default function NavBar() {
                   </Button>
                   <Button onClick={handleClose} color="primary" autoFocus>
                   <Link
-                  to="/register"
+                  to="/register-ph"
                   style={{ color: "inherit", textDecoration: "inherit" }}
                 >
                   Photographer

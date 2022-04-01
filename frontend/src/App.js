@@ -5,7 +5,8 @@ import Reviews from "./components/Reviews";
 import Pricing from "./components/Pricing";
 import PhotographersList from "./components/PhotographersList";
 import Login from "./components/Login";
-import Register from "./components/Register";
+import RegisterPh from "./components/register-photographer/Register-ph";
+import RegisterCl from "./components/register-client/Register-cl";
 import AboutUs from "./components/AboutUs";
 import ContactUs from "./components/ContactUs";
 import FAQ from "./components/FAQ";
@@ -25,7 +26,8 @@ export default function App() {
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/photographerslist" element={<PhotographersList />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        <Route path="/register-ph" element={<RegisterPh />} />
+        <Route path="/register-cl" element={<RegisterCl />} />
         <Route path="/aboutus" element={<AboutUs />} />
         <Route path="/contactus" element={<ContactUs />} />
         <Route path="/faq" element={<FAQ />} />
