@@ -18,13 +18,13 @@ import { useState } from "react";
 export default function NavBar() {
   const [open, setOpen] = useState(false);
 
-  const handleClickOpen = () => {
+  function handleClickOpen() {
     setOpen(true);
-  };
+  }
 
-  const handleClose = () => {
+  function handleClickClose() {
     setOpen(false);
-  };
+  }
   
   return (
     <>
@@ -105,7 +105,7 @@ export default function NavBar() {
               </Button>
               <Dialog
                 open={open}
-                onClose={handleClose}
+                onClose={handleClickClose}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
               >
@@ -116,7 +116,7 @@ export default function NavBar() {
 
                 </DialogContent>
                 <DialogActions style={{justifyContent: "center", alignItems: "center"}}>
-                  <Button onClick={handleClose} color="primary">
+                  <Button onClick={handleClickClose} color="primary">
                   <Link
                   to="/register-cl"
                   style={{ color: "inherit", textDecoration: "inherit" }}
@@ -124,7 +124,7 @@ export default function NavBar() {
                   Client
                 </Link>
                   </Button>
-                  <Button onClick={handleClose} color="primary" autoFocus>
+                  <Button onClick={handleClickClose} color="primary" autoFocus>
                   <Link
                   to="/register-ph"
                   style={{ color: "inherit", textDecoration: "inherit" }}

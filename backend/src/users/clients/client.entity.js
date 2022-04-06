@@ -29,13 +29,13 @@ const clientSchema = new Schema({
     type: String,
     required: true,
   },
-  phone: {
-    type: Number,
-  },
   dateOfBirth: {
     type: Date,
     required: true,
     trim: true,
+  },
+  phone: {
+    type: Number,
   },
   role: {
     type: String,

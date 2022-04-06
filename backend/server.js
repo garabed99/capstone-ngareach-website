@@ -1,8 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv").config();
 const port = process.env.PORT;
-const mongoPath = process.env.MONGO_PATH;
-console.log("mongoPath: => ", mongoPath);
+
 
 const app = express();
 const clients = require('./src/users/clients/client.controller');
