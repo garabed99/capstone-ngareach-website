@@ -81,11 +81,6 @@ export default function Register() {
         {activeStep === steps.length ? (
           "The Steps Completed:"
         ) : (
-          // <>
-          // <div>
-
-          // </div>
-          // </>
           <>
             {getStepsContent(activeStep)}
 

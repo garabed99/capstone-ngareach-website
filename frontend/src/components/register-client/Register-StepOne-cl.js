@@ -15,6 +15,7 @@ import {
 } from "@material-ui/core";
 import { Visibility, VisibilityOff, SendSharp } from "@material-ui/icons";
 
+import axios from "axios";
 import { useState, useEffect } from "react";
 
 const useStyles = makeStyles({
@@ -40,15 +41,28 @@ const useStyles = makeStyles({
 });
 
 export default function StepOne() {
+  const classes = useStyles();
+
   const [_email, setEmail] = useState("");
   const [_password, setPassword] = useState("");
   const [_confirmPassword, setconfirmPassword] = useState("");
 
-  // const registerData = {
-  //   email: _email,
-  //   password: _password,
-  //   confirmPassword: _confirmPassword,
-  // };
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    const accountData = {
+      email: _email,
+      password: _password,
+      confirmPassword: _confirmPassword,
+    };
+    console.log(accountData);
+
+    // axios
+    //   .post("http://localhost:4000/clients", accountData)
+    //   .then((res) => {
+    //     alert("Successfully added Career Data");
+    //   });
+  }
 
   // useEffect(() => {}, [registerData]);
 
@@ -72,8 +86,6 @@ export default function StepOne() {
     });
   };
 
-  const classes = useStyles();
-
   return (
     <div className={classes.mainContainer}>
       <Typography variant="h5" style={{ color: "#999", textAlign: "center" }}>
@@ -81,14 +93,18 @@ export default function StepOne() {
       </Typography>
       <div className={classes.formContainer}>
         <form>
-
           <TextField
             className={classes.inputField}
             required
             label="Email"
             variant="outlined"
+            onChange={(e) => setEmail(e.target.value)}
           />
-          <FormControl className={classes.inputField} variant="outlined">
+          <FormControl
+            className={classes.inputField}
+            variant="outlined"
+            onChange={(e) => setPassword(e.target.value)}
+          >
             <InputLabel required>Create Password</InputLabel>
             <OutlinedInput
               labelWidth={125}
@@ -111,7 +127,11 @@ export default function StepOne() {
               }
             />
           </FormControl>
-          <FormControl className={classes.inputField} variant="outlined">
+          <FormControl
+            className={classes.inputField}
+            variant="outlined"
+            onChange={(e) => setconfirmPassword(e.target.value)}
+          >
             <InputLabel required>Confirm Password</InputLabel>
             <OutlinedInput
               labelWidth={135}
@@ -141,6 +161,7 @@ export default function StepOne() {
               className={classes.btn}
               variant="contained"
               type="submit"
+              onClick={handleSubmit}
               endIcon={<SendSharp />}
             >
               REGISTER

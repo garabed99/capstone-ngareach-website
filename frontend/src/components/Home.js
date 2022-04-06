@@ -4,7 +4,13 @@ import "./styles/Home.css";
 import background from "../imgs/background.jpg";
 export default function Home() {
   return (
-    <div style={{ backgroundImage: `url(${background})` }}>
+    <div
+      style={{
+        backgroundImage: `url(${background})`,
+        backgroundSize: "cover",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
       <NavBar />
       <div style={{ marginLeft: "60px", marginRight: "60px" }}>
         <h1>Welcome to Ngareach!</h1>
@@ -54,9 +60,6 @@ export default function Home() {
           <option value="micro">Micro</option>
           <option value="film">Film</option>
           <option value="astrophotography">Astrophotography</option>
-
-
-
         </select>
 
         <label for="minPrice">Min Price</label>

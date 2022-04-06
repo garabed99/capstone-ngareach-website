@@ -19,6 +19,7 @@ import {
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { SendSharp } from "@material-ui/icons";
 
+import axios from "axios";
 import { useState } from "react";
 
 const useStyles = makeStyles((theme) => ({
@@ -50,9 +51,35 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function StepThree() {
-  const [_photographyTypes, setPhotographyTypes] = useState([]);
   const classes = useStyles();
 
+  const [_yearsOfExp, setYearsOfExp] = useState("");
+  const [_bio, setBio] = useState("");
+  const [_photographyTypes, setPhotographyTypes] = useState([]);
+  const [_imgFile, setImgFile] = useState("");
+  const [_instagramLink, setInstagramLink] = useState("");
+  const [_facebookLink, setFacebookLink] = useState("");
+  const [_websiteLink, setWebsiteLink] = useState("");
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    const careerData = {
+      yearsOfExp: _yearsOfExp,
+      bio: _bio,
+      photographyTypes: _photographyTypes,
+      imgFile: _imgFile,
+      facebookLink: _facebookLink,
+      instagramLink: _instagramLink,
+      websiteLink: _websiteLink,
+    };
+    console.log(careerData);
+    // axios
+    //   .post("http://localhost:4000/photographers", careerData)
+    //   .then((res) => {
+    //     alert("Successfully added Career Data");
+    //   });
+  }
   return (
     <div className={classes.mainContainer}>
       <Typography variant="h5" style={{ color: "#999", textAlign: "center" }}>
@@ -60,22 +87,22 @@ export default function StepThree() {
       </Typography>
       <div className={classes.formContainer}>
         <form>
-
           {/* <div className={classes.inputField}> */}
-            <Autocomplete
+          <Autocomplete
             className={classes.inputField}
-              id="tags-standard"
-              options={yearsOfExperience}
-              getOptionLabel={(option) => option.year}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  variant="outlined"
-                  label="Years of Experience"
-                  placeholder="Add Years"
-                />
-              )}
-            />
+            id="tags-standard"
+            options={yearsOfExperience}
+            getOptionLabel={(option) => option.year}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                variant="outlined"
+                label="Years of Experience"
+                placeholder="Add Years"
+              />
+            )}
+            onChange={(e) => setYearsOfExp(e.target.value)}
+          />
           {/* </div> */}
 
           <TextField
@@ -83,6 +110,7 @@ export default function StepThree() {
             multiline
             label="Biography"
             variant="outlined"
+            onChange={(e) => setBio(e.target.value)}
           />
 
           <div className={classes.root}>
@@ -100,28 +128,39 @@ export default function StepThree() {
                   placeholder="Add More"
                 />
               )}
+              onChange={(e) => setPhotographyTypes(e.target.value)}
             />
           </div>
 
           <br />
 
-          {/* <TextField
-              className={classes.inputField}
-              id="dob"
-              label="Date Of Birth"
-              type="date"
-              defaultValue="1999-01-14"
-              sx={{ width: 220 }}
-              InputLabelProps={{
-                shrink: true,
-              }}
-            /> */}
+          <TextField
+            className={classes.inputField}
+            label="Instagram link"
+            variant="outlined"
+            onChange={(e) => setInstagramLink(e.target.value)}
+          />
+
+          <TextField
+            className={classes.inputField}
+            label="Facebook link"
+            variant="outlined"
+            onChange={(e) => setFacebookLink(e.target.value)}
+          />
+
+          <TextField
+            className={classes.inputField}
+            label="Personal website link"
+            variant="outlined"
+            onChange={(e) => setWebsiteLink(e.target.value)}
+          />
 
           <>
             <Button
               className={classes.btn}
               variant="contained"
               type="submit"
+              onClick={handleSubmit}
               endIcon={<SendSharp />}
             >
               Submit
@@ -175,5 +214,4 @@ const photographyTypes = [
   { title: "Film" },
   { title: "Astrophotography" },
   { title: "Graduation" },
-
 ];

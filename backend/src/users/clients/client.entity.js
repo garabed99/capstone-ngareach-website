@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
-const { ADMIN_ROLE, CUSTOMER_ROLE } = require("../commons/util");
+const { ADMIN_ROLE, CLIENT_ROLE } = require("../../commons/util");
 
 const Schema = mongoose.Schema;
 const clientSchema = new Schema({
@@ -25,10 +25,22 @@ const clientSchema = new Schema({
     type: String,
     required: [true, "Password required..."],
   },
+  gender: {
+    type: String,
+    required: true,
+  },
+  phone: {
+    type: Number,
+  },
+  dateOfBirth: {
+    type: Date,
+    required: true,
+    trim: true,
+  },
   role: {
     type: String,
-    enum: [ADMIN_ROLE, CUSTOMER_ROLE],
-    default: CUSTOMER_ROLE,
+    enum: [ADMIN_ROLE, CLIENT_ROLE],
+    default: CLIENT_ROLE,
   },
 });
 clientSchema.pre("save", function (next) {
