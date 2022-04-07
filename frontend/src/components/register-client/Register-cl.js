@@ -27,6 +27,10 @@ export default function Register() {
   const [activeStep, setActiveStep] = useState(0);
   const classes = useStyles();
   const steps = getSteps();
+  const [_email, setEmail] = useState("");
+  const [_password, setPassword] = useState("");
+  const [_confirmPassword, setconfirmPassword] = useState("");
+  
 
   function getSteps() {
     return ["ACCOUNT", "PERSONAL", "FINISH"];

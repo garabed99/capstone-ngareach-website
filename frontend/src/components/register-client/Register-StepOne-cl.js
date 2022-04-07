@@ -57,11 +57,11 @@ export default function StepOne() {
     };
     console.log(accountData);
 
-    // axios
-    //   .post("http://localhost:4000/clients", accountData)
-    //   .then((res) => {
-    //     alert("Successfully added Career Data");
-    //   });
+    axios
+      .post("http://localhost:4000/clients", accountData)
+      .then((res) => {
+        alert("Successfully added Career Data");
+      });
   }
 
   // useEffect(() => {}, [registerData]);

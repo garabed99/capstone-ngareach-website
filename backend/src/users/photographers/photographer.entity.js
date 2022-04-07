@@ -89,7 +89,7 @@ const photographerSchema = new Schema({
     default: PHOTOGRAPHER_ROLE,
   },
 });
-clientSchema.pre("save", function (next) {
+photographerSchema.pre("save", function (next) {
   if (this.isModified("password")) {
     const salt = bcrypt.genSaltSync();
     this.password = bcrypt.hashSync(this.password, salt);

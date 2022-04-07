@@ -66,11 +66,11 @@ export default function StepTwo() {
       phoneNum: _phoneNum,
     };
     console.log(personalData);
-    // axios
-    //   .post("http://localhost:4000/clients", personalData)
-    //   .then((res) => {
-    //     alert("Successfully added Career Data");
-    //   });
+    axios
+      .post("http://localhost:4000/clients", personalData)
+      .then((res) => {
+        alert("Successfully added Career Data");
+      });
   }
 
   return (

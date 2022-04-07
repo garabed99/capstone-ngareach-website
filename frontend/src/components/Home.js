@@ -13,7 +13,7 @@ export default function Home() {
     >
       <NavBar />
       <div style={{ marginLeft: "60px", marginRight: "60px" }}>
-        <h1>Welcome to Ngareach!</h1>
+        <h1>Welcome to Նկաreach!</h1>
       </div>
 
       <form className="flex-form">

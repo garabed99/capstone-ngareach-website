@@ -25,21 +25,21 @@ export default function NavBar() {
   function handleClickClose() {
     setOpen(false);
   }
-  
+
   return (
     <>
       <div className="main-container">
         <AppBar position="sticky">
           <Toolbar>
             <div className="logo-container">
-              <Typography variant="h6">Ngareach</Typography>
+              <Typography variant="h5" style={{color: "black"}}>Նկաreach</Typography>
             </div>
             <div className="metaData-container">
               <div className="page-route">
                 <Button>
                   <Link
                     to="/home"
-                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    style={{ color: "white", textDecoration: "inherit" }}
                   >
                     Home
                   </Link>
@@ -49,7 +49,7 @@ export default function NavBar() {
                 <Button>
                   <Link
                     to="/howitworks"
-                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    style={{ color: "white", textDecoration: "inherit" }}
                   >
                     How It Works
                   </Link>
@@ -59,7 +59,7 @@ export default function NavBar() {
                 <Button>
                   <Link
                     to="/reviews"
-                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    style={{ color: "white", textDecoration: "inherit" }}
                   >
                     Reviews
                   </Link>
@@ -69,7 +69,7 @@ export default function NavBar() {
                 <Button>
                   <Link
                     to="/pricing"
-                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    style={{ color: "white", textDecoration: "inherit" }}
                   >
                     Pricing
                   </Link>
@@ -79,7 +79,7 @@ export default function NavBar() {
                 <Button>
                   <Link
                     to="/photographerslist"
-                    style={{ color: "inherit", textDecoration: "inherit" }}
+                    style={{ color: "white", textDecoration: "inherit" }}
                   >
                     Our Photographers
                   </Link>
@@ -91,14 +91,14 @@ export default function NavBar() {
               <Button>
                 <Link
                   to="/login"
-                  style={{ color: "inherit", textDecoration: "inherit" }}
+                  style={{ color: "white", textDecoration: "inherit" }}
                 >
                   Login
                 </Link>
               </Button>
 
               <Button
-                style={{ color: "inherit", textDecoration: "inherit" }}
+                style={{ color: "white", textDecoration: "inherit" }}
                 onClick={handleClickOpen}
               >
                 Register
@@ -112,25 +112,25 @@ export default function NavBar() {
                 <DialogTitle id="alert-dialog-title">
                   {"Register as Client or Photographer?"}
                 </DialogTitle>
-                <DialogContent>
-
-                </DialogContent>
-                <DialogActions style={{justifyContent: "center", alignItems: "center"}}>
-                  <Button onClick={handleClickClose} color="primary">
-                  <Link
-                  to="/register-cl"
-                  style={{ color: "inherit", textDecoration: "inherit" }}
+                <DialogContent></DialogContent>
+                <DialogActions
+                  style={{ justifyContent: "center", alignItems: "center" }}
                 >
-                  Client
-                </Link>
+                  <Button onClick={handleClickClose} color="primary">
+                    <Link
+                      to="/register-cl"
+                      style={{ color: "white", textDecoration: "inherit" }}
+                    >
+                      Client
+                    </Link>
                   </Button>
                   <Button onClick={handleClickClose} color="primary" autoFocus>
-                  <Link
-                  to="/register-ph"
-                  style={{ color: "inherit", textDecoration: "inherit" }}
-                >
-                  Photographer
-                </Link>
+                    <Link
+                      to="/register-ph"
+                      style={{ color: "white", textDecoration: "inherit" }}
+                    >
+                      Photographer
+                    </Link>
                   </Button>
                 </DialogActions>
               </Dialog>
