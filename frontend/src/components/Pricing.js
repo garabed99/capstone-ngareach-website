@@ -1,6 +1,9 @@
 import NavBar from "./NavBar";
 import Footer from "./Footer";
 
+import { Box } from "@material-ui/core";
+
+
 export default function Pricing() {
   return (
     <div>
@@ -34,7 +37,9 @@ export default function Pricing() {
         </p>
       </div>
 
-      <Footer />
+      <Box>
+        <Footer />
+      </Box>
     </div>
   );
 }

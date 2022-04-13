@@ -1,5 +1,6 @@
 import NavBar from "./NavBar";
 import Footer from "./Footer";
+import { Box } from "@material-ui/core";
 
 export default function Reviews() {
   return (
@@ -34,7 +35,9 @@ export default function Reviews() {
         </p>
       </div>
 
-      <Footer />
+      <Box >
+        <Footer/>
+      </Box>
     </div>
   );
 }

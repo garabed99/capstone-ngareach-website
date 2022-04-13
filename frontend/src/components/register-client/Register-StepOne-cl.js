@@ -40,12 +40,12 @@ const useStyles = makeStyles({
   },
 });
 
-export default function StepOne() {
+export default function StepOne(props) {
   const classes = useStyles();
 
   const [_email, setEmail] = useState("");
   const [_password, setPassword] = useState("");
-  const [_confirmPassword, setconfirmPassword] = useState("");
+  const [_confirmPassword, setConfirmPassword] = useState("");
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -55,13 +55,28 @@ export default function StepOne() {
       password: _password,
       confirmPassword: _confirmPassword,
     };
-    console.log(accountData);
+    // console.log(accountData);
+
+    localStorage.setItem("clientData", JSON.stringify(accountData));
+    const sessionData = localStorage.getItem("clientData");
+    console.log(sessionData);
 
     axios
       .post("http://localhost:4000/clients", accountData)
       .then((res) => {
-        alert("Successfully added Career Data");
+        alert("Successfully added Account Data");
+      })
+      .catch((err) => {
+        console.log(err);
       });
+  }
+
+  function checkValidation(e) {
+    setConfirmPassword(e.target.value)
+
+    if(_password === _confirmPassword) {
+
+    }
   }
 
   // useEffect(() => {}, [registerData]);
@@ -130,7 +145,7 @@ export default function StepOne() {
           <FormControl
             className={classes.inputField}
             variant="outlined"
-            onChange={(e) => setconfirmPassword(e.target.value)}
+            onChange={(e) => setConfirmPassword(e.target.value)}
           >
             <InputLabel required>Confirm Password</InputLabel>
             <OutlinedInput

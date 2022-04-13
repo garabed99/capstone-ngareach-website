@@ -79,13 +79,13 @@ export default function Register() {
           {activeStep === 0 ? "" : "PREVIOUS"}
         </Button>
         {activeStep === steps.length ? (
-          "The Steps Completed:"
+          "Unauthorized step"
         ) : (
           <>
             {getStepsContent(activeStep)}
 
             <Button onClick={handleNext}>
-              {activeStep === steps.length - 1 ? "FINISH" : "NEXT"}
+              {activeStep === steps.length - 1 ? " " : "NEXT"}
               <Link
                 to="/home"
                 style={{ color: "inherit", textDecoration: "inherit" }}

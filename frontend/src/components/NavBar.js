@@ -88,14 +88,14 @@ export default function NavBar() {
             </div>
 
             <div className="registration-container">
-              <Button>
+              {/* <Button>
                 <Link
                   to="/login"
                   style={{ color: "white", textDecoration: "inherit" }}
                 >
                   Login
                 </Link>
-              </Button>
+              </Button> */}
 
               <Button
                 style={{ color: "white", textDecoration: "inherit" }}
@@ -119,7 +119,7 @@ export default function NavBar() {
                   <Button onClick={handleClickClose} color="primary">
                     <Link
                       to="/register-cl"
-                      style={{ color: "white", textDecoration: "inherit" }}
+                      style={{ color: "inherit", textDecoration: "inherit" }}
                     >
                       Client
                     </Link>
@@ -127,9 +127,17 @@ export default function NavBar() {
                   <Button onClick={handleClickClose} color="primary" autoFocus>
                     <Link
                       to="/register-ph"
-                      style={{ color: "white", textDecoration: "inherit" }}
+                      style={{ color: "inherit", textDecoration: "inherit" }}
                     >
                       Photographer
+                    </Link>
+                  </Button>
+                  <Button onClick={handleClickClose} color="primary" autoFocus>
+                    <Link
+                      to="/login"
+                      style={{ color: "inherit", textDecoration: "inherit" }}
+                    >
+                      Already Have Account
                     </Link>
                   </Button>
                 </DialogActions>

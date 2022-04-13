@@ -71,7 +71,7 @@ export default function Login() {
         <Grid>
           <Paper elevation={10} style={paperStyle}>
             <Grid align="center">
-              <h2>Sign In</h2>
+              <h2>Login</h2>
             </Grid>
 
             <TextField

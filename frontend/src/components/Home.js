@@ -2,6 +2,8 @@ import NavBar from "./NavBar";
 import Footer from "./Footer";
 import "./styles/Home.css";
 import background from "../imgs/background.jpg";
+import { Box } from "@material-ui/core";
+import { positions } from "@material-ui/system";
 export default function Home() {
   return (
     <div
@@ -69,7 +71,7 @@ export default function Home() {
         <button type="submit">Search</button>
       </form>
 
-      <Footer />
+        <Footer />
     </div>
   );
 }

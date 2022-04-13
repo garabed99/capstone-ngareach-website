@@ -29,20 +29,33 @@ export default function Register() {
   const steps = getSteps();
   const [_email, setEmail] = useState("");
   const [_password, setPassword] = useState("");
-  const [_confirmPassword, setconfirmPassword] = useState("");
-  
+  const [_confirmPassword, setConfirmPassword] = useState("");
+  const [_firstName, setFirstName] = useState("");
+  const [_lastName, setLastName] = useState("");
+  const [_gender, setGender] = useState("");
+  const [_dateOfBirth, setDateOfBirth] = useState(
+    new Date("1999-01-14T11:11:11")
+  );
+  const [_phoneNum, setPhoneNum] = useState("");
+
+  const handleEmail = (value) => setEmail(value);
+  const handlePassword = (value) => setPassword(value);
+  const handleConfirmPassword = (value) => setConfirmPassword(value);
+  const handleFirstName = (value) => setFirstName(value);
+  const handleLastName = (value) => setLastName(value);
+  const handleGender = (value) => setGender(value);
+  const handleDateOfBirth = (value) => setDateOfBirth(value);
+  const handlePhoneNum = (value) => setPhoneNum(value);
 
   function getSteps() {
     return ["ACCOUNT", "PERSONAL", "FINISH"];
   }
 
-  const handlePrev = () => {
+  const handlePrev = () =>
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
 
-  const handleNext = () => {
+  const handleNext = () =>
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
 
   function getStepsContent(stepIndex) {
     switch (stepIndex) {
@@ -80,7 +93,7 @@ export default function Register() {
           {activeStep === 0 ? "" : "PREVIOUS"}
         </Button>
         {activeStep === steps.length ? (
-          "The Steps Completed:"
+          "Unauthorized step"
         ) : (
           // <>
           // <div>
@@ -91,13 +104,19 @@ export default function Register() {
             {getStepsContent(activeStep)}
 
             <Button onClick={handleNext}>
-            {activeStep === steps.length - 1 ? "FINISH" : "NEXT"}
+              {activeStep === steps.length - 1 ? (
+                // <Link
+                //   to="/home"
+                //   style={{ color: "inherit", textDecoration: "inherit" }}
+                // ></Link>
+                ""
+              ) : (
+                "NEXT"
+              )}
               <Link
                 to="/home"
                 style={{ color: "inherit", textDecoration: "inherit" }}
-              >
-                
-              </Link>
+              ></Link>
             </Button>
           </>
         )}

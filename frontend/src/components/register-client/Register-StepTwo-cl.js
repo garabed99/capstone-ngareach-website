@@ -22,6 +22,8 @@ import PhoneInput from "react-phone-number-input";
 import axios from "axios";
 import { useState } from "react";
 
+import StepOne from "./Register-StepOne-cl";
+
 const useStyles = makeStyles({
   mainContainer: {
     display: "grid",
@@ -49,7 +51,7 @@ export default function StepTwo() {
 
   const [_firstName, setFirstName] = useState("");
   const [_lastName, setLastName] = useState("");
-  const [_gender, setgender] = useState("");
+  const [_gender, setGender] = useState("");
   const [_dateOfBirth, setDateOfBirth] = useState(
     new Date("1999-01-14T11:11:11")
   );
@@ -66,10 +68,18 @@ export default function StepTwo() {
       phoneNum: _phoneNum,
     };
     console.log(personalData);
+
+    localStorage.setItem("clientData", JSON.stringify(personalData));
+    const sessionData = localStorage.getItem("clientData");
+    console.log(sessionData);
+
     axios
       .post("http://localhost:4000/clients", personalData)
       .then((res) => {
         alert("Successfully added Career Data");
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }
 
@@ -101,7 +111,7 @@ export default function StepTwo() {
               aria-label="position"
               name="position"
               defaultValue="top"
-              onChange={(e) => setgender(e.target.value)}
+              onChange={(e) => setGender(e.target.value)}
             >
               <FormControlLabel
                 value="female"

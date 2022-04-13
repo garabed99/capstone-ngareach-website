@@ -14,6 +14,7 @@ import {
 import { Visibility, VisibilityOff, SendSharp } from "@material-ui/icons";
 
 import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles({
   mainContainer: {
@@ -38,11 +39,30 @@ const useStyles = makeStyles({
 });
 
 export default function StepFour() {
+  const classes = useStyles();
+  const navigate = useNavigate();
 
-//   const [_]
   return (
-    <div>
-      <h2>Step Four</h2>
-    </div>
+    <>
+      <div className={classes.mainContainer}>
+        <Typography
+          variant="h5"
+          style={{ color: "black", textAlign: "center" }}
+        >
+          Registeration Completed!
+        </Typography>
+        <div className={classes.formContainer}>
+          <Button
+            className={classes.btn}
+            variant="contained"
+            // onClick={handleRedirect}
+            onClick={() => navigate(`/home`)}
+            endIcon={<SendSharp />}
+          >
+            DONE
+          </Button>
+        </div>
+      </div>
+    </>
   );
 }
