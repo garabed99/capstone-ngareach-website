@@ -14,12 +14,38 @@ router.post(
 );
 
 router.get(
-    "/:id",
-    asyncHandler(async (req, res) => {
-      const { id } = req.params;
-      const result = await photographers.findOne(id);
-      res.send(result);
-    })
-  );
+  "/",
+  asyncHandler(async (req, res) => {
+    const result = await photographers.findAll();
+    res.send(result);
+  })
+);
+
+router.get(
+  "/:id",
+  asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    const result = await photographers.findOne(id);
+    res.send(result);
+  })
+);
+
+router.delete(
+  "/:id",
+  asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    const result = await photographers.delete(id);
+    res.json(result);
+  })
+);
+
+router.patch(
+  "/:id",
+  asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    const result = await photographers.update(id, req.body);
+    res.json(result);
+  })
+);
 
 module.exports = router;

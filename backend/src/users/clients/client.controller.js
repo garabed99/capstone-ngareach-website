@@ -3,7 +3,6 @@ const router = express.Router();
 const clients = require("./client.service");
 const asyncHandler = require("express-async-handler");
 
-
 router.post(
   "/",
   asyncHandler(async (req, res) => {
@@ -14,20 +13,13 @@ router.post(
   })
 );
 
-
-// router.get(
-//   "/",
-//   asyncHandler(async (req, res) => {
-//     const query = req.query;
-//     const result = await clients.findAll(query);
-    
-//     res.send(result);
-//   })
-// );
-
-// router.get("/", (req, res) => {
-//   res.send("hello world");
-// });
+router.get(
+  "/",
+  asyncHandler(async (req, res) => {
+    const result = await clients.findAll();
+    res.send(result);
+  })
+);
 
 router.get(
   "/:id",
@@ -35,6 +27,24 @@ router.get(
     const { id } = req.params;
     const result = await clients.findOne(id);
     res.send(result);
+  })
+);
+
+router.delete(
+  "/:id",
+  asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    const result = await clients.delete(id);
+    res.json(result);
+  })
+);
+
+router.patch(
+  "/:id",
+  asyncHandler(async (req, res) => {
+    const { id } = req.params;
+    const result = await clients.update(id, req.body);
+    res.json(result);
   })
 );
 
