@@ -2,11 +2,9 @@ import React from "react";
 import {
   Grid,
   Paper,
-  Avatar,
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
   TextField,
   Button,

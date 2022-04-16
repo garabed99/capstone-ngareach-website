@@ -1,10 +1,7 @@
 //contains ACCOUNT Details
-
 import {
   Button,
-  // Checkbox,
   FormControl,
-  // Grid,
   IconButton,
   InputAdornment,
   InputLabel,
@@ -72,10 +69,9 @@ export default function StepOne(props) {
   }
 
   function checkValidation(e) {
-    setConfirmPassword(e.target.value)
+    setConfirmPassword(e.target.value);
 
-    if(_password === _confirmPassword) {
-
+    if (_password === _confirmPassword) {
     }
   }
 

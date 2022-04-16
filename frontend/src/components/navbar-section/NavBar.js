@@ -4,15 +4,12 @@ import {
   Dialog,
   DialogActions,
   DialogContent,
-  DialogContentText,
   DialogTitle,
-  Tab,
-  Tabs,
   Toolbar,
   Typography,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import "./styles/NavBar.css";
+import "../styles/NavBar.css";
 import { useState } from "react";
 
 export default function NavBar() {

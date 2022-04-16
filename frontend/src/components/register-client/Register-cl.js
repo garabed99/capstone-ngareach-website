@@ -4,7 +4,6 @@ import {
   Stepper,
   Step,
   StepLabel,
-  Typography,
 } from "@material-ui/core";
 
 import { Link } from "react-router-dom";
@@ -12,6 +11,7 @@ import { useState, useEffect } from "react";
 import StepOne from "./Register-StepOne-cl";
 import StepTwo from "./Register-StepTwo-cl";
 import StepThree from "./Register-StepThree-cl";
+import { DataProvider } from "./context-client/DataContext.cl";
 
 const useStyles = makeStyles({
   root: {
@@ -27,9 +27,13 @@ export default function Register() {
   const [activeStep, setActiveStep] = useState(0);
   const classes = useStyles();
   const steps = getSteps();
+
+  //Account Data
   const [_email, setEmail] = useState("");
   const [_password, setPassword] = useState("");
   const [_confirmPassword, setConfirmPassword] = useState("");
+
+  //Personal Data
   const [_firstName, setFirstName] = useState("");
   const [_lastName, setLastName] = useState("");
   const [_gender, setGender] = useState("");
@@ -38,9 +42,12 @@ export default function Register() {
   );
   const [_phoneNum, setPhoneNum] = useState("");
 
+  //Account Data
   const handleEmail = (value) => setEmail(value);
   const handlePassword = (value) => setPassword(value);
   const handleConfirmPassword = (value) => setConfirmPassword(value);
+
+  //Personal Data
   const handleFirstName = (value) => setFirstName(value);
   const handleLastName = (value) => setLastName(value);
   const handleGender = (value) => setGender(value);
@@ -60,7 +67,13 @@ export default function Register() {
   function getStepsContent(stepIndex) {
     switch (stepIndex) {
       case 0:
-        return <StepOne />;
+        return (
+          <StepOne
+            email={_email}
+            password={_password}
+            confirmPassword={_confirmPassword}
+          />
+        );
       case 1:
         return <StepTwo />;
       case 2:
@@ -72,14 +85,6 @@ export default function Register() {
 
   return (
     <>
-      <Button>
-        <Link
-          to="/home"
-          style={{ color: "inherit", textDecoration: "inherit" }}
-        >
-          Home
-        </Link>
-      </Button>
       <div className={classes.root}>
         <Stepper activeStep={activeStep} alternativeLabel>
           {steps.map((label) => (
@@ -95,24 +100,11 @@ export default function Register() {
         {activeStep === steps.length ? (
           "Unauthorized step"
         ) : (
-          // <>
-          // <div>
-
-          // </div>
-          // </>
           <>
             {getStepsContent(activeStep)}
 
             <Button onClick={handleNext}>
-              {activeStep === steps.length - 1 ? (
-                // <Link
-                //   to="/home"
-                //   style={{ color: "inherit", textDecoration: "inherit" }}
-                // ></Link>
-                ""
-              ) : (
-                "NEXT"
-              )}
+              {activeStep === steps.length - 1 ? "" : "NEXT"}
               <Link
                 to="/home"
                 style={{ color: "inherit", textDecoration: "inherit" }}

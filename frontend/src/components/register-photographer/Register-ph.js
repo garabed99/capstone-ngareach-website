@@ -4,7 +4,6 @@ import {
   Stepper,
   Step,
   StepLabel,
-  Typography,
 } from "@material-ui/core";
 
 import { Link } from "react-router-dom";
@@ -58,14 +57,6 @@ export default function Register() {
 
   return (
     <>
-      <Button>
-        <Link
-          to="/home"
-          style={{ color: "inherit", textDecoration: "inherit" }}
-        >
-          Home
-        </Link>
-      </Button>
       <div className={classes.root}>
         <Stepper activeStep={activeStep} alternativeLabel>
           {steps.map((label) => (

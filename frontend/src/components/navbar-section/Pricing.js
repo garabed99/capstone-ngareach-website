@@ -1,12 +1,8 @@
-import NavBar from "./NavBar";
-import Footer from "./Footer";
-
-export default function HowItWorks() {
+export default function Pricing() {
   return (
     <div>
-      <NavBar />
       <div style={{ marginLeft: "30px", marginRight: "30px" }}>
-        <h1>this is How It Works</h1>
+        <h1>this is Pricing</h1>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime
           mollitia, molestiae quas vel sint commodi repudiandae consequuntur
@@ -33,8 +29,6 @@ export default function HowItWorks() {
           aliquam eligendi, placeat qui corporis!
         </p>
       </div>
-
-      <Footer />
     </div>
   );
 }

@@ -1,10 +1,7 @@
 //contains ACCOUNT Details
-
 import {
   Button,
-  // Checkbox,
   FormControl,
-  // Grid,
   IconButton,
   InputAdornment,
   InputLabel,

@@ -1,15 +1,8 @@
-import NavBar from "./NavBar";
-import Footer from "./Footer";
-
-import { Box } from "@material-ui/core";
-
-
-export default function Pricing() {
+export default function TermsAndConditions() {
   return (
     <div>
-      <NavBar />
       <div style={{ marginLeft: "30px", marginRight: "30px" }}>
-        <h1>this is Pricing</h1>
+        <h1>this is TermsAndConditions</h1>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime
           mollitia, molestiae quas vel sint commodi repudiandae consequuntur
@@ -36,10 +29,6 @@ export default function Pricing() {
           aliquam eligendi, placeat qui corporis!
         </p>
       </div>
-
-      <Box>
-        <Footer />
-      </Box>
     </div>
   );
 }

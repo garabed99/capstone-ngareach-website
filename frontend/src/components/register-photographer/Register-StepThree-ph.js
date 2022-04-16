@@ -1,21 +1,5 @@
 //contains CAREER Details
-import {
-  Button,
-  Checkbox,
-  Chip,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  Grid,
-  InputLabel,
-  makeStyles,
-  OutlinedInput,
-  Radio,
-  RadioGroup,
-  TextField,
-  TextareaAutosize,
-  Typography,
-} from "@material-ui/core";
+import { Button, makeStyles, TextField, Typography } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { SendSharp } from "@material-ui/icons";
 
@@ -61,6 +45,11 @@ export default function StepThree() {
   const [_facebookLink, setFacebookLink] = useState("");
   const [_websiteLink, setWebsiteLink] = useState("");
 
+  const handleDelete = (chipToDelete) => () => {
+    setPhotographyTypes((chips) =>
+      chips.filter((chip) => chip.key !== chipToDelete.key)
+    );
+  };
   function handleSubmit(e) {
     e.preventDefault();
 
@@ -101,7 +90,7 @@ export default function StepThree() {
                 placeholder="Add Years"
               />
             )}
-            onChange={(e) => setYearsOfExp(e.target.value)}
+            onChange={(e, v) => setYearsOfExp(v.year)}
           />
           {/* </div> */}
 
@@ -118,7 +107,7 @@ export default function StepThree() {
               multiple
               id="tags-standard"
               options={photographyTypes}
-              getOptionLabel={(option) => option.title}
+              getOptionLabel={(option) => option.genre}
               defaultValue={[photographyTypes[2]]}
               renderInput={(params) => (
                 <TextField
@@ -128,7 +117,7 @@ export default function StepThree() {
                   placeholder="Add More"
                 />
               )}
-              onChange={(e) => setPhotographyTypes(e.target.value)}
+              onChange={(e, v) => setPhotographyTypes(v)}
             />
           </div>
 
@@ -179,39 +168,39 @@ const yearsOfExperience = [
 ];
 
 const photographyTypes = [
-  { title: "Pet" },
-  { title: "Wildlife" },
-  { title: "Fashion" },
-  { title: "Sports" },
-  { title: "Architecture" },
-  { title: "Real estate" },
-  { title: "Food" },
-  { title: "Vehicle" },
-  { title: "Advertising" },
-  { title: "Aerial" },
-  { title: "Landscape" },
-  { title: "Panoramic" },
-  { title: "Underwater" },
-  { title: "Family" },
-  { title: "Baby and child" },
-  { title: "Newborn" },
-  { title: "Portrait" },
-  { title: "Branding" },
-  { title: "Erotic" },
-  { title: "Concert" },
-  { title: "Fine art" },
-  { title: "Street" },
-  { title: "Wedding" },
-  { title: "Birthday" },
-  { title: "Baptism" },
-  { title: "Travel" },
-  { title: "Photojournalism" },
-  { title: "Press" },
-  { title: "Stock" },
-  { title: "Paparazzi" },
-  { title: "Macro" },
-  { title: "Micro" },
-  { title: "Film" },
-  { title: "Astrophotography" },
-  { title: "Graduation" },
+  { genre: "Pet" },
+  { genre: "Wildlife" },
+  { genre: "Fashion" },
+  { genre: "Sports" },
+  { genre: "Architecture" },
+  { genre: "Real estate" },
+  { genre: "Food" },
+  { genre: "Vehicle" },
+  { genre: "Advertising" },
+  { genre: "Aerial" },
+  { genre: "Landscape" },
+  { genre: "Panoramic" },
+  { genre: "Underwater" },
+  { genre: "Family" },
+  { genre: "Baby and child" },
+  { genre: "Newborn" },
+  { genre: "Portrait" },
+  { genre: "Branding" },
+  { genre: "Erotic" },
+  { genre: "Concert" },
+  { genre: "Fine art" },
+  { genre: "Street" },
+  { genre: "Wedding" },
+  { genre: "Birthday" },
+  { genre: "Baptism" },
+  { genre: "Travel" },
+  { genre: "Photojournalism" },
+  { genre: "Press" },
+  { genre: "Stock" },
+  { genre: "Paparazzi" },
+  { genre: "Macro" },
+  { genre: "Micro" },
+  { genre: "Film" },
+  { genre: "Astrophotography" },
+  { genre: "Graduation" },
 ];

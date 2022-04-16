@@ -1,14 +1,10 @@
 //contains PERSONAL Details
 import {
   Button,
-  // Checkbox,
   FormControl,
   FormControlLabel,
   FormLabel,
-  // Grid,
-  // InputLabel,
   makeStyles,
-  // OutlinedInput,
   Radio,
   RadioGroup,
   TextField,

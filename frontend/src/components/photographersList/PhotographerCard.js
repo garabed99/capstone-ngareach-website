@@ -18,10 +18,10 @@ import { useState } from "react";
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 345,
+    maxWidth: 300,
   },
   media: {
-    height: 140,
+    height: 150,
   },
 });
 
@@ -48,10 +48,16 @@ export default function PhotographerCard() {
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
-              Photographer Name
+              Garabed
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              Description
+            <Typography variant="body2" color="textSecondary" component="p" noWrap>
+            litia, molestiae quas vel sint commodi repudiandae consequuntur
+          voluptatum laborum numquam blanditiis harum quisquam eius sed odit
+          fugiat iusto fuga praesentium optio, eaque rerum! Provident similique
+          accusantium nemo autem. Veritatis obcaecati tenetur iure eius earum ut
+          molestias architecto voluptate aliquam nihil, eveniet aliquid culpa
+          officia aut! Impedit sit sunt quaerat, odit, tenetur error, harum
+          nesciunt ipsum debitis quas aliquid. Repreh
             </Typography>
           </CardContent>
         </CardActionArea>

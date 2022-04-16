@@ -1,19 +1,5 @@
 //contains PERSONAL Details
-import {
-  Button,
-  // Checkbox,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
-  // Grid,
-  // InputLabel,
-  makeStyles,
-  // OutlinedInput,
-  Radio,
-  RadioGroup,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import { Button, makeStyles, Typography } from "@material-ui/core";
 import { SendSharp } from "@material-ui/icons";
 
 import { Link, useNavigate } from "react-router-dom";

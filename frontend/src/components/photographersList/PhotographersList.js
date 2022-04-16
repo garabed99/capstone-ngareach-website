@@ -1,15 +1,11 @@
-import NavBar from "../NavBar";
-import Footer from "../Footer";
 import PhotographerCard from "./PhotographerCard";
-import { Grid } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import { Box } from "@material-ui/core";
-import { positions } from "@material-ui/system";
+import { Grid, makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles({
   gridContainer: {
-    paddingLeft: "40px",
-    // paddingRight: "40px",
+    paddingLeft: "20px",
+    marginBottom: "50px"
+    
   },
 });
 
@@ -19,7 +15,6 @@ export default function PhotographersList() {
   return (
     <>
       <div>
-        <NavBar />
         <h1>this is PhotographersList</h1>
       </div>
 
@@ -29,6 +24,11 @@ export default function PhotographersList() {
         className={classes.gridContainer}
         justify="center"
       >
+        {/* users.map((user) => {
+          <Grid item xs={12} sm={6} md={3}>
+          <PhotographerCard photographer={user}/>}
+        </Grid>
+          ) */}
         <Grid item xs={12} sm={6} md={3}>
           <PhotographerCard />
         </Grid>
@@ -60,8 +60,6 @@ export default function PhotographersList() {
           <PhotographerCard />
         </Grid>
       </Grid>
-
-      <Footer />
     </>
   );
 }

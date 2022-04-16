@@ -1,11 +1,6 @@
-import NavBar from "./NavBar";
-import Footer from "./Footer";
-import { Box } from "@material-ui/core";
-
 export default function Reviews() {
   return (
     <div>
-      <NavBar />
       <div style={{ marginLeft: "30px", marginRight: "30px" }}>
         <h1>this is Reviews</h1>
         <p>
@@ -34,10 +29,6 @@ export default function Reviews() {
           aliquam eligendi, placeat qui corporis!
         </p>
       </div>
-
-      <Box >
-        <Footer/>
-      </Box>
     </div>
   );
 }

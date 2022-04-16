@@ -7,9 +7,6 @@ import {
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 
-import NavBar from "./NavBar";
-import Footer from "./Footer";
-
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -28,7 +25,7 @@ export default function FAQ() {
 
   return (
     <div>
-      <NavBar />
+      {/* <NavBar /> */}
       <div style={{ marginLeft: "30px", marginRight: "30px" }}>
         <h1>Frequently Asked Questions (FAQ)</h1>
 
@@ -99,8 +96,6 @@ export default function FAQ() {
           </Accordion>
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 }
