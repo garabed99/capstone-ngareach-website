@@ -61,7 +61,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Login() {
+export default function SignPh() {
   const classes = useStyles();
 
   const [_email, setEmail] = useState("");

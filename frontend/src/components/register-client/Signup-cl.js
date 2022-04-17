@@ -3,6 +3,7 @@ import {
   FormControl,
   FormControlLabel,
   FormLabel,
+  FormHelperText,
   Grid,
   Paper,
   IconButton,
@@ -44,7 +45,7 @@ const useStyles = makeStyles({
     height: "3rem",
     background: "#42a5f5",
     color: "white",
-    marginTop: "25px"
+    marginTop: "25px",
   },
   paperStyle: {
     padding: 20,
@@ -55,7 +56,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Login() {
+export default function SignupCl() {
   const classes = useStyles();
 
   const [_email, setEmail] = useState("");
@@ -69,6 +70,14 @@ export default function Login() {
     new Date("1999-01-14T11:11:11")
   );
   const [_phoneNum, setPhoneNum] = useState("");
+
+  const emailRegex = RegExp(
+    /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+  );
+
+  const passwordRegex = RegExp(
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/
+  );
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -200,6 +209,7 @@ export default function Login() {
                 <TextField
                   className={classes.inputField}
                   required
+                  name="firstName"
                   label="First Name"
                   variant="outlined"
                   onChange={(e) => setFirstName(e.target.value)}

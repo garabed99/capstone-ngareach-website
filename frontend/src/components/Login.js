@@ -1,26 +1,80 @@
 import React from "react";
 import {
-  Grid,
-  Paper,
+  Button,
+  Checkbox,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Grid,
+  makeStyles,
+  OutlinedInput,
+  Paper,
+  IconButton,
+  InputAdornment,
+  InputLabel,
   TextField,
-  Button,
   Typography,
 } from "@material-ui/core";
 
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
+import { Visibility, VisibilityOff, SendSharp } from "@material-ui/icons";
+import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
+const useStyles = makeStyles({
+  mainContainer: {
+    display: "grid",
+    justifyContent: "center",
+    position: "relative",
+  },
+  formContainer: {
+    position: "relative",
+    width: "20rem",
+    height: "auto",
+    padding: "2rem",
+  },
+  inputField: {
+    position: "relative",
+    width: "100%",
+    marginBottom: "10px",
+  },
+  btn: {
+    width: "100%",
+    height: "3rem",
+    background: "#42a5f5",
+    color: "white",
+    marginTop: "25px",
+  },
+  regBtn: {
+    width: "100%",
+    height: "3rem",
+    background: "#42a5f5",
+    color: "white",
+    marginTop: "5px",
+  },
+  paperStyle: {
+    padding: 20,
+    height: "70vh",
+    // maxWidth: ,
+    width: 400,
+    margin: "40px auto",
+  },
+});
+
 export default function Login() {
+  const classes = useStyles();
   const [open, setOpen] = useState(false);
 
   const [_email, setEmail] = useState("");
   const [_password, setPassword] = useState("");
+
+  const [showPasswordValue, setPasswordValue] = useState({
+    showPassword: false,
+  });
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -31,14 +85,18 @@ export default function Login() {
     };
 
     console.log(loginData);
-    // axios
-    //   .post("http://localhost:4000/auth/login", loginData)
-    //   .then((res) => {
-    //     console.log(res);
-    //     alert("Successfully added Career Data");
-    //   });
+    axios
+      .post("http://localhost:4000/auth/login", loginData)
+      .then((res) => {
+        console.log(res);
+        window.location.href = "/";
+        alert("Successfully added Career Data");
+      })
+      .catch((error) => {
+        alert("wrong details", error.message);
+        console.log(error.message);
+      });
   }
-
   function handleClickOpen() {
     setOpen(true);
   }
@@ -47,67 +105,77 @@ export default function Login() {
     setOpen(false);
   }
 
-  const paperStyle = {
-    padding: 20,
-    height: "70vh",
-    width: 300,
-    margin: "100px auto",
+  const handleClickShowPassword = () => {
+    setPasswordValue({
+      showPassword: !showPasswordValue.showPassword,
+    });
   };
-
-  const btnstyle = { margin: "8px 0" };
   return (
     <>
-      <form>
+      <Paper elevation={10} className={classes.paperStyle}>
         <Grid>
-          <Paper elevation={10} style={paperStyle}>
-            <Grid align="center">
-              <h2>Login</h2>
+          <Grid align="center">
+            <h2>Login</h2>
+          </Grid>
+
+          <div className={classes.formContainer}>
+            <Grid container spacing={3}>
+              <TextField
+                className={classes.inputField}
+                required
+                label="Email"
+                variant="outlined"
+                autoFocus
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <FormControl
+                className={classes.inputField}
+                variant="outlined"
+                onChange={(e) => setPassword(e.target.value)}
+              >
+                <InputLabel required>Password</InputLabel>
+                <OutlinedInput
+                  labelWidth={85}
+                  type={showPasswordValue.showPassword ? "text" : "password"}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton edge="end" onClick={handleClickShowPassword}>
+                        {showPasswordValue.showPassword ? (
+                          <Visibility />
+                        ) : (
+                          <VisibilityOff />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+              </FormControl>
+
+              <Button
+                type="submit"
+                color="primary"
+                variant="contained"
+                className={classes.btn}
+                fullWidth
+                onClick={handleSubmit}
+              >
+                Sign in
+              </Button>
+
+              {/* DIALOG OF NEED ACCOUNT */}
+              <Grid style={{marginTop: "25px"}}>
+                <Typography>Don't have an account?</Typography>
+                <Button
+                  type="submit"
+                  color="primary"
+                  variant="contained"
+                  className={classes.regBtn}
+                  onClick={handleClickOpen}
+                >
+                  Register
+                </Button>
+              </Grid>
             </Grid>
-
-            <TextField
-              label="Email"
-              fullWidth
-              required
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <TextField
-              label="Password"
-              type="password"
-              fullWidth
-              required
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <FormControlLabel
-              control={<Checkbox name="checkedB" color="primary" />}
-              label="Remember me"
-            />
-            <Button
-              type="submit"
-              color="primary"
-              variant="contained"
-              style={btnstyle}
-              fullWidth
-              onClick={handleSubmit}
-            >
-              Sign in
-            </Button>
-            <Typography>
-              {/* <Link href="#">Forgot password?</Link> */}
-            </Typography>
-
-            {/* DIALOG OF NEED ACCOUNT */}
-
-            <Typography>Don't have an account?</Typography>
-            <Button
-              type="submit"
-              color="primary"
-              variant="contained"
-              style={btnstyle}
-              onClick={handleClickOpen}
-            >
-              Register
-            </Button>
-
             <Dialog
               open={open}
               onClose={handleClickClose}
@@ -123,7 +191,7 @@ export default function Login() {
               >
                 <Button onClick={handleClickClose} color="primary">
                   <Link
-                    to="/register-cl"
+                    to="/signup-cl"
                     style={{ color: "inherit", textDecoration: "inherit" }}
                   >
                     Client
@@ -131,7 +199,7 @@ export default function Login() {
                 </Button>
                 <Button onClick={handleClickClose} color="primary" autoFocus>
                   <Link
-                    to="/register-ph"
+                    to="/signup-ph"
                     style={{ color: "inherit", textDecoration: "inherit" }}
                   >
                     Photographer
@@ -139,9 +207,9 @@ export default function Login() {
                 </Button>
               </DialogActions>
             </Dialog>
-          </Paper>
+          </div>
         </Grid>
-      </form>
+      </Paper>
     </>
   );
 }
