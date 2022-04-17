@@ -28,7 +28,7 @@ export default function Home() {
                   className="photographer-name"
                   placeholder="Photographer Name"
                 />
-                
+
                 <select name="eventType" id="">
                   <option selected value="0">
                     Event Type

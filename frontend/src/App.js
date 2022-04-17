@@ -5,8 +5,10 @@ import Reviews from "./components/navbar-section/Reviews";
 import Pricing from "./components/navbar-section/Pricing";
 import PhotographersList from "./components/photographersList/PhotographersList";
 import Login from "./components/Login";
-import RegisterPh from "./components/register-photographer/Register-ph";
-import RegisterCl from "./components/register-client/Register-cl";
+// import RegisterPh from "./components/register-photographer/Register-ph";
+// import RegisterCl from "./components/register-client/Register-cl";
+import SignupPh from "./components/register-photographer/Signup-ph";
+import SignupCl from "./components/register-client/Signup-cl";
 import AboutUs from "./components/information-footer/AboutUs";
 import ContactUs from "./components/information-footer/ContactUs";
 import FAQ from "./components/information-footer/FAQ";
@@ -31,15 +33,17 @@ export default function App() {
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/photographerslist" element={<PhotographersList />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/register-ph" element={<RegisterPh />} />
-          <Route path="/register-cl" element={<RegisterCl />} />
+          {/* <Route path="/register-ph" element={<RegisterPh />} />
+          <Route path="/register-cl" element={<RegisterCl />} /> */}
+          <Route path="/signup-cl" element={<SignupCl />} />
+          <Route path="/signup-ph" element={<SignupPh />} />
           <Route path="/aboutus" element={<AboutUs />} />
           <Route path="/contactus" element={<ContactUs />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/termsandconditions" element={<TermsAndConditions />} />
           <Route path="/privacypolicy" element={<PrivacyPolicy />} />
         </Routes>
-        
+
         <Footer />
       </BrowserRouter>
     </>

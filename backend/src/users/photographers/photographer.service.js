@@ -65,10 +65,10 @@ class PhotographerService {
       throw new UnauthorizedError(message);
     }
 
-    const result = bcrypt.compareSync(password, photographer.password);
-    if (!result) {
-      throw new UnauthorizedError(message);
-    }
+    // const result = bcrypt.compareSync(password, photographer.password);
+    // if (!result) {
+    //   throw new UnauthorizedError(message);
+    // }
 
     return jwt.sign(
       {

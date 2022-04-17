@@ -21,7 +21,12 @@ export default function Footer() {
         <Container maxWidth="lg">
           <Grid container spacing={10}>
             <Grid item xs={12} sm={4}>
-              <Box borderBottom={1}>Information</Box>
+              <Box
+                borderBottom={1}
+                style={{ fontSize: "20px", fontWeight: "bold" }}
+              >
+                Information
+              </Box>
               <Box>
                 <Link href="/aboutus" color="inherit">
                   About Us
@@ -50,7 +55,12 @@ export default function Footer() {
             </Grid>
 
             <Grid item xs={12} sm={4}>
-              <Box borderBottom={1}>Follow Us</Box>
+              <Box
+                borderBottom={1}
+                style={{ fontSize: "20px", fontWeight: "bold" }}
+              >
+                Follow Us
+              </Box>
               <Box>
                 <Link href="https://www.facebook.com/garabed99" color="inherit">
                   Facebook
@@ -79,7 +89,11 @@ export default function Footer() {
               </Box>
             </Grid>
           </Grid>
-          <Box textAlign="center" pt={{ xs: 3, sm: 4 }}>
+          <Box
+            style={{ fontSize: "16px" }}
+            textAlign="center"
+            pt={{ xs: 3, sm: 4 }}
+          >
             Ngareach &reg; {new Date().getFullYear()}
           </Box>
         </Container>

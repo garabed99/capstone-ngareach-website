@@ -20,7 +20,7 @@ const useStyles = makeStyles({
     display: "grid",
     justifyContent: "center",
     position: "relative",
-    zIndex: 5,
+    zIndex: 9,
   },
   formContainer: {
     position: "relative",

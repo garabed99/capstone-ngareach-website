@@ -4,12 +4,12 @@ const port = process.env.PORT;
 const connectDB = require('./config/db')
 const clients = require('./src/users/clients/client.controller');
 const photographers = require('./src/users/photographers/photographer.controller');
-
+const cors = require('cors') 
 
 const app = express();
 connectDB()
 
-
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/clients", clients)

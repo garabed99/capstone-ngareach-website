@@ -57,14 +57,6 @@ export default function Login() {
   const btnstyle = { margin: "8px 0" };
   return (
     <>
-      <Button>
-        <Link
-          to="/home"
-          style={{ color: "inherit", textDecoration: "inherit" }}
-        >
-          Home
-        </Link>
-      </Button>
       <form>
         <Grid>
           <Paper elevation={10} style={paperStyle}>
