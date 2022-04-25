@@ -93,6 +93,54 @@ export default function NavBar() {
                   </Button>
                 </div>
               </div>
+
+              <div className="registration-container">
+                <Button
+                  style={{ color: "white", textDecoration: "inherit" }}
+                  onClick={handleClickOpen}
+                >
+                  Register
+                </Button>
+                <Dialog
+                  open={openDialog}
+                  onClose={handleClickClose}
+                  aria-labelledby="alert-dialog-title"
+                  aria-describedby="alert-dialog-description"
+                >
+                  <DialogTitle id="alert-dialog-title">
+                    {"Register as Client or Photographer?"}
+                  </DialogTitle>
+                  <DialogContent></DialogContent>
+                  <DialogActions
+                    style={{ justifyContent: "center", alignItems: "center" }}
+                  >
+                    <Button onClick={handleClickClose} color="primary">
+                      <Link
+                        to="/signup-cl"
+                        style={{ color: "inherit", textDecoration: "inherit" }}
+                      >
+                        Client
+                      </Link>
+                    </Button>
+                    <Button onClick={handleClickClose} color="primary">
+                      <Link
+                        to="/signup-ph"
+                        style={{ color: "inherit", textDecoration: "inherit" }}
+                      >
+                        Photographer
+                      </Link>
+                    </Button>
+                    <Button onClick={handleClickClose} color="primary">
+                      <Link
+                        to="/login"
+                        style={{ color: "inherit", textDecoration: "inherit" }}
+                      >
+                        Already Have Account
+                      </Link>
+                    </Button>
+                  </DialogActions>
+                </Dialog>
+              </div>
             </Hidden>
             <Hidden smUp>
               <IconButton>
@@ -102,54 +150,6 @@ export default function NavBar() {
                 />
               </IconButton>
             </Hidden>
-
-            <div className="registration-container">
-              <Button
-                style={{ color: "white", textDecoration: "inherit" }}
-                onClick={handleClickOpen}
-              >
-                Register
-              </Button>
-              <Dialog
-                open={openDialog}
-                onClose={handleClickClose}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-              >
-                <DialogTitle id="alert-dialog-title">
-                  {"Register as Client or Photographer?"}
-                </DialogTitle>
-                <DialogContent></DialogContent>
-                <DialogActions
-                  style={{ justifyContent: "center", alignItems: "center" }}
-                >
-                  <Button onClick={handleClickClose} color="primary">
-                    <Link
-                      to="/signup-cl"
-                      style={{ color: "inherit", textDecoration: "inherit" }}
-                    >
-                      Client
-                    </Link>
-                  </Button>
-                  <Button onClick={handleClickClose} color="primary">
-                    <Link
-                      to="/signup-ph"
-                      style={{ color: "inherit", textDecoration: "inherit" }}
-                    >
-                      Photographer
-                    </Link>
-                  </Button>
-                  <Button onClick={handleClickClose} color="primary">
-                    <Link
-                      to="/login"
-                      style={{ color: "inherit", textDecoration: "inherit" }}
-                    >
-                      Already Have Account
-                    </Link>
-                  </Button>
-                </DialogActions>
-              </Dialog>
-            </div>
           </Toolbar>
           <SwipeableDrawer
             anchor="left"
@@ -204,6 +204,53 @@ export default function NavBar() {
                 Our Photographers
               </Link>
             </Button>
+            <Divider />
+            <br />
+            <Button
+              style={{ color: "blue", textDecoration: "inherit" }}
+              onClick={handleClickOpen}
+            >
+              Register
+            </Button>
+            <Dialog
+              open={openDialog}
+              onClose={handleClickClose}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">
+                {"Register as Client or Photographer?"}
+              </DialogTitle>
+              <DialogContent></DialogContent>
+              <DialogActions
+                style={{ justifyContent: "center", alignItems: "center" }}
+              >
+                <Button onClick={handleClickClose} color="primary">
+                  <Link
+                    to="/signup-cl"
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                  >
+                    Client
+                  </Link>
+                </Button>
+                <Button onClick={handleClickClose} color="primary">
+                  <Link
+                    to="/signup-ph"
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                  >
+                    Photographer
+                  </Link>
+                </Button>
+                <Button onClick={handleClickClose} color="primary">
+                  <Link
+                    to="/login"
+                    style={{ color: "inherit", textDecoration: "inherit" }}
+                  >
+                    Already Have Account
+                  </Link>
+                </Button>
+              </DialogActions>
+            </Dialog>
           </SwipeableDrawer>
         </AppBar>
       </div>
