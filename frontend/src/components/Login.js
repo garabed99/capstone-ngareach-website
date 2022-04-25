@@ -1,29 +1,25 @@
 import React from "react";
 import {
   Button,
-  Checkbox,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  FormControl,
-  FormControlLabel,
-  FormLabel,
   Grid,
   makeStyles,
-  OutlinedInput,
   Paper,
   IconButton,
   InputAdornment,
-  InputLabel,
   TextField,
   Typography,
 } from "@material-ui/core";
+import { Visibility, VisibilityOff } from "@material-ui/icons";
 
-import { Visibility, VisibilityOff, SendSharp } from "@material-ui/icons";
 import axios from "axios";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { useFormik } from "formik";
+import * as yup from "yup";
 
 const useStyles = makeStyles({
   mainContainer: {
@@ -65,38 +61,28 @@ const useStyles = makeStyles({
   },
 });
 
+const validationSchema = yup.object({
+  email: yup
+    .string()
+    .email("Enter a valid email.")
+    .required("Email is required."),
+  password: yup
+    .string()
+    .required("Password is required.")
+    .matches(
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character."
+    ),
+});
+
 export default function Login() {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
 
-  const [_email, setEmail] = useState("");
-  const [_password, setPassword] = useState("");
-
   const [showPasswordValue, setPasswordValue] = useState({
     showPassword: false,
   });
-
-  function handleSubmit(e) {
-    e.preventDefault();
-
-    const loginData = {
-      email: _email,
-      password: _password,
-    };
-
-    console.log(loginData);
-    axios
-      .post("http://localhost:4000/auth/login", loginData)
-      .then((res) => {
-        console.log(res);
-        window.location.href = "/";
-        alert("Successfully added Career Data");
-      })
-      .catch((error) => {
-        alert("wrong details", error.message);
-        console.log(error.message);
-      });
-  }
+  const handleClickShowPassword = () => setPasswordValue(!showPasswordValue);
   function handleClickOpen() {
     setOpen(true);
   }
@@ -104,12 +90,59 @@ export default function Login() {
   function handleClickClose() {
     setOpen(false);
   }
+  async function handleSubmit(values) {
+    localStorage.setItem("values", JSON.stringify(values));
+    const sessionData = localStorage.getItem("values");
+    console.log(sessionData);
 
-  const handleClickShowPassword = () => {
-    setPasswordValue({
-      showPassword: !showPasswordValue.showPassword,
-    });
-  };
+    const { email, password } = values;
+
+    axios
+      .post("http://localhost:4000/auth/login", { email, password })
+      .then((res) => {
+        alert("Successfully logged in account!");
+        window.location.href = "/";
+      })
+      .catch((err) => {
+        console.log(err);
+        alert(err);
+      });
+  }
+
+  const clientFormik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema,
+    onSubmit: handleSubmit,
+  });
+  console.log(clientFormik.errors);
+  console.log(clientFormik.values);
+
+  ///
+  // function handleSubmit(e) {
+  //   e.preventDefault();
+
+  //   const loginData = {
+  //     email: _email,
+  //     password: _password,
+  //   };
+
+  //   console.log(loginData);
+  //   axios
+  //     .post("http://localhost:4000/auth/login", loginData)
+  //     .then((res) => {
+  //       console.log(res);
+  //       alert("Successfully added Career Data");
+  //       window.location.href = "/";
+  //     })
+  //     .catch((error) => {
+  //       alert("wrong details", error.message);
+  //       console.log(error.message);
+  //     });
+  // }
+
   return (
     <>
       <Paper elevation={10} className={classes.paperStyle}>
@@ -124,46 +157,66 @@ export default function Login() {
                 className={classes.inputField}
                 required
                 label="Email"
+                name="email"
+                value={clientFormik.values.email}
                 variant="outlined"
                 autoFocus
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) =>
+                  clientFormik.setFieldValue("email", e.target.value)
+                }
+                error={
+                  clientFormik.touched.email &&
+                  Boolean(clientFormik.errors.email)
+                }
+                helperText={
+                  clientFormik.touched.email && clientFormik.errors.email
+                }
               />
-              <FormControl
+              <TextField
                 className={classes.inputField}
+                required
+                name="password"
+                label="Create Password"
                 variant="outlined"
-                onChange={(e) => setPassword(e.target.value)}
-              >
-                <InputLabel required>Password</InputLabel>
-                <OutlinedInput
-                  labelWidth={85}
-                  type={showPasswordValue.showPassword ? "text" : "password"}
-                  endAdornment={
+                type={showPasswordValue ? "password" : "text"}
+                onChange={(e) =>
+                  clientFormik.setFieldValue("password", e.target.value)
+                }
+                error={
+                  clientFormik.touched.password &&
+                  Boolean(clientFormik.errors.password)
+                }
+                helperText={
+                  clientFormik.touched.password && clientFormik.errors.password
+                }
+                InputProps={{
+                  endAdornment: (
                     <InputAdornment position="end">
-                      <IconButton edge="end" onClick={handleClickShowPassword}>
-                        {showPasswordValue.showPassword ? (
-                          <Visibility />
-                        ) : (
-                          <VisibilityOff />
-                        )}
+                      <IconButton
+                        edge="end"
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                      >
+                        {showPasswordValue ? <VisibilityOff /> : <Visibility />}
                       </IconButton>
                     </InputAdornment>
-                  }
-                />
-              </FormControl>
+                  ),
+                }}
+              />
 
               <Button
+                className={classes.btn}
                 type="submit"
                 color="primary"
                 variant="contained"
-                className={classes.btn}
                 fullWidth
-                onClick={handleSubmit}
+                onClick={clientFormik.handleSubmitClient}
               >
                 Sign in
               </Button>
 
               {/* DIALOG OF NEED ACCOUNT */}
-              <Grid style={{marginTop: "25px"}}>
+              <Grid style={{ marginTop: "25px" }}>
                 <Typography>Don't have an account?</Typography>
                 <Button
                   type="submit"

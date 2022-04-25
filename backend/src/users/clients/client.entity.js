@@ -4,14 +4,10 @@ const { ADMIN_ROLE, CLIENT_ROLE } = require("../../commons/util");
 
 const ID_GENERATOR = (length = 7) => {
   let result = "cl-";
-  const characters = "1234567890";
-  const charactersLength = characters.length;
-  const n = length;
-  for (let i = 0; i < n; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
-
-  return result;
+  return (result += Math.floor(
+    Math.pow(10, length - 1) +
+      Math.random() * (Math.pow(10, length) - Math.pow(10, length - 1) - 1)
+  ));
 };
 
 const Schema = mongoose.Schema;
@@ -24,36 +20,37 @@ const clientSchema = new Schema(
     },
     email: {
       type: String,
-      required: [true, "Please add a email..."],
+      required: [true, "Email is required..."],
       trim: true,
       unique: true,
     },
     firstName: {
       type: String,
-      required: true,
+      required: [true, "First name is required..."],
       trim: true,
     },
 
     lastName: {
       type: String,
-      required: true,
+      required: [true, "Last name is required..."],
       trim: true,
     },
     password: {
       type: String,
-      required: [true, "Password required..."],
+      required: [true, "Password is required..."],
     },
     gender: {
       type: String,
-      required: true,
+      required: [true, "Gender is required..."],
     },
     dateOfBirth: {
       type: Date,
-      required: true,
+      required: [true, "Date of birth is required..."],
       trim: true,
     },
     phone: {
-      type: Number,
+      type: String,
+      required: [true, "Phone number is required..."],
     },
     role: {
       type: String,

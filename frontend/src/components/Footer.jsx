@@ -1,5 +1,4 @@
 import { Container, Grid, Box, Link } from "@material-ui/core";
-import { Link as LinkRouter } from "react-router-dom";
 
 export default function Footer() {
   return (
@@ -16,7 +15,7 @@ export default function Footer() {
         paddingBottom="0"
         paddingTop="0"
         paddingRight="0"
-        paddingLight="0"
+        paddingLeft="0"
       >
         <Container maxWidth="lg">
           <Grid container spacing={10}>
@@ -75,7 +74,10 @@ export default function Footer() {
                 </Link>
               </Box>
               <Box>
-                <Link href="https://www.twitter.com/cnn" color="inherit">
+                <Link
+                  href="https://twitter.com/canonusaimaging"
+                  color="inherit"
+                >
                   Twitter
                 </Link>
               </Box>

@@ -8,20 +8,17 @@ import {
   Paper,
   IconButton,
   InputAdornment,
-  InputLabel,
   makeStyles,
-  OutlinedInput,
   Radio,
   RadioGroup,
   TextField,
 } from "@material-ui/core";
 import { Visibility, VisibilityOff, SendSharp } from "@material-ui/icons";
 
-import "react-phone-number-input/style.css";
-import PhoneInput from "react-phone-number-input";
-
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useFormik } from "formik";
+import * as yup from "yup";
 
 const useStyles = makeStyles({
   mainContainer: {
@@ -45,62 +42,102 @@ const useStyles = makeStyles({
     height: "3rem",
     background: "#42a5f5",
     color: "white",
-    marginTop: "25px",
+    marginTop: "10px",
   },
   paperStyle: {
     padding: 20,
-    height: "70vh",
+    height: "80vh",
     // maxWidth: ,
     width: 500,
     margin: "40px auto",
   },
 });
 
+const validationSchema = yup.object({
+  email: yup
+    .string()
+    .email("Enter a valid email.")
+    .required("Email is required."),
+  password: yup
+    .string()
+    .required("Password is required.")
+    .matches(
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character."
+    ),
+  confirmPassword: yup
+    .string()
+    .oneOf([yup.ref("password"), null], "Password must match.")
+    .required("Confirm password is required."),
+  firstName: yup
+    .string()
+    .required("Enter your first name.")
+    .matches(/^[A-Za-z'\- ]+$/, "Cannot contain numbers or special characters.")
+    .min(3, "Must be 3 characters or more.")
+    .max(15, "Must be 15 characters or less."),
+  lastName: yup
+    .string()
+    .required("Enter your last name.")
+    .matches(/^[A-Za-z'\- ]+$/, "Cannot contain numbers or special characters.")
+    .min(3, "Must be 3 characters or more.")
+    .max(15, "Must be 15 characters or less."),
+  gender: yup.string().required("Gender is required."),
+  dateOfBirth: yup.date().required("Date of birth is required."),
+  phone: yup
+    .string()
+    .required("Enter your phone number.")
+    .matches(/^[0-9 +]+$/, "Must be only digits.")
+    .min(8, "Must be at least 8 digits.")
+    .max(15, "Must be at most 15 digits."),
+});
+
 export default function SignupCl() {
   const classes = useStyles();
 
-  const [_email, setEmail] = useState("");
-  const [_password, setPassword] = useState("");
-  const [_confirmPassword, setConfirmPassword] = useState("");
+  const [showPasswordValue, setPasswordValue] = useState({
+    showPassword: false,
+  });
+  const [showConfirmPasswordValue, setConfirmPasswordValue] = useState({
+    showConfirmPassword: false,
+  });
 
-  const [_firstName, setFirstName] = useState("");
-  const [_lastName, setLastName] = useState("");
-  const [_gender, setGender] = useState("");
-  const [_dateOfBirth, setDateOfBirth] = useState(
-    new Date("1999-01-14T11:11:11")
-  );
-  const [_phoneNum, setPhoneNum] = useState("");
+  const handleClickShowPassword = () => setPasswordValue(!showPasswordValue);
+  const handleClickShowConfirmPassword = () =>
+    setConfirmPasswordValue(!showConfirmPasswordValue);
 
-  const emailRegex = RegExp(
-    /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-  );
-
-  const passwordRegex = RegExp(
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/
-  );
-
-  function handleSubmit(e) {
-    e.preventDefault();
-
-    const clientData = {
-      email: _email,
-      password: _password,
-      confirmPassword: _confirmPassword,
-      firstName: _firstName,
-      lastName: _lastName,
-      gender: _gender,
-      dateOfBirth: _dateOfBirth,
-      phoneNum: _phoneNum,
-    };
-
-    localStorage.setItem("clientData", JSON.stringify(clientData));
-    const sessionData = localStorage.getItem("clientData");
+  async function handleSubmit(values) {
+    // const isValid = await validationSchema.isValid(values);
+    // console.log(isValid);
+    // console.log(values);
+    localStorage.setItem("values", JSON.stringify(values));
+    const sessionData = localStorage.getItem("values");
     console.log(sessionData);
 
+    const {
+      email,
+      password,
+      confirmPassword,
+      firstName,
+      lastName,
+      gender,
+      dateOfBirth,
+      phone,
+    } = values;
+
     axios
-      .post("http://localhost:4000/clients", clientData)
+      .post("http://localhost:4000/clients", {
+        email,
+        password,
+        confirmPassword,
+        firstName,
+        lastName,
+        gender,
+        dateOfBirth,
+        phone,
+      })
       .then((res) => {
-        alert("Successfully created an account!");
+        window.location.href = "/login";
+        alert("Successfully created an account! Try to login now.");
       })
       .catch((err) => {
         console.log(err);
@@ -108,139 +145,181 @@ export default function SignupCl() {
       });
   }
 
-  const [showCreatePasswordValue, setCreatePasswordValue] = useState({
-    showCreatePassword: false,
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+      confirmPassword: "",
+      firstName: "",
+      lastName: "",
+      gender: "",
+      dateOfBirth: "",
+      phone: "",
+    },
+    validationSchema,
+    onSubmit: handleSubmit,
   });
 
-  const [showConfirmPasswordValue, setConfirmPasswordValue] = useState({
-    showConfirmPassword: false,
-  });
-
-  const handleClickShowCreatePassword = () => {
-    setCreatePasswordValue({
-      showCreatePassword: !showCreatePasswordValue.showCreatePassword,
-    });
-  };
-
-  const handleClickShowConfirmPassword = () => {
-    setConfirmPasswordValue({
-      showConfirmPassword: !showConfirmPasswordValue.showConfirmPassword,
-    });
-  };
+  console.log(formik.errors);
+  console.log(formik.values);
   return (
     <>
       <Paper elevation={10} className={classes.paperStyle}>
         <Grid>
-          <Grid align="center" style={{ marginBottom: 10 }}>
-            <h2>Register as Client</h2>
+          <Grid align="center">
+            <h2 style={{ marginBottom: "0px" }}>Register as Client</h2>
           </Grid>
 
           <div className={classes.formContainer}>
             <Grid container spacing={3}>
               <Grid container item xs={6} direction="column">
+                <FormLabel style={{ marginBottom: "10px" }}>
+                  Account Details
+                </FormLabel>
                 <TextField
                   className={classes.inputField}
                   required
                   label="Email"
+                  name="email"
+                  value={formik.values.email}
                   variant="outlined"
                   autoFocus
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) =>
+                    formik.setFieldValue("email", e.target.value)
+                  }
+                  error={formik.touched.email && Boolean(formik.errors.email)}
+                  helperText={formik.touched.email && formik.errors.email}
                 />
-                <FormControl
+                <TextField
                   className={classes.inputField}
+                  required
+                  name="password"
+                  label="Create Password"
                   variant="outlined"
-                  onChange={(e) => setPassword(e.target.value)}
-                >
-                  <InputLabel required>Create Password</InputLabel>
-                  <OutlinedInput
-                    labelWidth={125}
-                    type={
-                      showCreatePasswordValue.showCreatePassword
-                        ? "text"
-                        : "password"
-                    }
-                    endAdornment={
+                  type={showPasswordValue ? "password" : "text"}
+                  onChange={(e) =>
+                    formik.setFieldValue("password", e.target.value)
+                  }
+                  error={
+                    formik.touched.password && Boolean(formik.errors.password)
+                  }
+                  helperText={formik.touched.password && formik.errors.password}
+                  InputProps={{
+                    endAdornment: (
                       <InputAdornment position="end">
                         <IconButton
                           edge="end"
-                          onClick={handleClickShowCreatePassword}
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
                         >
-                          {showCreatePasswordValue.showCreatePassword ? (
-                            <Visibility />
-                          ) : (
+                          {showPasswordValue ? (
                             <VisibilityOff />
+                          ) : (
+                            <Visibility />
                           )}
                         </IconButton>
                       </InputAdornment>
-                    }
-                  />
-                </FormControl>
-                <FormControl
+                    ),
+                  }}
+                />
+
+                <TextField
                   className={classes.inputField}
+                  required
+                  name="confirmPassword"
+                  label="Confirm Password"
                   variant="outlined"
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                >
-                  <InputLabel required>Confirm Password</InputLabel>
-                  <OutlinedInput
-                    labelWidth={135}
-                    type={
-                      showConfirmPasswordValue.showConfirmPassword
-                        ? "text"
-                        : "password"
-                    }
-                    endAdornment={
+                  type={showConfirmPasswordValue ? "password" : "text"}
+                  onChange={(e) =>
+                    formik.setFieldValue("confirmPassword", e.target.value)
+                  }
+                  error={
+                    formik.touched.confirmPassword &&
+                    Boolean(formik.errors.confirmPassword)
+                  }
+                  helperText={
+                    formik.touched.confirmPassword &&
+                    formik.errors.confirmPassword
+                  }
+                  InputProps={{
+                    endAdornment: (
                       <InputAdornment position="end">
                         <IconButton
                           edge="end"
+                          aria-label="toggle password visibility"
                           onClick={handleClickShowConfirmPassword}
                         >
-                          {showConfirmPasswordValue.showConfirmPassword ? (
-                            <Visibility />
-                          ) : (
+                          {showConfirmPasswordValue ? (
                             <VisibilityOff />
+                          ) : (
+                            <Visibility />
                           )}
                         </IconButton>
                       </InputAdornment>
-                    }
-                  />
-                </FormControl>
+                    ),
+                  }}
+                />
               </Grid>
+
               <Grid container item xs={6} direction="column">
+                <FormLabel style={{ marginBottom: "10px" }}>
+                  Personal Details
+                </FormLabel>
+
                 <TextField
                   className={classes.inputField}
                   required
                   name="firstName"
                   label="First Name"
                   variant="outlined"
-                  onChange={(e) => setFirstName(e.target.value)}
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.firstName && Boolean(formik.errors.firstName)
+                  }
+                  helperText={
+                    formik.touched.firstName && formik.errors.firstName
+                  }
                 />
                 <TextField
                   className={classes.inputField}
                   required
+                  name="lastName"
                   label="Last Name"
                   variant="outlined"
-                  onChange={(e) => setLastName(e.target.value)}
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.lastName && Boolean(formik.errors.lastName)
+                  }
+                  helperText={formik.touched.lastName && formik.errors.lastName}
                 />
-                <FormControl component="fieldset">
+
+                <FormControl
+                  required
+                  component="fieldset"
+                  error={formik.touched.gender && Boolean(formik.errors.gender)}
+                >
                   <FormLabel component="legend">Gender</FormLabel>
                   <RadioGroup
                     row
                     aria-label="position"
-                    name="position"
+                    name="gender"
                     defaultValue="top"
-                    onChange={(e) => setGender(e.target.value)}
+                    onChange={formik.handleChange}
                   >
                     <FormControlLabel
-                      value="female"
-                      control={<Radio color="primary" />}
+                      value="Female"
+                      control={<Radio required color="primary" />}
                       label="Female"
                     />
                     <FormControlLabel
-                      value="male"
-                      control={<Radio color="primary" />}
+                      value="Male"
+                      control={<Radio required color="primary" />}
                       label="Male"
                     />
                   </RadioGroup>
+                  <FormHelperText>
+                    {formik.touched.gender && formik.errors.gender}
+                  </FormHelperText>
                 </FormControl>
 
                 <br />
@@ -248,24 +327,36 @@ export default function SignupCl() {
                 <TextField
                   className={classes.inputField}
                   id="dob"
+                  variant="outlined"
                   label="Date Of Birth"
                   type="date"
-                  defaultValue="1999-01-14"
+                  name="dateOfBirth"
+                  // defaultValue="1999-01-14"
                   sx={{ width: 220 }}
                   InputLabelProps={{
                     shrink: true,
                   }}
-                  onChange={(e) => setDateOfBirth(e.target.value)}
+                  onChange={(e) =>
+                    formik.setFieldValue("dateOfBirth", e.target.value)
+                  }
+                  error={
+                    formik.touched.dateOfBirth &&
+                    Boolean(formik.errors.dateOfBirth)
+                  }
+                  helperText={
+                    formik.touched.dateOfBirth && formik.errors.dateOfBirth
+                  }
                 />
-
-                <FormLabel>Phone Number</FormLabel>
-
-                <PhoneInput
-                  placeholder="Enter phone number"
-                  defaultCountry="AM"
-                  value={_phoneNum}
-                  onChange={setPhoneNum}
-                  style={{ width: "200px", font: "20px" }}
+                <TextField
+                  className={classes.inputField}
+                  required
+                  name="phone"
+                  label="Phone Number"
+                  placeholder="+374 77418529"
+                  variant="outlined"
+                  onChange={formik.handleChange}
+                  error={formik.touched.phone && Boolean(formik.errors.phone)}
+                  helperText={formik.touched.phone && formik.errors.phone}
                 />
               </Grid>
             </Grid>
@@ -273,7 +364,7 @@ export default function SignupCl() {
               className={classes.btn}
               variant="contained"
               type="submit"
-              onClick={handleSubmit}
+              onClick={formik.handleSubmit}
               endIcon={<SendSharp />}
             >
               Submit

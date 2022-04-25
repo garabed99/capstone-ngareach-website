@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 
 class PhotographerService {
   create(payload) {
+    // console.log('service-photoType ', payload.photographyType)
     const photographer = new Photographer(payload);
     return photographer.save();
   }
@@ -65,10 +66,10 @@ class PhotographerService {
       throw new UnauthorizedError(message);
     }
 
-    // const result = bcrypt.compareSync(password, photographer.password);
-    // if (!result) {
-    //   throw new UnauthorizedError(message);
-    // }
+    const result = bcrypt.compareSync(password, photographer.password);
+    if (!result) {
+      throw new UnauthorizedError(message);
+    }
 
     return jwt.sign(
       {

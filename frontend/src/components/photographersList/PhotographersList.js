@@ -4,8 +4,7 @@ import { Grid, makeStyles } from "@material-ui/core";
 const useStyles = makeStyles({
   gridContainer: {
     paddingLeft: "20px",
-    marginBottom: "50px"
-    
+    marginBottom: "50px",
   },
 });
 
@@ -15,7 +14,7 @@ export default function PhotographersList() {
   return (
     <>
       <div>
-        <h1>this is PhotographersList</h1>
+        <h1 style={{ marginLeft: "30px" }}>All Photographers</h1>
       </div>
 
       <Grid

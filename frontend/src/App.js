@@ -24,25 +24,35 @@ export default function App() {
     <>
       <BrowserRouter>
         <NavBar />
-
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/home" element={<Home />} />
-          <Route path="/howitworks" element={<HowItWorks />} />
-          <Route path="/reviews" element={<Reviews />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/photographerslist" element={<PhotographersList />} />
-          <Route path="/login" element={<Login />} />
-          {/* <Route path="/register-ph" element={<RegisterPh />} />
+        <div
+          className="wrapper"
+          style={{
+            minHeight: "calc(100vh - 360px)",
+            margin: "0px 10px 10px 0px",
+          }}
+        >
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/howitworks" element={<HowItWorks />} />
+            <Route path="/reviews" element={<Reviews />} />
+            <Route path="/pricing" element={<Pricing />} />
+            <Route path="/photographerslist" element={<PhotographersList />} />
+            <Route path="/login" element={<Login />} />
+            {/* <Route path="/register-ph" element={<RegisterPh />} />
           <Route path="/register-cl" element={<RegisterCl />} /> */}
-          <Route path="/signup-cl" element={<SignupCl />} />
-          <Route path="/signup-ph" element={<SignupPh />} />
-          <Route path="/aboutus" element={<AboutUs />} />
-          <Route path="/contactus" element={<ContactUs />} />
-          <Route path="/faq" element={<FAQ />} />
-          <Route path="/termsandconditions" element={<TermsAndConditions />} />
-          <Route path="/privacypolicy" element={<PrivacyPolicy />} />
-        </Routes>
+            <Route path="/signup-cl" element={<SignupCl />} />
+            <Route path="/signup-ph" element={<SignupPh />} />
+            <Route path="/aboutus" element={<AboutUs />} />
+            <Route path="/contactus" element={<ContactUs />} />
+            <Route path="/faq" element={<FAQ />} />
+            <Route
+              path="/termsandconditions"
+              element={<TermsAndConditions />}
+            />
+            <Route path="/privacypolicy" element={<PrivacyPolicy />} />
+          </Routes>
+        </div>
 
         <Footer />
       </BrowserRouter>

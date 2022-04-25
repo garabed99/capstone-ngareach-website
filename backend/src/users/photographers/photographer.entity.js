@@ -4,14 +4,10 @@ const { ADMIN_ROLE, PHOTOGRAPHER_ROLE } = require("../../commons/util");
 
 const ID_GENERATOR = (length = 7) => {
   let result = "ph-";
-  const characters = "1234567890";
-  const charactersLength = characters.length;
-  const n = length;
-  for (let i = 0; i < n; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
-
-  return result;
+  return (result += Math.floor(
+    Math.pow(10, length - 1) +
+      Math.random() * (Math.pow(10, length) - Math.pow(10, length - 1) - 1)
+  ));
 };
 
 const Schema = mongoose.Schema;
@@ -24,83 +20,48 @@ const photographerSchema = new Schema(
     },
     email: {
       type: String,
-      required: [true, "Please add a email..."],
+      required: [true, "Email is required..."],
       trim: true,
       unique: true,
     },
     firstName: {
       type: String,
-      required: true,
+      required: [true, "First name is required..."],
       trim: true,
     },
-
     lastName: {
       type: String,
-      required: true,
+      required: [true, "Last name is required..."],
       trim: true,
     },
     password: {
       type: String,
-      required: [true, "Password required..."],
+      required: [true, "Password is required..."],
     },
     gender: {
       type: String,
-      required: true,
-    },
-    phone: {
-      type: Number,
+      required: [true, "Gender is required..."],
     },
     dateOfBirth: {
       type: Date,
-      required: true,
+      required: [true, "Date of birth is required..."],
       trim: true,
+    },
+    phone: {
+      type: String,
+      required: [true, "Phone number is required..."],
     },
     yearsOfExperience: {
       type: String,
-      required: true,
+      required: [true, "Years of experience is required..."],
     },
     biography: {
       type: String,
+      required: [true, "Biography is required..."],
     },
-    photographyType: {
-      type: Array,
-      // enum: [
-      //   "Pet",
-      //   "Wildlife",
-      //   "Fashion",
-      //   "Sports",
-      //   "Architecture",
-      //   "Real estate",
-      //   "Food",
-      //   "Vehicle",
-      //   "Advertising",
-      //   "Aerial",
-      //   "Landscape",
-      //   "Panoramic",
-      //   "Underwater",
-      //   "Family",
-      //   "Baby and child",
-      //   "Newborn",
-      //   "Portrait",
-      //   "Branding",
-      //   "Erotic",
-      //   "Concert",
-      //   "Fine art",
-      //   "Street",
-      //   "Wedding",
-      //   "Birthday",
-      //   "Baptism",
-      //   "Travel",
-      //   "Photojournalism",
-      //   "Press",
-      //   "Stock",
-      //   "Paparazzi",
-      //   "Macro",
-      //   "Micro",
-      //   "Film",
-      //   "Astrophotography",
-      //   "Graduation",
-      // ],
+    photographyTypes: {
+      type: String,
+      required: [true, "Photography types is required..."],
     },
     role: {
       type: String,
@@ -110,6 +71,7 @@ const photographerSchema = new Schema(
   },
   { _id: false }
 );
+
 photographerSchema.pre("save", function (next) {
   if (this.isModified("password")) {
     const salt = bcrypt.genSaltSync();
