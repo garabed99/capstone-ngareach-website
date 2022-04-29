@@ -103,9 +103,7 @@ const validationSchema = yup.object({
     .required("Choose your photography types.")
     // .transform((value) => (typeof value === "string" ? [value] : value))
     .min(1, "Must choose at least 1 type."),
-  facebookLink: yup.string(),
-  instagramLink: yup.string().required("Instagram account link is required."),
-  websiteLink: yup.string(),
+  websiteLink: yup.string().required("Website link is required."),
 });
 
 export default function SignupPh() {
@@ -143,11 +141,10 @@ export default function SignupPh() {
       yearsOfExperience,
       biography,
       photographyTypes,
-      // imgFile,
-      facebookLink,
-      instagramLink,
+      imgFile,
       websiteLink,
     } = values;
+
     axios
       .post("http://localhost:4000/photographers", {
         email,
@@ -161,9 +158,7 @@ export default function SignupPh() {
         yearsOfExperience,
         biography,
         photographyTypes,
-        // imgFile,
-        facebookLink,
-        instagramLink,
+        imgFile,
         websiteLink,
       })
       .then((res) => {
@@ -190,8 +185,6 @@ export default function SignupPh() {
       biography: "",
       photographyTypes: "",
       // imgFile: "",
-      facebookLink: "",
-      instagramLink: "",
       websiteLink: "",
     },
     validationSchema,
@@ -200,6 +193,7 @@ export default function SignupPh() {
   console.log(formik.initialValues.photographyTypes);
   console.log(formik.errors);
   console.log(formik.values);
+  
   return (
     <>
       <Paper elevation={10} className={classes.paperStyle}>
@@ -483,41 +477,10 @@ export default function SignupPh() {
                 <TextField
                   className={classes.inputField}
                   required
-                  label="Instagram link"
-                  name="instagramLink"
-                  variant="outlined"
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.instagramLink &&
-                    Boolean(formik.errors.instagramLink)
-                  }
-                  helperText={
-                    formik.touched.instagramLink && formik.errors.instagramLink
-                  }
-                />
-
-                <TextField
-                  className={classes.inputField}
-                  label="Facebook link"
-                  name="facebookLink"
-                  placeholder="(Optional)"
-                  variant="outlined"
-                  onChange={formik.handleChange}
-                  error={
-                    formik.touched.facebookLink &&
-                    Boolean(formik.errors.facebookLink)
-                  }
-                  helperText={
-                    formik.touched.facebookLink && formik.errors.facebookLink
-                  }
-                />
-
-                <TextField
-                  className={classes.inputField}
-                  label="Personal website"
+                  label="Website link"
                   name="websiteLink"
-                  placeholder="(Optional)"
                   variant="outlined"
+                  placeholder="Facebook / Instagram / Portfolio site"
                   onChange={formik.handleChange}
                   error={
                     formik.touched.websiteLink &&

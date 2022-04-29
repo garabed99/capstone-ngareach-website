@@ -2,12 +2,9 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const { ADMIN_ROLE, CLIENT_ROLE } = require("../../commons/util");
 
-const ID_GENERATOR = (length = 7) => {
+const ID_GENERATOR = () => {
   let result = "cl-";
-  return (result += Math.floor(
-    Math.pow(10, length - 1) +
-      Math.random() * (Math.pow(10, length) - Math.pow(10, length - 1) - 1)
-  ));
+  return (result += Date.now());
 };
 
 const Schema = mongoose.Schema;

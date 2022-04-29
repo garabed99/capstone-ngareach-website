@@ -2,7 +2,6 @@ import {
   makeStyles,
   Button,
   Card,
-  CardActionArea,
   CardActions,
   CardContent,
   CardMedia,
@@ -11,22 +10,61 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Grid,
   Typography,
 } from "@material-ui/core";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import background from "../../imgs/background.jpg";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 300,
+    maxWidth: 350,
+  },
+  gridContainer: {
+    marginLeft: "10px",
+    marginBottom: "50px",
   },
   media: {
-    height: 150,
+    width: 350,
+    height: 200,
+  },
+  btn: {
+    backgroundColor: "white",
+    color: "primary",
+    "&:hover": {
+      backgroundColor: "blue",
+      color: "white",
+    },
   },
 });
 
 export default function PhotographerCard() {
+  const classes = useStyles();
+
   const [open, setOpen] = useState(false);
+  const [photographers, setPhotographers] = useState([]);
+  const [dialogData, setDialogData] = useState(null);
+  //state for dialog
+
+  useEffect(() => {
+    fetchPhotographers();
+  }, []);
+
+  function fetchPhotographers() {
+    axios
+      .get("http://localhost:4000/photographers")
+      .then((res) => {
+        console.log("array of photographers", res.data);
+        setPhotographers(res.data);
+        // setDialogData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   function handleClickOpen() {
     setOpen(true);
@@ -35,70 +73,77 @@ export default function PhotographerCard() {
   function handleClickClose() {
     setOpen(false);
   }
-  const classes = useStyles();
-
   return (
     <>
-      <Card className={classes.root}>
-        <CardActionArea>
-          <CardMedia
-            className={classes.media}
-            image="/static/images/cards/contemplative-reptile.jpg"
-            title="Profile Picture"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-              Garabed
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p" noWrap>
-            litia, molestiae quas vel sint commodi repudiandae consequuntur
-          voluptatum laborum numquam blanditiis harum quisquam eius sed odit
-          fugiat iusto fuga praesentium optio, eaque rerum! Provident similique
-          accusantium nemo autem. Veritatis obcaecati tenetur iure eius earum ut
-          molestias architecto voluptate aliquam nihil, eveniet aliquid culpa
-          officia aut! Impedit sit sunt quaerat, odit, tenetur error, harum
-          nesciunt ipsum debitis quas aliquid. Repreh
-            </Typography>
-          </CardContent>
-        </CardActionArea>
-        <CardActions>
-          <Button size="small" color="primary" onClick={handleClickOpen}>
-            Contact Details
-          </Button>
-          <Dialog
-            open={open}
-            onClose={handleClickClose}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            <DialogTitle id="alert-dialog-title">
-              {"Contact Details"}
-            </DialogTitle>
-            <DialogContent>
-              <DialogContentText id="alert-dialog-description">
-                Email:
-                <br />
-                Phone number:
-                <br />
-                Website:
-              </DialogContentText>
-            </DialogContent>
-            <DialogActions
-              style={{ justifyContent: "center", alignItems: "center" }}
-            >
-              <Button onClick={handleClickClose} color="primary"></Button>
-              <Button
-                onClick={handleClickClose}
-                color="primary"
-                autoFocus
-              ></Button>
-            </DialogActions>
-          </Dialog>
-          <Button size="small" color="primary">
-            Visit Portfolio
-          </Button>
-        </CardActions>
-      </Card>
+      <Grid>
+        <Grid
+          container
+          spacing={3}
+          className={classes.gridContainer}
+          justifyContent="center"
+        >
+          {photographers.map((photographer) => {
+            return (
+              <Grid item xs={12} sm={6} md={3} key={photographer._id}>
+                <Card className={classes.root}>
+                  <CardMedia
+                    className={classes.media}
+                    image={background}
+                    title={`${photographer.firstName} ${photographer.lastName}`}
+                  />
+
+                  <CardContent>
+                    <Typography gutterBottom variant="h5">
+                      {photographer.firstName} {photographer.lastName}
+                    </Typography>
+                    <Typography
+                      variant="subtitle2"
+                      color="textSecondary"
+                      component="p"
+                      noWrap
+                    >
+                      {photographer.biography}
+                    </Typography>
+                    <br />
+                    <Typography>
+                      <b>Photography type:</b> {photographer.photographyTypes}
+                    </Typography>
+                  </CardContent>
+
+                  <CardActions>
+                    <Button fullWidth size="large" color="primary">
+                      <Link
+                        to={`/photographer/${photographer._id}`}
+                        style={{ color: "primary", textDecoration: "inherit" }}
+                      >
+                        Visit Portfolio
+                      </Link>
+                    </Button>
+                  </CardActions>
+                </Card>
+              </Grid>
+            );
+          })}
+        </Grid>
+      </Grid>
+
+      {/* <Dialog
+        open={open}
+        onClose={handleClickClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle>{"Contact Details"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            <b>Email:</b> some email
+            <br />
+            <b>Phone number:</b> +374684351
+            <br />
+            <b>Instagram:</b> @instagram
+          </DialogContentText>
+        </DialogContent>
+      </Dialog> */}
     </>
   );
 }

@@ -16,9 +16,8 @@ class AuthService {
         return client;
       }
       throw new Unauthorized();
-    }
-
-    if (!photographer || !bcrypt.compare(password, photographer.password)) {
+    } 
+    else if (!photographer || !bcrypt.compare(password, photographer.password)) {
       if (photographer) {
         await photographer.save();
         return photographer;

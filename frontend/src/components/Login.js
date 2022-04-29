@@ -83,6 +83,7 @@ export default function Login() {
     showPassword: false,
   });
   const handleClickShowPassword = () => setPasswordValue(!showPasswordValue);
+
   function handleClickOpen() {
     setOpen(true);
   }
@@ -119,29 +120,6 @@ export default function Login() {
   });
   console.log(clientFormik.errors);
   console.log(clientFormik.values);
-
-  ///
-  // function handleSubmit(e) {
-  //   e.preventDefault();
-
-  //   const loginData = {
-  //     email: _email,
-  //     password: _password,
-  //   };
-
-  //   console.log(loginData);
-  //   axios
-  //     .post("http://localhost:4000/auth/login", loginData)
-  //     .then((res) => {
-  //       console.log(res);
-  //       alert("Successfully added Career Data");
-  //       window.location.href = "/";
-  //     })
-  //     .catch((error) => {
-  //       alert("wrong details", error.message);
-  //       console.log(error.message);
-  //     });
-  // }
 
   return (
     <>
@@ -207,10 +185,9 @@ export default function Login() {
               <Button
                 className={classes.btn}
                 type="submit"
-                color="primary"
                 variant="contained"
                 fullWidth
-                onClick={clientFormik.handleSubmitClient}
+                onClick={clientFormik.handleSubmit}
               >
                 Sign in
               </Button>
@@ -220,7 +197,6 @@ export default function Login() {
                 <Typography>Don't have an account?</Typography>
                 <Button
                   type="submit"
-                  color="primary"
                   variant="contained"
                   className={classes.regBtn}
                   onClick={handleClickOpen}
@@ -229,40 +205,40 @@ export default function Login() {
                 </Button>
               </Grid>
             </Grid>
-            <Dialog
-              open={open}
-              onClose={handleClickClose}
-              aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
-            >
-              <DialogTitle id="alert-dialog-title">
-                {"Register as Client or Photographer?"}
-              </DialogTitle>
-              <DialogContent></DialogContent>
-              <DialogActions
-                style={{ justifyContent: "center", alignItems: "center" }}
-              >
-                <Button onClick={handleClickClose} color="primary">
-                  <Link
-                    to="/signup-cl"
-                    style={{ color: "inherit", textDecoration: "inherit" }}
-                  >
-                    Client
-                  </Link>
-                </Button>
-                <Button onClick={handleClickClose} color="primary" autoFocus>
-                  <Link
-                    to="/signup-ph"
-                    style={{ color: "inherit", textDecoration: "inherit" }}
-                  >
-                    Photographer
-                  </Link>
-                </Button>
-              </DialogActions>
-            </Dialog>
           </div>
         </Grid>
       </Paper>
+      <Dialog
+        open={open}
+        onClose={handleClickClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Register as Client or Photographer?"}
+        </DialogTitle>
+        <DialogContent></DialogContent>
+        <DialogActions
+          style={{ justifyContent: "center", alignItems: "center" }}
+        >
+          <Button onClick={handleClickClose} color="primary">
+            <Link
+              to="/signup-cl"
+              style={{ color: "inherit", textDecoration: "inherit" }}
+            >
+              Client
+            </Link>
+          </Button>
+          <Button onClick={handleClickClose} color="primary" autoFocus>
+            <Link
+              to="/signup-ph"
+              style={{ color: "inherit", textDecoration: "inherit" }}
+            >
+              Photographer
+            </Link>
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 }

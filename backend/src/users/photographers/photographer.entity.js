@@ -2,13 +2,10 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const { ADMIN_ROLE, PHOTOGRAPHER_ROLE } = require("../../commons/util");
 
-const ID_GENERATOR = (length = 7) => {
+const ID_GENERATOR = () => {
   let result = "ph-";
-  return (result += Math.floor(
-    Math.pow(10, length - 1) +
-      Math.random() * (Math.pow(10, length) - Math.pow(10, length - 1) - 1)
-  ));
-};
+  return result += Date.now()
+}
 
 const Schema = mongoose.Schema;
 const photographerSchema = new Schema(
@@ -20,48 +17,56 @@ const photographerSchema = new Schema(
     },
     email: {
       type: String,
-      required: [true, "Email is required..."],
+      required: [true, "Backend-- Email is required..."],
       trim: true,
       unique: true,
     },
     firstName: {
       type: String,
-      required: [true, "First name is required..."],
+      required: [true, "Backend-- First name is required..."],
       trim: true,
     },
     lastName: {
       type: String,
-      required: [true, "Last name is required..."],
+      required: [true, "Backend-- Last name is required..."],
       trim: true,
     },
     password: {
       type: String,
-      required: [true, "Password is required..."],
+      required: [true, "Backend-- Password is required..."],
     },
     gender: {
       type: String,
-      required: [true, "Gender is required..."],
+      required: [true, "Backend-- Gender is required..."],
     },
     dateOfBirth: {
       type: Date,
-      required: [true, "Date of birth is required..."],
+      required: [true, "Backend-- Date of birth is required..."],
       trim: true,
     },
     phone: {
       type: String,
-      required: [true, "Phone number is required..."],
+      required: [true, "Backend-- Phone number is required..."],
     },
     yearsOfExperience: {
       type: String,
-      required: [true, "Years of experience is required..."],
+      required: [true, "Backend-- Years of experience is required..."],
     },
     biography: {
       type: String,
-      required: [true, "Biography is required..."],
+      required: [true, "Backend-- Biography is required..."],
     },
     photographyTypes: {
       type: String,
-      required: [true, "Photography types is required..."],
+      required: [true, "Backend-- Photography types is required..."],
+    },
+    imgFile: {
+      data: Buffer,
+      contentType: String,
+    },
+    websiteLink: {
+      type: String,
+      required: [true, "Backend-- Website link is required..."],
     },
     role: {
       type: String,
@@ -69,7 +74,7 @@ const photographerSchema = new Schema(
       default: PHOTOGRAPHER_ROLE,
     },
   },
-  { _id: false }
+  // { _id: false }
 );
 
 photographerSchema.pre("save", function (next) {
