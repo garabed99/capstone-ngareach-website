@@ -1,12 +1,17 @@
-import React from "react";
 import {
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
+  FormControl,
+  FormControlLabel,
+  FormHelperText,
+  FormLabel,
   Grid,
   makeStyles,
+  Radio,
+  RadioGroup,
   Paper,
   IconButton,
   InputAdornment,
@@ -73,6 +78,7 @@ const validationSchema = yup.object({
       /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
       "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character."
     ),
+  role: yup.string().required("Role is required."),
 });
 
 export default function Login() {
@@ -92,15 +98,30 @@ export default function Login() {
     setOpen(false);
   }
   async function handleSubmit(values) {
-    localStorage.setItem("values", JSON.stringify(values));
-    const sessionData = localStorage.getItem("values");
-    console.log(sessionData);
+    // localStorage.setItem("values", JSON.stringify(values));
+    // const sessionData = localStorage.getItem("values");
+    // console.log(sessionData);
 
-    const { email, password } = values;
+    const { email, password, role } = values;
+    // const data = {
+    //   email: email,
+    //   password: password,
+    //   role: role,
+    // };
 
     axios
-      .post("http://localhost:4000/auth/login", { email, password })
+      .post("http://localhost:4000/auth/login", { email, password, role })
       .then((res) => {
+        // const token = res.data.token;
+        const test = sessionStorage.setItem("loggedUserInfo", JSON.stringify(res.data))
+        // sessionStorage.setItem("activeToken", res.data.token);
+        // sessionStorage.setItem("firstName", res.data.userInfo.firstName);
+        // sessionStorage.setItem("userID", res.data.userInfo.id)
+        // const token = sessionStorage.getItem("activeToken");
+        // console.log(token);
+        console.log(res);
+        console.log(test);
+
         alert("Successfully logged in account!");
         window.location.href = "/";
       })
@@ -110,16 +131,16 @@ export default function Login() {
       });
   }
 
-  const clientFormik = useFormik({
+  const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
+      role: "",
     },
     validationSchema,
     onSubmit: handleSubmit,
   });
-  console.log(clientFormik.errors);
-  console.log(clientFormik.values);
+  // console.log(formik.errors);
 
   return (
     <>
@@ -128,7 +149,34 @@ export default function Login() {
           <Grid align="center">
             <h2>Login</h2>
           </Grid>
-
+          <FormControl
+            required
+            component="fieldset"
+            error={formik.touched.role && Boolean(formik.errors.role)}
+          >
+            <FormLabel component="legend">You Are:</FormLabel>
+            <RadioGroup
+              row
+              aria-label="position"
+              name="role"
+              defaultValue="top"
+              onChange={formik.handleChange}
+            >
+              <FormControlLabel
+                value="Customer"
+                control={<Radio color="primary" />}
+                label="Customer"
+              />
+              <FormControlLabel
+                value="Photographer"
+                control={<Radio color="primary" />}
+                label="Photographer"
+              />
+            </RadioGroup>
+            <FormHelperText>
+              {formik.touched.role && formik.errors.role}
+            </FormHelperText>
+          </FormControl>
           <div className={classes.formContainer}>
             <Grid container spacing={3}>
               <TextField
@@ -136,37 +184,27 @@ export default function Login() {
                 required
                 label="Email"
                 name="email"
-                value={clientFormik.values.email}
+                value={formik.values.email}
                 variant="outlined"
                 autoFocus
-                onChange={(e) =>
-                  clientFormik.setFieldValue("email", e.target.value)
-                }
-                error={
-                  clientFormik.touched.email &&
-                  Boolean(clientFormik.errors.email)
-                }
-                helperText={
-                  clientFormik.touched.email && clientFormik.errors.email
-                }
+                onChange={(e) => formik.setFieldValue("email", e.target.value)}
+                error={formik.touched.email && Boolean(formik.errors.email)}
+                helperText={formik.touched.email && formik.errors.email}
               />
               <TextField
                 className={classes.inputField}
                 required
                 name="password"
-                label="Create Password"
+                label="Password"
                 variant="outlined"
                 type={showPasswordValue ? "password" : "text"}
                 onChange={(e) =>
-                  clientFormik.setFieldValue("password", e.target.value)
+                  formik.setFieldValue("password", e.target.value)
                 }
                 error={
-                  clientFormik.touched.password &&
-                  Boolean(clientFormik.errors.password)
+                  formik.touched.password && Boolean(formik.errors.password)
                 }
-                helperText={
-                  clientFormik.touched.password && clientFormik.errors.password
-                }
+                helperText={formik.touched.password && formik.errors.password}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -187,7 +225,7 @@ export default function Login() {
                 type="submit"
                 variant="contained"
                 fullWidth
-                onClick={clientFormik.handleSubmit}
+                onClick={formik.handleSubmit}
               >
                 Sign in
               </Button>

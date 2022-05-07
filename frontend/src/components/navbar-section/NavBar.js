@@ -1,5 +1,6 @@
 import {
   AppBar,
+  Avatar,
   Button,
   Dialog,
   DialogActions,
@@ -8,19 +9,45 @@ import {
   Divider,
   Hidden,
   IconButton,
+  Menu,
+  MenuItem,
   SwipeableDrawer,
   Toolbar,
+  Tooltip,
   Typography,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import { Link } from "react-router-dom";
+
+import background from "../../imgs/background.jpg";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/NavBar.css";
 import { useState } from "react";
 
 export default function NavBar() {
+  const [openProfile, setOpenProfile] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
+  const navigate = useNavigate();
+  const loggedUser = JSON.parse(sessionStorage.getItem("loggedUserInfo"));
+  let isLogged = false;
+
+  if (loggedUser) {
+    isLogged = true;
+  }
+
+  function handleLogout() {
+    sessionStorage.clear();
+    navigate("/");
+  }
+
+  function handleProfileOpen() {
+    setOpenProfile(true);
+  }
+  
+  function handleProfileClose() {
+    setOpenProfile(false);
+  }
 
   function handleClickOpen() {
     setOpenDialog(true);
@@ -65,16 +92,6 @@ export default function NavBar() {
                 <div className="page-route">
                   <Button>
                     <Link
-                      to="/reviews"
-                      style={{ color: "white", textDecoration: "inherit" }}
-                    >
-                      Reviews
-                    </Link>
-                  </Button>
-                </div>
-                <div className="page-route">
-                  <Button>
-                    <Link
                       to="/pricing"
                       style={{ color: "white", textDecoration: "inherit" }}
                     >
@@ -95,12 +112,39 @@ export default function NavBar() {
               </div>
 
               <div className="registration-container">
-                <Button
-                  style={{ color: "white", textDecoration: "inherit" }}
-                  onClick={handleClickOpen}
-                >
-                  Register
-                </Button>
+                {isLogged ? (
+                  <>
+                    <Avatar src={background} />
+                    <Button
+                      style={{ color: "white" }}
+                      onClick={handleProfileOpen}
+                      aria-controls="simple-menu"
+                      aria-haspopup="true"
+                    >
+                      {loggedUser.userInfo.firstName}
+                    </Button>
+                    <Menu
+                      open={Boolean(openProfile)}
+                      onClose={handleProfileClose}
+                      anchorEl={openProfile}
+                      getContentAnchorEl={null}
+                      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+                      transformOrigin={{ vertical: "top", horizontal: "right" }}
+                    >
+                      <MenuItem>Profile</MenuItem>
+                      <MenuItem>My account</MenuItem>
+                      <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                    </Menu>
+                  </>
+                ) : (
+                  <Button
+                    style={{ color: "white", textDecoration: "inherit" }}
+                    onClick={handleClickOpen}
+                  >
+                    Register
+                  </Button>
+                )}
+
                 <Dialog
                   open={openDialog}
                   onClose={handleClickClose}
@@ -182,14 +226,6 @@ export default function NavBar() {
             </Button>
             <Button>
               <Link
-                to="/reviews"
-                style={{ color: "blue", textDecoration: "inherit" }}
-              >
-                Reviews
-              </Link>
-            </Button>
-            <Button>
-              <Link
                 to="/pricing"
                 style={{ color: "blue", textDecoration: "inherit" }}
               >
@@ -206,12 +242,18 @@ export default function NavBar() {
             </Button>
             <Divider />
             <br />
-            <Button
-              style={{ color: "blue", textDecoration: "inherit" }}
-              onClick={handleClickOpen}
-            >
-              Register
-            </Button>
+            {isLogged ? (
+              <Tooltip title="user">
+                <Avatar style={{ alignSelf: "center" }} src={background} />
+              </Tooltip>
+            ) : (
+              <Button
+                style={{ color: "blue", textDecoration: "inherit" }}
+                onClick={handleClickOpen}
+              >
+                Register
+              </Button>
+            )}
             <Dialog
               open={openDialog}
               onClose={handleClickClose}

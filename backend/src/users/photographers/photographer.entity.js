@@ -1,20 +1,11 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const uuid = require("uuid");
 const { ADMIN_ROLE, PHOTOGRAPHER_ROLE } = require("../../commons/util");
-
-const ID_GENERATOR = () => {
-  let result = "ph-";
-  return result += Date.now()
-}
-
 const Schema = mongoose.Schema;
+
 const photographerSchema = new Schema(
   {
-    _id: {
-      type: String,
-      unique: true,
-      default: ID_GENERATOR(),
-    },
     email: {
       type: String,
       required: [true, "Backend-- Email is required..."],
@@ -60,6 +51,10 @@ const photographerSchema = new Schema(
       type: String,
       required: [true, "Backend-- Photography types is required..."],
     },
+    pricePerHour: {
+      type: String,
+      required: [true, "Backend-- Price Per Hour is required..."],
+    },
     imgFile: {
       data: Buffer,
       contentType: String,
@@ -74,7 +69,6 @@ const photographerSchema = new Schema(
       default: PHOTOGRAPHER_ROLE,
     },
   },
-  // { _id: false }
 );
 
 photographerSchema.pre("save", function (next) {

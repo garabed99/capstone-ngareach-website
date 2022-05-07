@@ -1,5 +1,5 @@
-const ADMIN_ROLE = "admin";
-const CLIENT_ROLE = "customer";
-const PHOTOGRAPHER_ROLE = "photographer";
+const ADMIN_ROLE = "Admin";
+const CLIENT_ROLE = "Customer";
+const PHOTOGRAPHER_ROLE = "Photographer";
 
-module.exports = { ADMIN_ROLE, CLIENT_ROLE,  PHOTOGRAPHER_ROLE};
+module.exports = { ADMIN_ROLE, CLIENT_ROLE, PHOTOGRAPHER_ROLE };

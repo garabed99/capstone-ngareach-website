@@ -2,6 +2,7 @@ import {
   Button,
   FormControl,
   FormControlLabel,
+  FormHelperText,
   FormLabel,
   Grid,
   Paper,
@@ -11,7 +12,6 @@ import {
   Radio,
   RadioGroup,
   TextField,
-  FormHelperText,
 } from "@material-ui/core";
 import { Visibility, VisibilityOff, SendSharp } from "@material-ui/icons";
 import Autocomplete from "@material-ui/lab/Autocomplete";
@@ -103,6 +103,7 @@ const validationSchema = yup.object({
     .required("Choose your photography types.")
     // .transform((value) => (typeof value === "string" ? [value] : value))
     .min(1, "Must choose at least 1 type."),
+  pricePerHour: yup.string().required("Price per hour rate is required."),
   websiteLink: yup.string().required("Website link is required."),
 });
 
@@ -125,9 +126,9 @@ export default function SignupPh() {
     // console.log(isValid);
     // console.log(values);
 
-    localStorage.setItem("values", JSON.stringify(values));
-    const sessionData = localStorage.getItem("values");
-    console.log(sessionData);
+    // localStorage.setItem("values", JSON.stringify(values));
+    // const sessionData = localStorage.getItem("values");
+    // console.log(sessionData);
 
     const {
       email,
@@ -141,6 +142,7 @@ export default function SignupPh() {
       yearsOfExperience,
       biography,
       photographyTypes,
+      pricePerHour,
       imgFile,
       websiteLink,
     } = values;
@@ -158,6 +160,7 @@ export default function SignupPh() {
         yearsOfExperience,
         biography,
         photographyTypes,
+        pricePerHour,
         imgFile,
         websiteLink,
       })
@@ -184,16 +187,17 @@ export default function SignupPh() {
       yearsOfExperience: "",
       biography: "",
       photographyTypes: "",
+      pricePerHour: "",
       // imgFile: "",
       websiteLink: "",
     },
     validationSchema,
     onSubmit: handleSubmit,
   });
-  console.log(formik.initialValues.photographyTypes);
-  console.log(formik.errors);
-  console.log(formik.values);
-  
+  // console.log(formik.initialValues.photographyTypes);
+  // console.log(formik.errors);
+  // console.log(formik.values);
+
   return (
     <>
       <Paper elevation={10} className={classes.paperStyle}>
@@ -203,7 +207,7 @@ export default function SignupPh() {
           </Grid>
 
           <div className={classes.formContainer}>
-            <Grid container spacing={2}>
+            <Grid container spacing={3}>
               <Grid container item xs={4} direction="column">
                 <FormLabel style={{ marginBottom: "10px" }}>
                   Account Details
@@ -472,7 +476,22 @@ export default function SignupPh() {
                     />
                   )}
                 />
-
+                <TextField
+                  className={classes.inputField}
+                  required
+                  label="Price per hour rate"
+                  name="pricePerHour"
+                  variant="outlined"
+                  placeholder="Price per hour in AMD"
+                  onChange={formik.handleChange}
+                  error={
+                    formik.touched.pricePerHour &&
+                    Boolean(formik.errors.pricePerHour)
+                  }
+                  helperText={
+                    formik.touched.pricePerHour && formik.errors.pricePerHour
+                  }
+                />
                 {/* </div> */}
                 <TextField
                   className={classes.inputField}

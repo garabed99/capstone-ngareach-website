@@ -13,7 +13,6 @@ import {
 
 import PhoneIcon from "@material-ui/icons/Phone";
 import EmailIcon from "@material-ui/icons/Email";
-import HttpIcon from "@material-ui/icons/Http";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -58,10 +57,10 @@ const useStyles = makeStyles({
     paddingRight: 40,
     paddingLeft: 40,
     paddingTop: 20,
-    height: "140vh",
+    height: "100vh",
     maxHeight: "160vh",
     // maxWidth: ,
-    width: "80vw",
+    width: "70vw",
     margin: "40px auto",
   },
 });
@@ -70,22 +69,22 @@ export default function ProfilePh() {
   const classes = useStyles();
 
   const [open, setOpen] = useState(false);
-  const [photographerData, setPhotographerData] = useState([]);
+  const [clientData, setClientData] = useState([]);
   const param = useParams();
   const id = param.id;
 
   useEffect(() => {
-    fetchPhotographerData();
+    fetchClientData();
   }, []);
 
-  function fetchPhotographerData() {
+  function fetchClientData() {
     axios
-      .get(`http://localhost:4000/photographers/${id}`)
+      .get(`http://localhost:4000/clients/${id}`)
       .then((res) => {
         // console.log("array of photographer Data", res.data);
 
         if (res.data._id === id) {
-          setPhotographerData(res.data);
+          setClientData(res.data);
         }
       })
       .catch((err) => {
@@ -103,17 +102,17 @@ export default function ProfilePh() {
 
   return (
     <>
-      <div key={photographerData._id}>
+      <div key={clientData._id}>
         <Paper elevation={10} className={classes.paperStyle}>
           <h1 style={{ marginBottom: "20px" }}>
-            {photographerData.firstName} {photographerData.lastName}
+            {clientData.firstName} {clientData.lastName}
           </h1>
           <Grid container spacing={3} item xs={12} direction="row">
             <Grid container item xs={6} direction="column">
               <CardMedia
                 className={classes.media}
                 image={background}
-                title={`${photographerData.firstName} ${photographerData.lastName}`}
+                title={`${clientData.firstName} ${clientData.lastName}`}
               />
 
               <Button
@@ -129,26 +128,6 @@ export default function ProfilePh() {
               >
                 Contact Info
               </Button>
-              <h3>Years Of Experience:</h3>
-              <Typography variant="body2">
-                {photographerData.yearsOfExperience}
-              </Typography>
-              <h3>Price per hour:</h3>
-              <Typography variant="body2">
-                {photographerData.pricePerHour} AMD
-              </Typography>
-            </Grid>
-            <Grid container item xs={6} direction="column">
-              <h3>Biography</h3>
-              <Typography variant="overline">
-                {photographerData.biography}
-              </Typography>
-            </Grid>
-            <Grid container item xs={6} direction="column">
-              <h3>Biography</h3>
-              <Typography variant="overline">
-                {photographerData.biography}
-              </Typography>
             </Grid>
           </Grid>
         </Paper>
@@ -163,18 +142,12 @@ export default function ProfilePh() {
             <DialogContentText>
               <EmailIcon fontSize="medium" />
               &nbsp;
-              <b>Email:</b> {photographerData.email}
+              <b>Email:</b> {clientData.email}
               <br />
               <PhoneIcon fontSize="medium" />
               &nbsp;
-              <b>Phone number:</b> {photographerData.phone}
+              <b>Phone number:</b> {clientData.phone}
               <br />
-              <HttpIcon fontSize="medium" />
-              &nbsp;
-              <b>Website: </b>
-              <a href={`${photographerData.websiteLink}`}>
-                {photographerData.websiteLink}
-              </a>
             </DialogContentText>
           </DialogContent>
         </Dialog>

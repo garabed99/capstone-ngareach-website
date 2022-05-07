@@ -1,20 +1,10 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const { ADMIN_ROLE, CLIENT_ROLE } = require("../../commons/util");
-
-const ID_GENERATOR = () => {
-  let result = "cl-";
-  return (result += Date.now());
-};
-
 const Schema = mongoose.Schema;
+
 const clientSchema = new Schema(
   {
-    _id: {
-      type: String,
-      unique: true,
-      default: ID_GENERATOR(),
-    },
     email: {
       type: String,
       required: [true, "Email is required..."],
@@ -55,7 +45,6 @@ const clientSchema = new Schema(
       default: CLIENT_ROLE,
     },
   },
-  { _id: false }
 );
 
 clientSchema.pre("save", function (next) {

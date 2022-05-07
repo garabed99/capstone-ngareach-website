@@ -109,9 +109,9 @@ export default function SignupCl() {
     // const isValid = await validationSchema.isValid(values);
     // console.log(isValid);
     // console.log(values);
-    localStorage.setItem("values", JSON.stringify(values));
-    const sessionData = localStorage.getItem("values");
-    console.log(sessionData);
+    // localStorage.setItem("values", JSON.stringify(values));
+    // const sessionData = localStorage.getItem("values");
+    // console.log(sessionData);
 
     const {
       email,
@@ -160,8 +160,8 @@ export default function SignupCl() {
     onSubmit: handleSubmit,
   });
 
-  console.log(formik.errors);
-  console.log(formik.values);
+  // console.log(formik.errors);
+  // console.log(formik.values);
   return (
     <>
       <Paper elevation={10} className={classes.paperStyle}>

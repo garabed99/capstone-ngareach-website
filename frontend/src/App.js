@@ -1,10 +1,10 @@
 import "./App.css";
 import Home from "./components/Home";
 import HowItWorks from "./components/navbar-section/HowItWorks";
-import Reviews from "./components/navbar-section/Reviews";
 import Pricing from "./components/navbar-section/Pricing";
 import PhotographersList from "./components/photographersList/PhotographersList";
 import ProfilePh from "./components/profile-photographer/Profile-ph";
+import ProfileCl from "./components/profile-client/Profile-cl";
 import Login from "./components/Login";
 import SignupPh from "./components/register-photographer/Signup-ph";
 import SignupCl from "./components/register-client/Signup-cl";
@@ -33,10 +33,10 @@ export default function App() {
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
             <Route path="/howitworks" element={<HowItWorks />} />
-            <Route path="/reviews" element={<Reviews />} />
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/photographerslist" element={<PhotographersList />} />
             <Route path="/photographer/:id" element={<ProfilePh />} />
+            <Route path="/client/:id" element={<ProfileCl />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup-cl" element={<SignupCl />} />
             <Route path="/signup-ph" element={<SignupPh />} />
