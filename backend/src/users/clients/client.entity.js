@@ -3,49 +3,51 @@ const bcrypt = require("bcryptjs");
 const { ADMIN_ROLE, CLIENT_ROLE } = require("../../commons/util");
 const Schema = mongoose.Schema;
 
-const clientSchema = new Schema(
-  {
-    email: {
-      type: String,
-      required: [true, "Email is required..."],
-      trim: true,
-      unique: true,
-    },
-    firstName: {
-      type: String,
-      required: [true, "First name is required..."],
-      trim: true,
-    },
-
-    lastName: {
-      type: String,
-      required: [true, "Last name is required..."],
-      trim: true,
-    },
-    password: {
-      type: String,
-      required: [true, "Password is required..."],
-    },
-    gender: {
-      type: String,
-      required: [true, "Gender is required..."],
-    },
-    dateOfBirth: {
-      type: Date,
-      required: [true, "Date of birth is required..."],
-      trim: true,
-    },
-    phone: {
-      type: String,
-      required: [true, "Phone number is required..."],
-    },
-    role: {
-      type: String,
-      enum: [ADMIN_ROLE, CLIENT_ROLE],
-      default: CLIENT_ROLE,
-    },
+const clientSchema = new Schema({
+  email: {
+    type: String,
+    required: [true, "Backend-- Email is required..."],
+    trim: true,
+    unique: true,
   },
-);
+  firstName: {
+    type: String,
+    required: [true, "Backend-- First name is required..."],
+    trim: true,
+  },
+
+  lastName: {
+    type: String,
+    required: [true, "Backend-- Last name is required..."],
+    trim: true,
+  },
+  password: {
+    type: String,
+    required: [true, "Backend-- Password is required..."],
+  },
+  gender: {
+    type: String,
+    required: [true, "Backend-- Gender is required..."],
+  },
+  dateOfBirth: {
+    type: Date,
+    required: [true, "Backend-- Date of birth is required..."],
+    trim: true,
+  },
+  phone: {
+    type: String,
+    required: [true, "PBackend-- hone number is required..."],
+  },
+  profilePicture: {
+    data: Buffer,
+    contentType: String,
+  },
+  role: {
+    type: String,
+    enum: [ADMIN_ROLE, CLIENT_ROLE],
+    default: CLIENT_ROLE,
+  },
+});
 
 clientSchema.pre("save", function (next) {
   if (this.isModified("password")) {

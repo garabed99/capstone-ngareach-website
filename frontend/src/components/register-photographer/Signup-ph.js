@@ -30,11 +30,7 @@ const useStyles = makeStyles({
   formContainer: {
     position: "relative",
     width: "60rem",
-    // height: "auto",
     paddingTop: "2rem",
-    // paddingLeft: "2rem",
-    // paddingRight: "2rem",
-    // paddingBottom: "2rem",
     marginLeft: "100px",
     marginRight: "100px",
   },
@@ -54,7 +50,6 @@ const useStyles = makeStyles({
     padding: 20,
     height: "95vh",
     maxHeight: "120vh",
-    // maxWidth: ,
     width: 1200,
     margin: "40px auto",
   },
@@ -144,7 +139,6 @@ export default function SignupPh() {
       biography,
       photographyTypes,
       pricePerHour,
-      imgFile,
       websiteLink,
     } = values;
 
@@ -162,7 +156,6 @@ export default function SignupPh() {
         biography,
         photographyTypes,
         pricePerHour,
-        imgFile,
         websiteLink,
       })
       .then(() => {
@@ -189,7 +182,6 @@ export default function SignupPh() {
       biography: "",
       photographyTypes: "",
       pricePerHour: "",
-      // imgFile: "",
       websiteLink: "",
     },
     validationSchema,
@@ -456,8 +448,8 @@ export default function SignupPh() {
                   // getOptionSelected={(option, value) =>
                   //   option.genre === value.genre
                   // }
-                  onChange={(e, v) =>
-                    formik.setFieldValue("photographyTypes", v.genre)
+                  onChange={
+                    (e, v) => formik.setFieldValue("photographyTypes", v.genre)
                     //formik.setValues("photographyTypes", v.genre)
                   }
                   renderInput={(params) => (

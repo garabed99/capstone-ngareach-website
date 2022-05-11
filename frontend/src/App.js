@@ -4,7 +4,9 @@ import HowItWorks from "./components/navbar-section/HowItWorks";
 import Pricing from "./components/navbar-section/Pricing";
 import PhotographersList from "./components/photographersList/PhotographersList";
 import ProfilePh from "./components/profile-photographer/Profile-ph";
+import EditProfilePh from "./components/profile-photographer/EditProfile-Ph";
 import ProfileCl from "./components/profile-client/Profile-cl";
+import EditProfileCl from "./components/profile-client/EditProfile-cl";
 import Login from "./components/Login";
 import SignupPh from "./components/register-photographer/Signup-ph";
 import SignupCl from "./components/register-client/Signup-cl";
@@ -36,7 +38,15 @@ export default function App() {
             <Route path="/pricing" element={<Pricing />} />
             <Route path="/photographerslist" element={<PhotographersList />} />
             <Route path="/photographer/:id" element={<ProfilePh />} />
+            <Route
+              path="/photographer/editprofile-ph/:id"
+              element={<EditProfilePh />}
+            />
             <Route path="/client/:id" element={<ProfileCl />} />
+            <Route
+              path="/client/editprofile-cl/:id"
+              element={<EditProfileCl />}
+            />
             <Route path="/login" element={<Login />} />
             <Route path="/signup-cl" element={<SignupCl />} />
             <Route path="/signup-ph" element={<SignupPh />} />

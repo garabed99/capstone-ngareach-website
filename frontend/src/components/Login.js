@@ -113,7 +113,10 @@ export default function Login() {
       .post("http://localhost:4000/auth/login", { email, password, role })
       .then((res) => {
         // const token = res.data.token;
-        const test = sessionStorage.setItem("loggedUserInfo", JSON.stringify(res.data))
+        const test = sessionStorage.setItem(
+          "loggedUserInfo",
+          JSON.stringify(res.data)
+        );
         // sessionStorage.setItem("activeToken", res.data.token);
         // sessionStorage.setItem("firstName", res.data.userInfo.firstName);
         // sessionStorage.setItem("userID", res.data.userInfo.id)
@@ -122,7 +125,7 @@ export default function Login() {
         console.log(res);
         console.log(test);
 
-        alert("Successfully logged in account!");
+        alert("Successfully logged in!");
         window.location.href = "/";
       })
       .catch((err) => {

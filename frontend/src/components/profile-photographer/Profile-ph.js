@@ -50,9 +50,9 @@ const useStyles = makeStyles({
     color: "white",
     marginTop: "5px",
   },
-  media: {
-    width: 350,
-    height: 200,
+  profilePic: {
+    width: 250,
+    height: 250,
   },
   paperStyle: {
     paddingRight: 40,
@@ -76,7 +76,7 @@ export default function ProfilePh() {
 
   useEffect(() => {
     fetchPhotographerData();
-  });
+  }, []);
 
   function fetchPhotographerData() {
     axios
@@ -111,7 +111,7 @@ export default function ProfilePh() {
           <Grid container spacing={3} item xs={12} direction="row">
             <Grid container item xs={6} direction="column">
               <CardMedia
-                className={classes.media}
+                className={classes.profilePic}
                 image={background}
                 title={`${photographerData.firstName} ${photographerData.lastName}`}
               />

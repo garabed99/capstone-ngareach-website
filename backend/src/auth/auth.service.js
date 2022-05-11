@@ -20,7 +20,7 @@ class AuthService {
       return client;
     }
 
-     if (role === PHOTOGRAPHER_ROLE) {
+    if (role === PHOTOGRAPHER_ROLE) {
       const photographer = await photographers.findOne({ email });
 
       if (!photographer || !bcrypt.compare(password, photographer.password)) {
@@ -47,6 +47,7 @@ class AuthService {
       email: user.email,
       firstName: user.firstName,
       lastName: user.lastName,
+      role: user.role,
     };
     return { userInfo };
   }

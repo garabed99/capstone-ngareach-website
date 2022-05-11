@@ -25,7 +25,7 @@ import "../styles/NavBar.css";
 import { useState } from "react";
 
 export default function NavBar() {
-  const [openProfile, setOpenProfile] = useState(false);
+  const [openMenu, setOpenMenu] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
   const navigate = useNavigate();
@@ -42,11 +42,11 @@ export default function NavBar() {
   }
 
   function handleProfileOpen() {
-    setOpenProfile(true);
+    setOpenMenu(true);
   }
-  
+
   function handleProfileClose() {
-    setOpenProfile(false);
+    setOpenMenu(false);
   }
 
   function handleClickOpen() {
@@ -123,16 +123,39 @@ export default function NavBar() {
                     >
                       {loggedUser.userInfo.firstName}
                     </Button>
+
                     <Menu
-                      open={Boolean(openProfile)}
+                      open={Boolean(openMenu)}
                       onClose={handleProfileClose}
-                      anchorEl={openProfile}
+                      anchorEl={openMenu}
                       getContentAnchorEl={null}
                       anchorOrigin={{ vertical: "top", horizontal: "right" }}
                       transformOrigin={{ vertical: "top", horizontal: "right" }}
                     >
-                      <MenuItem>Profile</MenuItem>
-                      <MenuItem>My account</MenuItem>
+                      <MenuItem
+                        component={Link}
+                        to={
+                          loggedUser.userInfo.role === "Client"
+                            ? `/client/${loggedUser.userInfo.id}`
+                            : `/photographer/${loggedUser.userInfo.id}`
+                        }
+                        style={{ textDecoration: "none" }}
+                      >
+                        Profile
+                      </MenuItem>
+
+                      <MenuItem
+                        component={Link}
+                        to={
+                          loggedUser.userInfo.role === "Client"
+                            ? `/client/editprofile-cl/${loggedUser.userInfo.id}`
+                            : `/photographer/editprofile-ph/${loggedUser.userInfo.id}`
+                        }
+                        style={{ textDecoration: "none" }}
+                      >
+                        My account
+                      </MenuItem>
+
                       <MenuItem onClick={handleLogout}>Logout</MenuItem>
                     </Menu>
                   </>
@@ -243,12 +266,43 @@ export default function NavBar() {
             <Divider />
             <br />
             {isLogged ? (
-              <Tooltip title="user">
+              <>
                 <Avatar style={{ alignSelf: "center" }} src={background} />
-              </Tooltip>
+                <Button
+                  style={{
+                    color: "blue",
+                  }}
+                  onClick={handleProfileOpen}
+                  aria-controls="simple-menu"
+                  aria-haspopup="true"
+                >
+                  {loggedUser.userInfo.firstName}
+                </Button>
+                <Menu
+                  open={Boolean(openMenu)}
+                  anchorEl={openMenu}
+                  getContentAnchorEl={null}
+                  anchorOrigin={{ vertical: "top", horizontal: "right" }}
+                  transformOrigin={{ vertical: "top", horizontal: "right" }}
+                >
+                  <Link
+                    to={`/client/${loggedUser.id}`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <MenuItem>Profile</MenuItem>
+                  </Link>
+                  <Link
+                    to={`/client/${loggedUser.id}`}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <MenuItem>My account</MenuItem>
+                  </Link>
+                  <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                </Menu>
+              </>
             ) : (
               <Button
-                style={{ color: "blue", textDecoration: "inherit" }}
+                style={{ color: "white", textDecoration: "inherit" }}
                 onClick={handleClickOpen}
               >
                 Register

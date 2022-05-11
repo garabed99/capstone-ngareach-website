@@ -24,7 +24,7 @@ const useStyles = makeStyles({
     marginLeft: "10px",
     marginBottom: "50px",
   },
-  media: {
+  profilePic: {
     width: 350,
     height: 200,
   },
@@ -74,7 +74,7 @@ export default function PhotographerCard() {
         <Grid item xs={12} sm={6} md={3} key={photographer._id}>
           <Card className={classes.root}>
             <CardMedia
-              className={classes.media}
+              className={classes.profilePic}
               image={background}
               title={`${photographer.firstName} ${photographer.lastName}`}
             />
