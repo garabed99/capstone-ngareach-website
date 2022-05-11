@@ -76,7 +76,7 @@ export default function ProfilePh() {
 
   useEffect(() => {
     fetchPhotographerData();
-  }, []);
+  });
 
   function fetchPhotographerData() {
     axios

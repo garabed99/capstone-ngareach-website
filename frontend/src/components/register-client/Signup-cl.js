@@ -135,7 +135,7 @@ export default function SignupCl() {
         dateOfBirth,
         phone,
       })
-      .then((res) => {
+      .then(() => {
         window.location.href = "/login";
         alert("Successfully created an account! Try to login now.");
       })

@@ -163,9 +163,9 @@ export default function Login() {
               onChange={formik.handleChange}
             >
               <FormControlLabel
-                value="Customer"
+                value="Client"
                 control={<Radio color="primary" />}
-                label="Customer"
+                label="Client"
               />
               <FormControlLabel
                 value="Photographer"

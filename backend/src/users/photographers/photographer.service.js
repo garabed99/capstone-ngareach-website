@@ -2,6 +2,7 @@ const Photographer = require("./photographer.entity");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const { NotFound } = require('http-errors');
 
 class PhotographerService {
   create(payload) {

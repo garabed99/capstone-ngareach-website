@@ -100,6 +100,7 @@ const validationSchema = yup.object({
   biography: yup.string().required("Biography is required."),
   photographyTypes: yup
     .string()
+    // .array()
     .required("Choose your photography types.")
     // .transform((value) => (typeof value === "string" ? [value] : value))
     .min(1, "Must choose at least 1 type."),
@@ -164,7 +165,7 @@ export default function SignupPh() {
         imgFile,
         websiteLink,
       })
-      .then((res) => {
+      .then(() => {
         alert("Successfully created an account!");
         window.location.href = "/";
       })
@@ -457,6 +458,7 @@ export default function SignupPh() {
                   // }
                   onChange={(e, v) =>
                     formik.setFieldValue("photographyTypes", v.genre)
+                    //formik.setValues("photographyTypes", v.genre)
                   }
                   renderInput={(params) => (
                     <TextField

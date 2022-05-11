@@ -8,7 +8,6 @@ import {
   Grid,
   makeStyles,
   Paper,
-  Typography,
 } from "@material-ui/core";
 
 import PhoneIcon from "@material-ui/icons/Phone";
@@ -75,7 +74,7 @@ export default function ProfilePh() {
 
   useEffect(() => {
     fetchClientData();
-  }, []);
+  });
 
   function fetchClientData() {
     axios
@@ -99,7 +98,6 @@ export default function ProfilePh() {
   function handleClickClose() {
     setOpen(false);
   }
-
   return (
     <>
       <div key={clientData._id}>
