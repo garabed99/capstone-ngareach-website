@@ -16,6 +16,8 @@ router.post(
 router.get(
   "/",
   asyncHandler(async (req, res) => {
+    const filters = req.query;
+    // filter
     const result = await photographers.findAll();
     res.send(result);
   })

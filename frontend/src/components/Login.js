@@ -17,8 +17,10 @@ import {
   InputAdornment,
   TextField,
   Typography,
+  Snackbar,
 } from "@material-ui/core";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
+import { Alert } from "@material-ui/lab";
 
 import axios from "axios";
 import { useState } from "react";
@@ -64,6 +66,10 @@ const useStyles = makeStyles({
     width: 400,
     margin: "40px auto",
   },
+  // alert: {
+  //   width: "100%",
+  //   "& > * + *": {},
+  // },
 });
 
 const validationSchema = yup.object({
@@ -84,6 +90,8 @@ const validationSchema = yup.object({
 export default function Login() {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
+  const [successAlert, setSuccessAlert] = useState(false);
+  const [errorAlert, setErrorAlert] = useState(false);
 
   const [showPasswordValue, setPasswordValue] = useState({
     showPassword: false,
@@ -98,39 +106,26 @@ export default function Login() {
     setOpen(false);
   }
   async function handleSubmit(values) {
-    // localStorage.setItem("values", JSON.stringify(values));
-    // const sessionData = localStorage.getItem("values");
-    // console.log(sessionData);
-
     const { email, password, role } = values;
-    // const data = {
-    //   email: email,
-    //   password: password,
-    //   role: role,
-    // };
 
     axios
       .post("http://localhost:4000/auth/login", { email, password, role })
       .then((res) => {
-        // const token = res.data.token;
-        const test = sessionStorage.setItem(
+        const test = localStorage.setItem(
           "loggedUserInfo",
           JSON.stringify(res.data)
         );
-        // sessionStorage.setItem("activeToken", res.data.token);
-        // sessionStorage.setItem("firstName", res.data.userInfo.firstName);
-        // sessionStorage.setItem("userID", res.data.userInfo.id)
-        // const token = sessionStorage.getItem("activeToken");
-        // console.log(token);
-        console.log(res);
+        console.log("the res", res);
         console.log(test);
+        setSuccessAlert(true);
 
-        alert("Successfully logged in!");
-        window.location.href = "/";
+        setTimeout(() => {
+          window.location.href = "/";
+        }, 800);
       })
       .catch((err) => {
         console.log(err);
-        alert(err);
+        setErrorAlert(true);
       });
   }
 
@@ -143,7 +138,6 @@ export default function Login() {
     validationSchema,
     onSubmit: handleSubmit,
   });
-  // console.log(formik.errors);
 
   return (
     <>
@@ -233,7 +227,6 @@ export default function Login() {
                 Sign in
               </Button>
 
-              {/* DIALOG OF NEED ACCOUNT */}
               <Grid style={{ marginTop: "25px" }}>
                 <Typography>Don't have an account?</Typography>
                 <Button
@@ -244,6 +237,17 @@ export default function Login() {
                 >
                   Register
                 </Button>
+                <div>
+                  {successAlert ? (
+                    <Snackbar open={successAlert} autoHideDuration={2000}>
+                      <Alert severity="success">Successfully logged in!</Alert>
+                    </Snackbar>
+                  ) : (
+                    <Snackbar open={errorAlert} autoHideDuration={2000}>
+                      <Alert severity="error">Wrong email or password!</Alert>
+                    </Snackbar>
+                  )}
+                </div>
               </Grid>
             </Grid>
           </div>

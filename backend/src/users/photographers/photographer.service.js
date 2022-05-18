@@ -6,7 +6,6 @@ const { NotFound } = require('http-errors');
 
 class PhotographerService {
   create(payload) {
-    // console.log('service-photoType ', payload.photographyType)
     const photographer = new Photographer(payload);
     return photographer.save();
   }

@@ -1,9 +1,6 @@
 const Client = require("./client.entity");
 const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const { NotFound } = require('http-errors');
-
+const { NotFound } = require("http-errors");
 class ClientService {
   create(payload) {
     const client = new Client(payload);

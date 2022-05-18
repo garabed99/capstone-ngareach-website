@@ -2,7 +2,7 @@ export default function PrivacyPolicy() {
   return (
     <div>
       <div style={{ marginLeft: "30px", marginRight: "30px" }}>
-        <h1>this is PrivacyPolicy</h1>
+        <h1>Privacy Policy</h1>
         <p style={{lineHeight: "1.5"}}>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime
           mollitia, molestiae quas vel sint commodi repudiandae consequuntur

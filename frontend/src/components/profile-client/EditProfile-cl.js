@@ -1,15 +1,18 @@
 import {
   Button,
+  CardMedia,
   FormLabel,
   Grid,
   Paper,
   IconButton,
+  Input,
   InputAdornment,
   makeStyles,
   TextField,
-  CardMedia,
+  Snackbar,
 } from "@material-ui/core";
 import { Visibility, VisibilityOff, SendSharp } from "@material-ui/icons";
+import { Alert } from "@material-ui/lab";
 
 import axios from "axios";
 import { useState, useEffect } from "react";
@@ -69,6 +72,8 @@ export default function EditProfileCl() {
   const [newLastName, setNewLastName] = useState();
   const [newPhone, setNewPhone] = useState();
   const [newProfilePicture, setNewProfilePicture] = useState();
+  const [successAlert, setSuccessAlert] = useState(false);
+  const [errorAlert, setErrorAlert] = useState(false);
 
   useEffect(() => {
     fetchClientData();
@@ -100,10 +105,11 @@ export default function EditProfileCl() {
     setOldPasswordValue(!showOldPasswordValue);
   const handleClickShowNewPassword = () =>
     setNewPasswordValue(!showNewPasswordValue);
+  // function handlePictureUpload() {}
 
   function handleSubmit(e) {
     e.preventDefault();
-    if (oldPassword === newPassword) {
+    if (oldPassword === newPassword && oldPassword !== undefined) {
       alert("Same Password!");
       throw new Error("Same Password!");
     }
@@ -114,17 +120,31 @@ export default function EditProfileCl() {
       firstName: newFirstName,
       lastName: newLastName,
       phone: newPhone,
-      profilePicture: newProfilePicture,
+      profilePicture: newProfilePicture.name,
     };
     console.log(data);
+
+    console.log("data profile", data.profilePicture);
+
+    // const fd = new FormData();
+    // fd.append("image", data.profilePicture, data.profilePicture.name);
+    // console.log("fdddd", fd);
+
     axios
-      .patch(`http://localhost:4000/clients/${id}`, data)
+      .patch(`http://localhost:4000/clients/${id}`, data, {
+        headers: {
+          "Content-Type": data.profilePicture.type,
+        },
+      })
       .then(() => {
-        alert("Updated profile successfully");
+        console.log(data.profilePicture);
+        setSuccessAlert(true);
+        // alert("Updated profile successfully");
       })
       .catch((err) => {
         console.log(err);
-        alert(err);
+        setErrorAlert(true);
+        // alert(err);
       });
   }
 
@@ -155,9 +175,20 @@ export default function EditProfileCl() {
                     }
                     title={`${existingClientData.firstName} ${existingClientData.lastName}`}
                   />
-                  [upload image button here]
+                  <div>
+                    Upload Profile Picture
+                    <Button component="label" style={{ width: "250px" }}>
+                      <Input
+                        accept="image/*"
+                        type="file"
+                        name="profilePicture"
+                        onChange={(e) =>
+                          setNewProfilePicture(e.target.files[0])
+                        }
+                      />
+                    </Button>
+                  </div>
                 </Grid>
-
                 <Grid container item xs={4} direction="column">
                   <FormLabel style={{ marginBottom: "10px" }}>
                     Account Details
@@ -265,6 +296,17 @@ export default function EditProfileCl() {
                   >
                     Update
                   </Button>
+                </div>
+                <div>
+                  {successAlert ? (
+                    <Snackbar open={successAlert} autoHideDuration={2000}>
+                      <Alert severity="success">Successfully Updated!</Alert>
+                    </Snackbar>
+                  ) : (
+                    <Snackbar open={errorAlert} autoHideDuration={2000}>
+                      <Alert severity="error">Something went wrong!</Alert>
+                    </Snackbar>
+                  )}
                 </div>
               </Grid>
             </div>

@@ -15,7 +15,6 @@ const clientSchema = new Schema({
     required: [true, "Backend-- First name is required..."],
     trim: true,
   },
-
   lastName: {
     type: String,
     required: [true, "Backend-- Last name is required..."],
@@ -39,8 +38,9 @@ const clientSchema = new Schema({
     required: [true, "PBackend-- hone number is required..."],
   },
   profilePicture: {
-    data: Buffer,
-    contentType: String,
+    // data: Buffer,
+    // contentType: String
+    type: String,
   },
   role: {
     type: String,

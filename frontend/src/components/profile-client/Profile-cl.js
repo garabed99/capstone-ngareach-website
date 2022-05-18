@@ -15,7 +15,7 @@ import EmailIcon from "@material-ui/icons/Email";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import background from "../../imgs/background.jpg";
+import blankProfile from "../../imgs/blank-profile.png";
 
 const useStyles = makeStyles({
   mainContainer: {
@@ -58,7 +58,6 @@ const useStyles = makeStyles({
     paddingTop: 20,
     height: "100vh",
     maxHeight: "160vh",
-    // maxWidth: ,
     width: "70vw",
     margin: "40px auto",
   },
@@ -74,13 +73,13 @@ export default function ProfilePh() {
 
   useEffect(() => {
     fetchClientData();
-  },[]);
+  },);
 
   function fetchClientData() {
     axios
       .get(`http://localhost:4000/clients/${id}`)
       .then((res) => {
-        // console.log("array of photographer Data", res.data);
+        // console.log("array of clients Data", res.data);
 
         if (res.data._id === id) {
           setClientData(res.data);
@@ -109,7 +108,11 @@ export default function ProfilePh() {
             <Grid container item xs={6} direction="column">
               <CardMedia
                 className={classes.profilePic}
-                image={background}
+                image={
+                  !clientData.profilePicture
+                    ? blankProfile
+                    : clientData.profilePicture
+                }
                 title={`${clientData.firstName} ${clientData.lastName}`}
               />
 
@@ -119,7 +122,7 @@ export default function ProfilePh() {
                   background: "#42a5f5",
                   color: "white",
                   textDecoration: "inherit",
-                  width: "25%",
+                  width: "250px",
                   variant: "contained",
                 }}
                 onClick={handleClickOpen}

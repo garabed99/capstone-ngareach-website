@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
-const uuid = require("uuid");
 const { ADMIN_ROLE, PHOTOGRAPHER_ROLE } = require("../../commons/util");
 const Schema = mongoose.Schema;
 

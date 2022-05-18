@@ -12,7 +12,7 @@ import {
 
 import { useState, useEffect } from "react";
 import axios from "axios";
-import background from "../../imgs/background.jpg";
+import blankProfile from "../../imgs/blank-profile.png";
 import { Link } from "react-router-dom";
 import ReactPaginate from "react-paginate";
 
@@ -75,7 +75,11 @@ export default function PhotographerCard() {
           <Card className={classes.root}>
             <CardMedia
               className={classes.profilePic}
-              image={background}
+              image={
+                !photographer.profilePicture
+                  ? blankProfile
+                  : photographer.profilePicture
+              }
               title={`${photographer.firstName} ${photographer.lastName}`}
             />
 
@@ -123,20 +127,19 @@ export default function PhotographerCard() {
         >
           {currentPagePhotographers}
           <ReactPaginate
-          previousLabel={"← PREVIOUS"}
-          nextLabel={"NEXT →"}
-          pageCount={pageCount}
-          breakLabel={"..."}
-          marginPagesDisplayed={2}
-          onPageChange={handlePageClick}
-          containerClassName={"paginationBtns"}
-          previousLinkClassName={"previousBtn"}
-          nextLinkClassName={"nextBtn"}
-          disabledClassName={"paginationDisabled"}
-          activeClassName={"activeBtn"}
-        />
+            previousLabel={"← PREVIOUS"}
+            nextLabel={"NEXT →"}
+            pageCount={pageCount}
+            breakLabel={"..."}
+            marginPagesDisplayed={2}
+            onPageChange={handlePageClick}
+            containerClassName={"paginationBtns"}
+            previousLinkClassName={"previousBtn"}
+            nextLinkClassName={"nextBtn"}
+            disabledClassName={"paginationDisabled"}
+            activeClassName={"activeBtn"}
+          />
         </Grid>
-
       </Grid>
     </>
   );

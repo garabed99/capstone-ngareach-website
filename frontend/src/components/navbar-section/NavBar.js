@@ -19,7 +19,7 @@ import {
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 
-import background from "../../imgs/background.jpg";
+import blankProfile from "../../imgs/blank-profile.png";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/NavBar.css";
 import { useState } from "react";
@@ -29,7 +29,7 @@ export default function NavBar() {
   const [openDialog, setOpenDialog] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
   const navigate = useNavigate();
-  const loggedUser = JSON.parse(sessionStorage.getItem("loggedUserInfo"));
+  const loggedUser = JSON.parse(localStorage.getItem("loggedUserInfo"));
   let isLogged = false;
 
   if (loggedUser) {
@@ -37,7 +37,7 @@ export default function NavBar() {
   }
 
   function handleLogout() {
-    sessionStorage.clear();
+    localStorage.clear();
     navigate("/");
   }
 
@@ -73,7 +73,10 @@ export default function NavBar() {
                   <Button>
                     <Link
                       to="/home"
-                      style={{ color: "white", textDecoration: "inherit" }}
+                      style={{
+                        color: "white",
+                        textDecoration: "inherit",
+                      }}
                     >
                       Home
                     </Link>
@@ -100,7 +103,7 @@ export default function NavBar() {
                   </Button>
                 </div>
                 <div className="page-route">
-                  <Button>
+                  <Button style={{}}>
                     <Link
                       to="/photographerslist"
                       style={{ color: "white", textDecoration: "inherit" }}
@@ -114,12 +117,24 @@ export default function NavBar() {
               <div className="registration-container">
                 {isLogged ? (
                   <>
-                    <Avatar src={background} />
                     <Button
-                      style={{ color: "white" }}
+                      style={{
+                        color: "white",
+                        fontSize: "16px",
+                        textTransform: "unset",
+                      }}
                       onClick={handleProfileOpen}
                       aria-controls="simple-menu"
                       aria-haspopup="true"
+                      startIcon={
+                        <Avatar
+                          src={
+                            !loggedUser.profilePicture
+                              ? blankProfile
+                              : loggedUser.profilePicture
+                          }
+                        />
+                      }
                     >
                       {loggedUser.userInfo.firstName}
                     </Button>
@@ -161,7 +176,10 @@ export default function NavBar() {
                   </>
                 ) : (
                   <Button
-                    style={{ color: "white", textDecoration: "inherit" }}
+                    style={{
+                      color: "white",
+                      textDecoration: "inherit",
+                    }}
                     onClick={handleClickOpen}
                   >
                     Register
@@ -242,7 +260,10 @@ export default function NavBar() {
             <Button>
               <Link
                 to="/howitworks"
-                style={{ color: "blue", textDecoration: "inherit" }}
+                style={{
+                  color: "blue",
+                  textDecoration: "inherit",
+                }}
               >
                 How It Works
               </Link>
@@ -250,7 +271,10 @@ export default function NavBar() {
             <Button>
               <Link
                 to="/pricing"
-                style={{ color: "blue", textDecoration: "inherit" }}
+                style={{
+                  color: "blue",
+                  textDecoration: "inherit",
+                }}
               >
                 Pricing
               </Link>
@@ -258,7 +282,10 @@ export default function NavBar() {
             <Button>
               <Link
                 to="/photographerslist"
-                style={{ color: "blue", textDecoration: "inherit" }}
+                style={{
+                  color: "blue",
+                  textDecoration: "inherit",
+                }}
               >
                 Our Photographers
               </Link>
@@ -267,14 +294,25 @@ export default function NavBar() {
             <br />
             {isLogged ? (
               <>
-                <Avatar style={{ alignSelf: "center" }} src={background} />
                 <Button
                   style={{
                     color: "blue",
+                    textTransform: "unset",
+                    fontSize: "16px",
                   }}
                   onClick={handleProfileOpen}
                   aria-controls="simple-menu"
                   aria-haspopup="true"
+                  startIcon={
+                    <Avatar
+                      style={{ alignSelf: "center" }}
+                      src={
+                        !loggedUser.profilePicture
+                          ? blankProfile
+                          : loggedUser.profilePicture
+                      }
+                    />
+                  }
                 >
                   {loggedUser.userInfo.firstName}
                 </Button>
@@ -286,13 +324,13 @@ export default function NavBar() {
                   transformOrigin={{ vertical: "top", horizontal: "right" }}
                 >
                   <Link
-                    to={`/client/${loggedUser.id}`}
+                    to={`/client/${loggedUser.userInfo.id}`}
                     style={{ textDecoration: "none" }}
                   >
                     <MenuItem>Profile</MenuItem>
                   </Link>
                   <Link
-                    to={`/client/${loggedUser.id}`}
+                    to={`/client/${loggedUser.userInfo.id}`}
                     style={{ textDecoration: "none" }}
                   >
                     <MenuItem>My account</MenuItem>

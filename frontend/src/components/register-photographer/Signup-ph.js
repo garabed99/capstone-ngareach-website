@@ -12,9 +12,11 @@ import {
   Radio,
   RadioGroup,
   TextField,
+  Snackbar,
 } from "@material-ui/core";
 import { Visibility, VisibilityOff, SendSharp } from "@material-ui/icons";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import { Alert } from "@material-ui/lab";
 
 import axios from "axios";
 import { useState } from "react";
@@ -105,6 +107,8 @@ const validationSchema = yup.object({
 
 export default function SignupPh() {
   const classes = useStyles();
+  const [successAlert, setSuccessAlert] = useState(false);
+  const [errorAlert, setErrorAlert] = useState(false);
 
   const [showPasswordValue, setPasswordValue] = useState({
     showPassword: false,
@@ -118,14 +122,6 @@ export default function SignupPh() {
     setConfirmPasswordValue(!showConfirmPasswordValue);
 
   async function handleSubmit(values) {
-    // const isValid = await validationSchema.isValid(values);
-    // console.log(isValid);
-    // console.log(values);
-
-    // localStorage.setItem("values", JSON.stringify(values));
-    // const sessionData = localStorage.getItem("values");
-    // console.log(sessionData);
-
     const {
       email,
       password,
@@ -159,12 +155,18 @@ export default function SignupPh() {
         websiteLink,
       })
       .then(() => {
-        alert("Successfully created an account!");
-        window.location.href = "/";
+        setSuccessAlert(true);
+
+        setTimeout(() => {
+          window.location.href = "/login";
+        }, 800);
+        // alert("Successfully created an account!");
+        // window.location.href = "/";
       })
       .catch((err) => {
         console.log(err);
-        alert(err);
+        setErrorAlert(true);
+        // alert(err);
       });
   }
 
@@ -187,9 +189,6 @@ export default function SignupPh() {
     validationSchema,
     onSubmit: handleSubmit,
   });
-  // console.log(formik.initialValues.photographyTypes);
-  // console.log(formik.errors);
-  // console.log(formik.values);
 
   return (
     <>
@@ -211,7 +210,7 @@ export default function SignupPh() {
                   required
                   label="Email"
                   name="email"
-                  value={formik.values.email}
+                  value={formik.values.email.toLowerCase()}
                   variant="outlined"
                   autoFocus
                   onChange={(e) =>
@@ -358,7 +357,6 @@ export default function SignupPh() {
                   label="Date Of Birth"
                   type="date"
                   name="dateOfBirth"
-                  // defaultValue="1999-01-14"
                   sx={{ width: 220 }}
                   InputLabelProps={{
                     shrink: true,
@@ -514,6 +512,19 @@ export default function SignupPh() {
             >
               Submit
             </Button>
+            <div>
+              {successAlert ? (
+                <Snackbar open={successAlert} autoHideDuration={2000}>
+                  <Alert severity="success">
+                    Successfully created an account! Try to login now.
+                  </Alert>
+                </Snackbar>
+              ) : (
+                <Snackbar open={errorAlert} autoHideDuration={2000}>
+                  <Alert severity="error">Something went wrong!</Alert>
+                </Snackbar>
+              )}
+            </div>
           </div>
         </Grid>
       </Paper>

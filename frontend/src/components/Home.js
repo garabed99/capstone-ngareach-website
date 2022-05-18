@@ -1,7 +1,23 @@
 import "./styles/Home.css";
 import background from "../imgs/background.jpg";
+import axios from "axios";
+import { useState } from "react";
 
 export default function Home() {
+  const [photographers, setPhotographers] = useState([]);
+  const [type, setType] = useState("");
+
+  function fetchPhotographers(e) {
+    axios
+      .get("http://localhost:4000/photographers", {params: {photographyTypes:e.genre}})
+      .then((res) => {
+        console.log("array of photographers", res.data);
+        setPhotographers(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
   return (
     <>
       <div
@@ -26,46 +42,14 @@ export default function Home() {
                   placeholder="Photographer Name"
                 />
 
-                <select name="eventType" id="">
-                  <option selected value="0">
-                    Event Type
-                  </option>
-                  <option value="advertising">Advertising</option>
-                  <option value="architecture">Architecture</option>
-                  <option value="astrophotography">Astrophotography</option>
-                  <option value="baby and child">Baby and child</option>
-                  <option value="baptism">Baptism</option>
-                  <option value="birthday">Birthday</option>
-                  <option value="branding">Branding</option>
-                  <option value="concert">Concert</option>
-                  <option value="documentary">Documentary</option>
-                  <option value="erotic">Erotic</option>
-                  <option value="family">Family</option>
-                  <option value="fashion">Fashion</option>
-                  <option value="film">Film</option>
-                  <option value="fine art">Fine art</option>
-                  <option value="food">Food</option>
-                  <option value="graduation">Graduation</option>
-                  <option value="landscape">Landscape</option>
-                  <option value="macro">Macro</option>
-                  <option value="micro">Micro</option>
-                  <option value="panoramic">Panoramic</option>
-                  <option value="paparazzi">Paparazzi</option>
-                  <option value="pet">Pet</option>
-                  <option value="photojournalism">Photojournalism</option>
-                  <option value="portrait">Portrait</option>
-                  <option value="real estate">Real Estate</option>
-                  <option value="sports">Sports</option>
-                  <option value="stock">Stock</option>
-                  <option value="street">Street</option>
-                  <option value="travel">Travel</option>
-                  <option value="underwater">Underwater</option>
-                  <option value="vehicle">Vehicle</option>
-                  <option value="wedding">Wedding</option>
-                  <option value="wildlife">Wildlife</option>
+                <select name="event_type">
+                  {photographyTypes.map((event) => (
+                    <option value={event.genre.toLocaleLowerCase()}>
+                      {event.genre}
+                    </option>
+                  ))}
                 </select>
-
-                <button type="submit">Search</button>
+                <button type="submit" onClick={fetchPhotographers}>Search</button>
               </div>
             </div>
           </form>
@@ -74,3 +58,40 @@ export default function Home() {
     </>
   );
 }
+
+const photographyTypes = [
+  { genre: "Event Type" },
+  { genre: "Advertising" },
+  { genre: "Architecture" },
+  { genre: "Astrophotography" },
+  { genre: "Baby and child" },
+  { genre: "Baptism" },
+  { genre: "Birthday" },
+  { genre: "Branding" },
+  { genre: "Concert" },
+  { genre: "Documentary" },
+  { genre: "Erotic" },
+  { genre: "Family" },
+  { genre: "Fashion" },
+  { genre: "Film" },
+  { genre: "Fine art" },
+  { genre: "Food" },
+  { genre: "Graduation" },
+  { genre: "Landscape" },
+  { genre: "Macro" },
+  { genre: "Micro" },
+  { genre: "Panoramic" },
+  { genre: "Paparazzi" },
+  { genre: "Pet" },
+  { genre: "Photojournalism" },
+  { genre: "Portrait" },
+  { genre: "Real Estate" },
+  { genre: "Sports" },
+  { genre: "Stock" },
+  { genre: "Street" },
+  { genre: "Travel" },
+  { genre: "Underwater" },
+  { genre: "Vehicle" },
+  { genre: "Wedding" },
+  { genre: "Wildlife" },
+];

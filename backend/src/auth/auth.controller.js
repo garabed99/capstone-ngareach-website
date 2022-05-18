@@ -7,9 +7,8 @@ router.post(
   "/login",
   asyncHandler(async (req, res) => {
     const { email, password, role } = req.body;
-    console.log("res body====", email, password, role);
     const response = await auth.login(email, password, role);
-    console.log("responseeee",response);
+    console.log("response",response);
     res.json(response);
   })
 );

@@ -9,10 +9,13 @@ const jwtMiddleware = async (req, res, next) => {
     token = req.header("Authorization").split(" ")[1];
     const client = validateToken(token);
     const photographer = validateToken(token);
+
     const dbClient = await clients.findOne(client.userId);
     const dbPhotographer = await photographers.findOne(photographer.userId);
+
     client.role = dbClient.role;
     photographer.role = dbPhotographer.role;
+
     req.client = client;
     req.photographer = photographer;
   } catch (err) {

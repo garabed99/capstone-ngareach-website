@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const clients = require("./client.service");
 const asyncHandler = require("express-async-handler");
+const {
+  uploadClientProfile: upload,
+} = require("../../commons/middlewares/multer.middleware");
 
 router.post(
   "/",
@@ -41,9 +44,14 @@ router.delete(
 
 router.patch(
   "/:id",
+  upload.single("profilePicture"),
   asyncHandler(async (req, res) => {
     const { id } = req.params;
+    console.log("img --cl.CONTROLLER", req.body);
+red.file
     const result = await clients.update(id, req.body);
+
+    console.log(result);
     res.json(result);
   })
 );

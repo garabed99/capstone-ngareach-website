@@ -6,6 +6,9 @@ import {
   DialogContentText,
   DialogTitle,
   Grid,
+  ImageList,
+  ImageListItem,
+  ImageListItemBar,
   makeStyles,
   Paper,
   Typography,
@@ -17,7 +20,8 @@ import HttpIcon from "@material-ui/icons/Http";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import background from "../../imgs/background.jpg";
+import blankProfile from "../../imgs/blank-profile.png";
+import itemData from "./itemData";
 
 const useStyles = makeStyles({
   mainContainer: {
@@ -60,9 +64,29 @@ const useStyles = makeStyles({
     paddingTop: 20,
     height: "140vh",
     maxHeight: "160vh",
-    // maxWidth: ,
     width: "80vw",
     margin: "40px auto",
+  },
+  portfolioRoot: {
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-around",
+    alignItems: "center",
+    overflow: "hidden",
+    marginTop: "150px",
+    // backgroundColor: theme.palette.background.paper,
+  },
+  imageList: {
+    flexWrap: "nowrap",
+    // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
+    transform: "translateZ(0)",
+  },
+  // title: {
+  //   color: theme.palette.primary.light,
+  // },
+  titleBar: {
+    background:
+      "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
   },
 });
 
@@ -76,7 +100,7 @@ export default function ProfilePh() {
 
   useEffect(() => {
     fetchPhotographerData();
-  }, []);
+  });
 
   function fetchPhotographerData() {
     axios
@@ -112,7 +136,11 @@ export default function ProfilePh() {
             <Grid container item xs={6} direction="column">
               <CardMedia
                 className={classes.profilePic}
-                image={background}
+                image={
+                  !photographerData.profilePicture
+                    ? blankProfile
+                    : photographerData.profilePicture
+                }
                 title={`${photographerData.firstName} ${photographerData.lastName}`}
               />
 
@@ -144,13 +172,26 @@ export default function ProfilePh() {
                 {photographerData.biography}
               </Typography>
             </Grid>
-            <Grid container item xs={6} direction="column">
-              <h3>Biography</h3>
-              <Typography variant="overline">
-                {photographerData.biography}
-              </Typography>
-            </Grid>
+            {/* <Grid container item xs={6} direction="column">
+
+            </Grid> */}
           </Grid>
+          <div className={classes.portfolioRoot}>
+            <ImageList className={classes.imageList} cols={2.5} gap={3}>
+              {itemData.map((item) => (
+                <ImageListItem key={item.img}>
+                  <img src={item.img} alt={item.title} />
+                  <ImageListItemBar
+                    title={item.title}
+                    classes={{
+                      root: classes.titleBar,
+                      title: classes.title,
+                    }}
+                  />
+                </ImageListItem>
+              ))}
+            </ImageList>
+          </div>
         </Paper>
         <Dialog
           open={open}

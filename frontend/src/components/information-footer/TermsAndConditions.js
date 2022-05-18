@@ -2,7 +2,7 @@ export default function TermsAndConditions() {
   return (
     <div>
       <div style={{ marginLeft: "30px", marginRight: "30px" }}>
-        <h1>this is TermsAndConditions</h1>
+        <h1>Terms and Conditions</h1>
         <p style={{lineHeight: "1.5"}}>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime
           mollitia, molestiae quas vel sint commodi repudiandae consequuntur

@@ -5,8 +5,11 @@ export default function PhotographersList() {
     <>
       <div>
         <h1 style={{ marginLeft: "30px" }}>All Photographers</h1>
-      </div>
 
+      </div>
+      <div>
+        
+      </div>
       <PhotographerCard />
     </>
   );

@@ -12,8 +12,10 @@ import {
   Radio,
   RadioGroup,
   TextField,
+  Snackbar,
 } from "@material-ui/core";
 import { Visibility, VisibilityOff, SendSharp } from "@material-ui/icons";
+import { Alert } from "@material-ui/lab";
 
 import axios from "axios";
 import { useState } from "react";
@@ -93,6 +95,8 @@ const validationSchema = yup.object({
 
 export default function SignupCl() {
   const classes = useStyles();
+  const [successAlert, setSuccessAlert] = useState(false);
+  const [errorAlert, setErrorAlert] = useState(false);
 
   const [showPasswordValue, setPasswordValue] = useState({
     showPassword: false,
@@ -106,13 +110,6 @@ export default function SignupCl() {
     setConfirmPasswordValue(!showConfirmPasswordValue);
 
   async function handleSubmit(values) {
-    // const isValid = await validationSchema.isValid(values);
-    // console.log(isValid);
-    // console.log(values);
-    // localStorage.setItem("values", JSON.stringify(values));
-    // const sessionData = localStorage.getItem("values");
-    // console.log(sessionData);
-
     const {
       email,
       password,
@@ -136,12 +133,17 @@ export default function SignupCl() {
         phone,
       })
       .then(() => {
-        window.location.href = "/login";
-        alert("Successfully created an account! Try to login now.");
+        setSuccessAlert(true);
+        setTimeout(() => {
+          window.location.href = "/login";
+        }, 800);
+        // window.location.href = "/login";
+        // alert("Successfully created an account! Try to login now.");
       })
       .catch((err) => {
         console.log(err);
-        alert(err);
+        setErrorAlert(true);
+        // alert(err);
       });
   }
 
@@ -160,8 +162,6 @@ export default function SignupCl() {
     onSubmit: handleSubmit,
   });
 
-  // console.log(formik.errors);
-  // console.log(formik.values);
   return (
     <>
       <Paper elevation={10} className={classes.paperStyle}>
@@ -331,7 +331,6 @@ export default function SignupCl() {
                   label="Date Of Birth"
                   type="date"
                   name="dateOfBirth"
-                  // defaultValue="1999-01-14"
                   sx={{ width: 220 }}
                   InputLabelProps={{
                     shrink: true,
@@ -369,6 +368,17 @@ export default function SignupCl() {
             >
               Submit
             </Button>
+            <div>
+              {successAlert ? (
+                <Snackbar open={successAlert} autoHideDuration={2000}>
+                  <Alert severity="success">Successfully created an account! Try to login now.</Alert>
+                </Snackbar>
+              ) : (
+                <Snackbar open={errorAlert} autoHideDuration={2000}>
+                  <Alert severity="error">Something went wrong!</Alert>
+                </Snackbar>
+              )}
+            </div>
           </div>
         </Grid>
       </Paper>

@@ -1,16 +1,19 @@
 import {
   Button,
+  CardMedia,
   FormLabel,
   Grid,
   Paper,
   IconButton,
+  Input,
   InputAdornment,
   makeStyles,
   TextField,
-  CardMedia,
+  Snackbar,
 } from "@material-ui/core";
 import { Visibility, VisibilityOff, SendSharp } from "@material-ui/icons";
 import Autocomplete from "@material-ui/lab/Autocomplete";
+import { Alert } from "@material-ui/lab";
 
 import axios from "axios";
 import { useState, useEffect } from "react";
@@ -76,10 +79,12 @@ export default function EditProfilePh() {
   const [newWebsiteLink, setNewWebsiteLink] = useState();
   const [newProfilePicture, setNewProfilePicture] = useState();
   const [newPortfolio, setNewPortfolio] = useState([]);
+  const [successAlert, setSuccessAlert] = useState(false);
+  const [errorAlert, setErrorAlert] = useState(false);
 
   useEffect(() => {
     fetchPhotographerData();
-  }, []);
+  });
 
   function fetchPhotographerData() {
     axios
@@ -109,8 +114,9 @@ export default function EditProfilePh() {
     setNewPasswordValue(!showNewPasswordValue);
 
   function handleSubmit() {
-    if (oldPassword === newPassword) {
-      alert("Same Password!");
+    if (oldPassword === newPassword && oldPassword !== undefined) {
+      setErrorAlert(true);
+      // alert("Same Password!");
       throw new Error("Same Password!");
     }
     const data = {
@@ -131,14 +137,16 @@ export default function EditProfilePh() {
     axios
       .patch(`http://localhost:4000/photographers/${id}`, data)
       .then(() => {
-        alert("Updated profile successfully");
+        setSuccessAlert(true);
+
+        // alert("Updated profile successfully");
       })
       .catch((err) => {
         console.log(err);
-        alert(err);
+        setErrorAlert(true);
+        // alert(err);
       });
-    alert("Successfully updated!");
-    window.location.href = "/";
+    // window.location.href = "/";
   }
 
   return (
@@ -168,7 +176,16 @@ export default function EditProfilePh() {
                   }
                   title={`${existingPhotographerData.firstName} ${existingPhotographerData.lastName}`}
                 />
-                [upload image button here]
+
+                <div>
+                  Upload Profile Picture
+                  <Button component="label" style={{ width: "250px" }}>
+                    <Input
+                      type="file"
+                      onChange={(e) => setNewProfilePicture(e.target.files[0])}
+                    />
+                  </Button>
+                </div>
               </Grid>
 
               <Grid container item xs={4} direction="column">
@@ -353,6 +370,17 @@ export default function EditProfilePh() {
                 >
                   Update
                 </Button>
+              </div>
+              <div>
+                {successAlert ? (
+                  <Snackbar open={successAlert} autoHideDuration={2000}>
+                    <Alert severity="success">Successfully Updated!</Alert>
+                  </Snackbar>
+                ) : (
+                  <Snackbar open={errorAlert} autoHideDuration={2000}>
+                    <Alert severity="error">Something went wrong!</Alert>
+                  </Snackbar>
+                )}
               </div>
             </Grid>
           </div>
