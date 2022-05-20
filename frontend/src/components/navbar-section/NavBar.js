@@ -23,14 +23,18 @@ import blankProfile from "../../imgs/blank-profile.png";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/NavBar.css";
 import { useState } from "react";
+import axios from "axios";
 
 export default function NavBar() {
   const [openMenu, setOpenMenu] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
+  // const [profilePicture, setProfilePicture] = useState([]);
   const navigate = useNavigate();
+
   const loggedUser = JSON.parse(localStorage.getItem("loggedUserInfo"));
   let isLogged = false;
+  // const url = window.URL.createObjectURL(new Blob([loggedUser.profilePicture]));
 
   if (loggedUser) {
     isLogged = true;
@@ -129,9 +133,9 @@ export default function NavBar() {
                       startIcon={
                         <Avatar
                           src={
-                            !loggedUser.profilePicture
+                            !loggedUser.userInfo.profilePicture
                               ? blankProfile
-                              : loggedUser.profilePicture
+                              : loggedUser.userInfo.profilePicture
                           }
                         />
                       }
@@ -145,7 +149,10 @@ export default function NavBar() {
                       anchorEl={openMenu}
                       getContentAnchorEl={null}
                       anchorOrigin={{ vertical: "top", horizontal: "right" }}
-                      transformOrigin={{ vertical: "top", horizontal: "right" }}
+                      transformOrigin={{
+                        vertical: "top",
+                        horizontal: "right",
+                      }}
                     >
                       <MenuItem
                         component={Link}
@@ -202,7 +209,10 @@ export default function NavBar() {
                     <Button onClick={handleClickClose} color="primary">
                       <Link
                         to="/signup-cl"
-                        style={{ color: "inherit", textDecoration: "inherit" }}
+                        style={{
+                          color: "inherit",
+                          textDecoration: "inherit",
+                        }}
                       >
                         Client
                       </Link>
@@ -210,7 +220,10 @@ export default function NavBar() {
                     <Button onClick={handleClickClose} color="primary">
                       <Link
                         to="/signup-ph"
-                        style={{ color: "inherit", textDecoration: "inherit" }}
+                        style={{
+                          color: "inherit",
+                          textDecoration: "inherit",
+                        }}
                       >
                         Photographer
                       </Link>
@@ -218,7 +231,10 @@ export default function NavBar() {
                     <Button onClick={handleClickClose} color="primary">
                       <Link
                         to="/login"
-                        style={{ color: "inherit", textDecoration: "inherit" }}
+                        style={{
+                          color: "inherit",
+                          textDecoration: "inherit",
+                        }}
                       >
                         Already Have Account
                       </Link>

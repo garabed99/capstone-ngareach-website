@@ -46,6 +46,7 @@ class AuthService {
       email: user.email,
       firstName: user.firstName,
       lastName: user.lastName,
+      profilePicture: user.profilePicture,
       role: user.role,
     };
     return { userInfo };

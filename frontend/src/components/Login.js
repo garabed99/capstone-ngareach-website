@@ -181,7 +181,7 @@ export default function Login() {
                 required
                 label="Email"
                 name="email"
-                value={formik.values.email}
+                value={formik.values.email.toLowerCase()}
                 variant="outlined"
                 autoFocus
                 onChange={(e) => formik.setFieldValue("email", e.target.value)}
@@ -223,6 +223,7 @@ export default function Login() {
                 variant="contained"
                 fullWidth
                 onClick={formik.handleSubmit}
+   
               >
                 Sign in
               </Button>
@@ -253,6 +254,7 @@ export default function Login() {
           </div>
         </Grid>
       </Paper>
+
       <Dialog
         open={open}
         onClose={handleClickClose}

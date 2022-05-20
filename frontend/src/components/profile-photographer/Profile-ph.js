@@ -95,12 +95,14 @@ export default function ProfilePh() {
 
   const [open, setOpen] = useState(false);
   const [photographerData, setPhotographerData] = useState([]);
+  const [profilePicture, setProfilePicture] = useState("");
+  const [portfolio, setPortfolio] = useState([]);
   const param = useParams();
   const id = param.id;
-
+  // const portfolioObj = { ...portfolio };
   useEffect(() => {
     fetchPhotographerData();
-  });
+  }, []);
 
   function fetchPhotographerData() {
     axios
@@ -111,6 +113,34 @@ export default function ProfilePh() {
         if (res.data._id === id) {
           setPhotographerData(res.data);
         }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    axios
+      .get(`http://localhost:4000/photographers/profilepicture/${id}`, {
+        responseType: "blob",
+      })
+      .then((res) => {
+        for(let i =0; i < res.length; i++) {
+          
+        }
+        const url = window.URL.createObjectURL(new Blob([res.data]));
+        setProfilePicture(url);
+        console.log(url);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    axios
+      .get(`http://localhost:4000/photographers/portfolio/${id}`, {
+        responseType: "blob",
+      })
+      .then((res) => {
+        const url = window.URL.createObjectURL(new Blob([res.data]));
+        setPortfolio(url);
       })
       .catch((err) => {
         console.log(err);
@@ -136,14 +166,10 @@ export default function ProfilePh() {
             <Grid container item xs={6} direction="column">
               <CardMedia
                 className={classes.profilePic}
-                image={
-                  !photographerData.profilePicture
-                    ? blankProfile
-                    : photographerData.profilePicture
-                }
+                image={profilePicture ? profilePicture : blankProfile}
                 title={`${photographerData.firstName} ${photographerData.lastName}`}
               />
-
+              {console.log(portfolio)}
               <Button
                 style={{
                   marginTop: "10px",
@@ -178,7 +204,7 @@ export default function ProfilePh() {
           </Grid>
           <div className={classes.portfolioRoot}>
             <ImageList className={classes.imageList} cols={2.5} gap={3}>
-              {itemData.map((item) => (
+              {/* {portfolio.map((item) => (
                 <ImageListItem key={item.img}>
                   <img src={item.img} alt={item.title} />
                   <ImageListItemBar
@@ -189,7 +215,7 @@ export default function ProfilePh() {
                     }}
                   />
                 </ImageListItem>
-              ))}
+              ))} */}
             </ImageList>
           </div>
         </Paper>

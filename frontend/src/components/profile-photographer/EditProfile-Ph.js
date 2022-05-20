@@ -66,6 +66,7 @@ export default function EditProfilePh() {
   const id = param.id;
 
   const [existingPhotographerData, setExistingPhotographerData] = useState([]);
+  const [existingProfilePicture, setExistingProfilePicture] = useState("");
   const [newEmail, setNewEmail] = useState();
   const [oldPassword, setOldPassword] = useState();
   const [newPassword, setNewPassword] = useState();
@@ -77,14 +78,17 @@ export default function EditProfilePh() {
   const [newPhotographyTypes, setNewPhotographyTypes] = useState();
   const [newPricePerHour, setNewPricePerHour] = useState();
   const [newWebsiteLink, setNewWebsiteLink] = useState();
+
   const [newProfilePicture, setNewProfilePicture] = useState();
   const [newPortfolio, setNewPortfolio] = useState([]);
-  const [successAlert, setSuccessAlert] = useState(false);
-  const [errorAlert, setErrorAlert] = useState(false);
+  const [successUpdateAlert, setSuccessUpdateAlert] = useState(false);
+  const [errorUpdateAlert, setErrorUpdateAlert] = useState(false);
+  const [successUploadAlert, setSuccessUploadAlert] = useState(false);
+  const [errorUploadAlert, setErrorUploadAlert] = useState(false);
 
   useEffect(() => {
     fetchPhotographerData();
-  });
+  }, []);
 
   function fetchPhotographerData() {
     axios
@@ -95,6 +99,17 @@ export default function EditProfilePh() {
         if (res.data._id === id) {
           setExistingPhotographerData(res.data);
         }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    axios
+      .get(`http://localhost:4000/photographers/profilepicture/${id}`, {
+        responseType: "blob",
+      })
+      .then((res) => {
+        const url = window.URL.createObjectURL(new Blob([res.data]));
+        setExistingProfilePicture(url);
       })
       .catch((err) => {
         console.log(err);
@@ -110,12 +125,65 @@ export default function EditProfilePh() {
 
   const handleClickShowOldPassword = () =>
     setOldPasswordValue(!showOldPasswordValue);
+
   const handleClickShowNewPassword = () =>
     setNewPasswordValue(!showNewPasswordValue);
 
+  function handlePictureUpload() {
+    const fd = new FormData();
+    fd.append("profilePicture", newProfilePicture);
+    const photographerProfilePicture = {};
+    fd.forEach((value, key) => {
+      photographerProfilePicture[key] = value;
+    });
+
+    axios
+      .patch(`http://localhost:4000/photographers/profilepicture/${id}`, fd, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        console.log(res.headers);
+        console.log(res.data);
+        // console.log(data.profilePicture);
+        setSuccessUploadAlert(true);
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+        setErrorUploadAlert(true);
+      });
+  }
+
+  function handlePortfolioUpload() {
+    const fd = new FormData();
+    for (let i = 0; i < newPortfolio.length; i++) {
+      fd.append("portfolio", newPortfolio[i]);
+    }
+
+    axios
+      .patch(`http://localhost:4000/photographers/portfolio/${id}`, fd, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        console.log(res.headers);
+        console.log(res.data);
+        // console.log(data.profilePicture);
+        setSuccessUploadAlert(true);
+        // window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+        setErrorUploadAlert(true);
+      });
+  }
+
   function handleSubmit() {
     if (oldPassword === newPassword && oldPassword !== undefined) {
-      setErrorAlert(true);
+      setErrorUpdateAlert(true);
       // alert("Same Password!");
       throw new Error("Same Password!");
     }
@@ -130,23 +198,22 @@ export default function EditProfilePh() {
       photographyTyes: newPhotographyTypes,
       pricePerHour: newPricePerHour,
       websiteLink: newWebsiteLink,
-      profilePicture: newProfilePicture,
-      portfolio: newPortfolio,
     };
 
     axios
-      .patch(`http://localhost:4000/photographers/${id}`, data)
+      .patch(`http://localhost:4000/photographers/${id}`, data, {
+        headers: {
+          "content-type": "application/json",
+        },
+      })
       .then(() => {
-        setSuccessAlert(true);
-
-        // alert("Updated profile successfully");
+        setSuccessUpdateAlert(true);
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
-        setErrorAlert(true);
-        // alert(err);
+        setErrorUpdateAlert(true);
       });
-    // window.location.href = "/";
   }
 
   return (
@@ -170,20 +237,47 @@ export default function EditProfilePh() {
                 <CardMedia
                   className={classes.profilePic}
                   image={
-                    !existingPhotographerData.profilePicture
-                      ? blankProfile
-                      : existingPhotographerData.profilePicture
+                    existingProfilePicture
+                      ? existingProfilePicture
+                      : blankProfile
                   }
                   title={`${existingPhotographerData.firstName} ${existingPhotographerData.lastName}`}
                 />
+                <div style={{ marginTop: "20px" }}>
+                  Upload New Profile Picture
+                  <Input
+                    accept="image/*"
+                    type="file"
+                    name="profilePicture"
+                    onChange={(e) => setNewProfilePicture(e.target.files[0])}
+                  />
+                  <Button
+                    component="label"
+                    style={{ width: "250px" }}
+                    onClick={handlePictureUpload}
+                  >
+                    upload
+                  </Button>
+                </div>
 
-                <div>
-                  Upload Profile Picture
-                  <Button component="label" style={{ width: "250px" }}>
-                    <Input
-                      type="file"
-                      onChange={(e) => setNewProfilePicture(e.target.files[0])}
-                    />
+                <div style={{ marginTop: "20px" }}>
+                  Upload Your Portfolio (max 15)
+                  <Input
+                    // accept=".png, .jpg, .jpeg"
+                    type="file"
+                    inputProps={{
+                      accept: "image/*",
+                      multiple: true,
+                    }}
+                    name="portfolio"
+                    onChange={(e) => setNewPortfolio(e.target.files)}
+                  />
+                  <Button
+                    component="label"
+                    style={{ width: "250px" }}
+                    onClick={handlePortfolioUpload}
+                  >
+                    upload
                   </Button>
                 </div>
               </Grid>
@@ -198,7 +292,7 @@ export default function EditProfilePh() {
                   label="Change Email"
                   name="email"
                   variant="outlined"
-                  onChange={(e) => setNewEmail(e.target.value)}
+                  onChange={(e) => setNewEmail(e.target.value.toLowerCase())}
                 />
                 <TextField
                   className={classes.inputField}
@@ -371,13 +465,25 @@ export default function EditProfilePh() {
                   Update
                 </Button>
               </div>
+
               <div>
-                {successAlert ? (
-                  <Snackbar open={successAlert} autoHideDuration={2000}>
+                {successUpdateAlert ? (
+                  <Snackbar open={successUpdateAlert} autoHideDuration={1000}>
                     <Alert severity="success">Successfully Updated!</Alert>
                   </Snackbar>
                 ) : (
-                  <Snackbar open={errorAlert} autoHideDuration={2000}>
+                  <Snackbar open={errorUpdateAlert} autoHideDuration={1000}>
+                    <Alert severity="error">Something went wrong!</Alert>
+                  </Snackbar>
+                )}
+              </div>
+              <div>
+                {successUploadAlert ? (
+                  <Snackbar open={successUploadAlert} autoHideDuration={1000}>
+                    <Alert severity="success">Successfully Uploaded!</Alert>
+                  </Snackbar>
+                ) : (
+                  <Snackbar open={errorUploadAlert} autoHideDuration={1000}>
                     <Alert severity="error">Something went wrong!</Alert>
                   </Snackbar>
                 )}

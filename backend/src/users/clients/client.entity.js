@@ -38,8 +38,6 @@ const clientSchema = new Schema({
     required: [true, "PBackend-- hone number is required..."],
   },
   profilePicture: {
-    // data: Buffer,
-    // contentType: String
     type: String,
   },
   role: {

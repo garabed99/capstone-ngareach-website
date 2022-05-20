@@ -181,7 +181,7 @@ export default function SignupCl() {
                   required
                   label="Email"
                   name="email"
-                  value={formik.values.email}
+                  value={formik.values.email.toLowerCase()}
                   variant="outlined"
                   autoFocus
                   onChange={(e) =>

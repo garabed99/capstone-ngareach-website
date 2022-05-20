@@ -54,12 +54,10 @@ const photographerSchema = new Schema({
     required: [true, "Backend-- Price Per Hour is required..."],
   },
   profilePicture: {
-    data: Buffer,
-    contentType: String,
+    type: String,
   },
   portfolio: {
-    data: Buffer,
-    contentType: String,
+    type: [String],
   },
   websiteLink: {
     type: String,

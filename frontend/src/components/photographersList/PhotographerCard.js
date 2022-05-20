@@ -44,6 +44,7 @@ export default function PhotographerCard() {
   const classes = useStyles();
   const [currentPage, setCurrentPage] = useState(0);
   const [photographers, setPhotographers] = useState([]);
+  const [profilePicture, setProfilePicture] = useState([]);
 
   useEffect(() => {
     fetchPhotographers();
@@ -55,6 +56,21 @@ export default function PhotographerCard() {
       .then((res) => {
         console.log("array of photographers", res.data);
         setPhotographers(res.data);
+        return axios.get()
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    axios
+      .get(
+        `http://localhost:4000/photographers/profilepicture/${photographers.id}`,
+        {
+          responseType: "blob",
+        }
+      )
+      .then((res) => {
+        const url = window.URL.createObjectURL(new Blob([res.data]));
+        setProfilePicture(url);
       })
       .catch((err) => {
         console.log(err);
@@ -75,11 +91,7 @@ export default function PhotographerCard() {
           <Card className={classes.root}>
             <CardMedia
               className={classes.profilePic}
-              image={
-                !photographer.profilePicture
-                  ? blankProfile
-                  : photographer.profilePicture
-              }
+              image={photographer.profilePicture ? photographer.profilePicture : blankProfile}
               title={`${photographer.firstName} ${photographer.lastName}`}
             />
 

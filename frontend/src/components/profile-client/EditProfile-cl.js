@@ -65,12 +65,15 @@ export default function EditProfileCl() {
   const id = param.id;
 
   const [existingClientData, setExistingClientData] = useState([]);
+  const [existingProfilePicture, setExistingProfilePicture] = useState("");
+
   const [newEmail, setNewEmail] = useState();
   const [oldPassword, setOldPassword] = useState();
   const [newPassword, setNewPassword] = useState();
   const [newFirstName, setNewFirstName] = useState();
   const [newLastName, setNewLastName] = useState();
   const [newPhone, setNewPhone] = useState();
+
   const [newProfilePicture, setNewProfilePicture] = useState();
   const [successAlert, setSuccessAlert] = useState(false);
   const [errorAlert, setErrorAlert] = useState(false);
@@ -92,7 +95,19 @@ export default function EditProfileCl() {
       .catch((err) => {
         console.log(err);
       });
+    axios
+      .get(`http://localhost:4000/clients/profilepicture/${id}`, {
+        responseType: "blob",
+      })
+      .then((res) => {
+        const url = window.URL.createObjectURL(new Blob([res.data]));
+        setExistingProfilePicture(url);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
+  // console.log(existingClientData.profilePicture);
 
   const [showOldPasswordValue, setOldPasswordValue] = useState({
     showOldPassword: false,
@@ -103,9 +118,36 @@ export default function EditProfileCl() {
 
   const handleClickShowOldPassword = () =>
     setOldPasswordValue(!showOldPasswordValue);
+
   const handleClickShowNewPassword = () =>
     setNewPasswordValue(!showNewPasswordValue);
-  // function handlePictureUpload() {}
+
+  function handlePictureUpload() {
+    const fd = new FormData();
+    fd.append("profilePicture", newProfilePicture);
+    const clientProfilePicture = {};
+    fd.forEach((value, key) => {
+      clientProfilePicture[key] = value;
+    });
+
+    axios
+      .patch(`http://localhost:4000/clients/profilepicture/${id}`, fd, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        console.log(res.headers);
+        console.log(res.data);
+        // console.log(data.profilePicture);
+        setSuccessAlert(true);
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+        setErrorAlert(true);
+      });
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -120,31 +162,26 @@ export default function EditProfileCl() {
       firstName: newFirstName,
       lastName: newLastName,
       phone: newPhone,
-      profilePicture: newProfilePicture.name,
     };
-    console.log(data);
+    // console.log("dataaaa", data);
 
-    console.log("data profile", data.profilePicture);
-
-    // const fd = new FormData();
-    // fd.append("image", data.profilePicture, data.profilePicture.name);
-    // console.log("fdddd", fd);
-
+    // console.log("data profile", data.profilePicture);
+    console.log("nameee", data.lastName);
     axios
       .patch(`http://localhost:4000/clients/${id}`, data, {
         headers: {
-          "Content-Type": data.profilePicture.type,
+          "content-type": "application/json",
         },
       })
       .then(() => {
-        console.log(data.profilePicture);
+        console.log("nammee", data.lastName);
         setSuccessAlert(true);
-        // alert("Updated profile successfully");
+        window.location.reload();
       })
       .catch((err) => {
+        console.log("dataaaa", data);
         console.log(err);
         setErrorAlert(true);
-        // alert(err);
       });
   }
 
@@ -169,24 +206,28 @@ export default function EditProfileCl() {
                   <CardMedia
                     className={classes.profilePic}
                     image={
-                      !existingClientData.profilePicture
-                        ? blankProfile
-                        : existingClientData.profilePicture
+                      existingProfilePicture
+                        ? existingProfilePicture
+                        : blankProfile
                     }
                     title={`${existingClientData.firstName} ${existingClientData.lastName}`}
                   />
-                  <div>
-                    Upload Profile Picture
-                    <Button component="label" style={{ width: "250px" }}>
-                      <Input
-                        accept="image/*"
-                        type="file"
-                        name="profilePicture"
-                        onChange={(e) =>
-                          setNewProfilePicture(e.target.files[0])
-                        }
-                      />
+                  <div style={{ marginTop: "20px" }}>
+                    Upload New Profile Picture
+                    <Input
+                      accept="image/*"
+                      type="file"
+                      name="profilePicture"
+                      onChange={(e) => setNewProfilePicture(e.target.files[0])}
+                    />
+                    <Button
+                      component="label"
+                      style={{ width: "250px" }}
+                      onClick={handlePictureUpload}
+                    >
+                      upload
                     </Button>
+                    {/* <Button onClick={handlePictureUpload}>Upload</Button> */}
                   </div>
                 </Grid>
                 <Grid container item xs={4} direction="column">
@@ -199,7 +240,7 @@ export default function EditProfileCl() {
                     label="Change Email"
                     name="email"
                     variant="outlined"
-                    onChange={(e) => setNewEmail(e.target.value)}
+                    onChange={(e) => setNewEmail(e.target.value.toLowerCase())}
                   />
                   <TextField
                     className={classes.inputField}

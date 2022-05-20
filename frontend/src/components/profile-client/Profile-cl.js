@@ -68,22 +68,35 @@ export default function ProfilePh() {
 
   const [open, setOpen] = useState(false);
   const [clientData, setClientData] = useState([]);
+  const [profilePicture, setProfilePicture] = useState("");
   const param = useParams();
   const id = param.id;
 
   useEffect(() => {
     fetchClientData();
-  },);
+  }, []);
 
   function fetchClientData() {
     axios
       .get(`http://localhost:4000/clients/${id}`)
       .then((res) => {
-        // console.log("array of clients Data", res.data);
+        console.log("array of clients Data", res.data);
 
         if (res.data._id === id) {
           setClientData(res.data);
         }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    axios
+      .get(`http://localhost:4000/clients/profilepicture/${id}`, {
+        responseType: "blob",
+      })
+      .then((res) => {
+        const url = window.URL.createObjectURL(new Blob([res.data]));
+        setProfilePicture(url);
       })
       .catch((err) => {
         console.log(err);
@@ -97,6 +110,7 @@ export default function ProfilePh() {
   function handleClickClose() {
     setOpen(false);
   }
+
   return (
     <>
       <div key={clientData._id}>
@@ -108,14 +122,9 @@ export default function ProfilePh() {
             <Grid container item xs={6} direction="column">
               <CardMedia
                 className={classes.profilePic}
-                image={
-                  !clientData.profilePicture
-                    ? blankProfile
-                    : clientData.profilePicture
-                }
+                image={profilePicture ? profilePicture : blankProfile}
                 title={`${clientData.firstName} ${clientData.lastName}`}
               />
-
               <Button
                 style={{
                   marginTop: "10px",
