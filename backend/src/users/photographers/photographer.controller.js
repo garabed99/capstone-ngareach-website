@@ -23,8 +23,11 @@ router.get(
   "/",
   asyncHandler(async (req, res) => {
     const filters = req.query;
+    // console.log(req);
+    console.log(filters);
     // filter
-    const result = await photographers.findAll();
+    const result = await photographers.findAll(filters);
+    console.log("resuuuult", result);
     res.send(result);
   })
 );
@@ -127,7 +130,7 @@ router.get(
       // res.json(photos);
       // console.log("testingg", res.sendFile(result.portfolio));
       // res.sendFile(result.portfolio[0]);
-      res.send(result.portfolio.join("*"))
+      res.send(result.portfolio.join("*"));
     }
   })
 );

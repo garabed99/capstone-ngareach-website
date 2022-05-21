@@ -6,10 +6,13 @@ import { useState } from "react";
 export default function Home() {
   const [photographers, setPhotographers] = useState([]);
   const [type, setType] = useState("");
+  const [currentGenre, setCurrentGenre] = useState(null);
 
   function fetchPhotographers(e) {
     axios
-      .get("http://localhost:4000/photographers", {params: {photographyTypes:e.genre}})
+      .get("http://localhost:4000/photographers", {
+        params: { photographyTypes: currentGenre },
+      })
       .then((res) => {
         console.log("array of photographers", res.data);
         setPhotographers(res.data);
@@ -42,14 +45,17 @@ export default function Home() {
                   placeholder="Photographer Name"
                 />
 
-                <select name="event_type">
+                <select
+                  name="event_type"
+                  onChange={(e) => setCurrentGenre(e.target.value)}
+                >
                   {photographyTypes.map((event) => (
-                    <option value={event.genre.toLocaleLowerCase()}>
-                      {event.genre}
-                    </option>
+                    <option value={event.genre}>{event.genre}</option>
                   ))}
                 </select>
-                <button type="submit" onClick={fetchPhotographers}>Search</button>
+                <button type="submit" onClick={fetchPhotographers}>
+                  Search
+                </button>
               </div>
             </div>
           </form>

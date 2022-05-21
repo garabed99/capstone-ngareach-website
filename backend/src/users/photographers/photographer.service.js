@@ -2,7 +2,7 @@ const Photographer = require("./photographer.entity");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const { NotFound } = require('http-errors');
+const { NotFound } = require("http-errors");
 
 class PhotographerService {
   create(payload) {
@@ -10,11 +10,11 @@ class PhotographerService {
     return photographer.save();
   }
 
-  async findAll() {
-    const result = await Photographer.find(
-      {},
-      { __v: false, password: false }
-    ).exec();
+  async findAll(filters) {
+    const result = await Photographer.find(filters, {
+      __v: false,
+      password: false,
+    }).exec();
     return result;
   }
 

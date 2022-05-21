@@ -22,7 +22,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import blankProfile from "../../imgs/blank-profile.png";
 // import itemData from "./itemData";
-
+let images;
 const useStyles = makeStyles({
   mainContainer: {
     display: "grid",
@@ -99,6 +99,7 @@ export default function ProfilePh() {
   const [photographerData, setPhotographerData] = useState([]);
   const [profilePicture, setProfilePicture] = useState("");
   const [portfolio, setPortfolio] = useState([]);
+  const [testPortfolio, setTestPortfolio] = useState(null);
   const param = useParams();
   const id = param.id;
   // console.log("portfoliooo", portfolio);
@@ -110,6 +111,10 @@ export default function ProfilePh() {
     // fetchPortfolio();
     fetchPhotographerData();
   }, []);
+
+  useEffect(() => {
+    console.log("aaaaaaaaaaaa", testPortfolio);
+  }, [testPortfolio]);
 
   function fetchPhotographerData() {
     axios
@@ -148,15 +153,37 @@ export default function ProfilePh() {
         console.log(res);
         // const json = JSON.stringify(Object.assign({}, res.data));
         // console.log("json", json);
-        let newURL = res.split("*");
-        let url = [];
-        for (let i = 0; i < newURL.length; i++) {
-          // url.push(res.data)
-          url.push(URL.createObjectURL(new Blob([newURL[i]])));
-        }
+        let newURL = res.data.split("*");
+        let filenames = newURL.map(
+          (cur) => "./" + cur.substring(cur.indexOf("portfolio") + 10)
+        );
+        console.log("filenames", filenames);
+        // let url = [];
+        // for (let i = 0; i < newURL.length; i++) {
+        //   // url.push(res.data)
+        //   url.push(URL.createObjectURL(new Blob([newURL[i]])));
+        // }
         //const url = window.URL.createObjectURL(new Blob([res.data]));
-        setPortfolio(url);
-        console.log("url", url);
+        function importAll(r) {
+          let images = {};
+          console.log("keeey", r.keys());
+          r.keys().map((item, index) => {
+            if (filenames.includes(item)) {
+              images[item.replace("./", "")] = r(item);
+            }
+          });
+          return images;
+        }
+
+        images = importAll(
+          require.context(
+            "../../../../backend/src/commons/images/photographers/portfolio",
+            false,
+            /\.(png|jpe?g|svg)$/
+          )
+        );
+        setTestPortfolio(images);
+        setPortfolio(newURL);
       })
       .catch((err) => {
         console.log(err);
@@ -165,7 +192,7 @@ export default function ProfilePh() {
 
   // async function fetchPortfolio() {
   //   const portfolioRes = await fetch(
-  //     `http://localhost:4000/photographers/portfolio/${id}`
+  //     http://localhost:4000/photographers/portfolio/${id}
   //   );
   //   console.log(portfolioRes);
   //   console.log(await fetch(portfolioRes.url));
@@ -173,6 +200,25 @@ export default function ProfilePh() {
   //   const url = URL.createObjectURL(blob);
   //   console.log(url);
   // }
+
+  function generateElements() {
+    let photos = [];
+    for (let key in testPortfolio) {
+      photos.push(
+        <ImageListItem key={key}>
+          <img src={testPortfolio[key]} alt={"portfolio"} />
+          <ImageListItemBar
+            title={key}
+            classes={{
+              root: classes.titleBar,
+              title: classes.title,
+            }}
+          />
+        </ImageListItem>
+      );
+    }
+    return photos;
+  }
 
   function handleClickOpen() {
     setOpen(true);
@@ -230,18 +276,7 @@ export default function ProfilePh() {
           </Grid>
           <div className={classes.portfolioRoot}>
             <ImageList className={classes.imageList} cols={3}>
-              {portfolio.map((item) => (
-                <ImageListItem key={item}>
-                  <img src={item} alt={"portfolio"} />
-                  <ImageListItemBar
-                    title={item}
-                    classes={{
-                      root: classes.titleBar,
-                      title: classes.title,
-                    }}
-                  />
-                </ImageListItem>
-              ))}
+              {generateElements()}
             </ImageList>
           </div>
         </Paper>
