@@ -31,6 +31,7 @@ export default function App() {
             margin: "0px 10px 10px 0px",
           }}
         >
+
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/home" element={<Home />} />
@@ -59,6 +60,7 @@ export default function App() {
             />
             <Route path="/privacypolicy" element={<PrivacyPolicy />} />
           </Routes>
+          
         </div>
 
         <Footer />

@@ -227,7 +227,6 @@ export default function EditProfileCl() {
                     >
                       upload
                     </Button>
-                    {/* <Button onClick={handlePictureUpload}>Upload</Button> */}
                   </div>
                 </Grid>
                 <Grid container item xs={4} direction="column">

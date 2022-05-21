@@ -49,10 +49,12 @@ const uploadClientProfile = multer({
   storage: clientProfileStorageEngine,
   fileFilter: filefilter,
 });
+
 const uploadPhotographerProfile = multer({
   storage: photographerProfileStorageEngine,
   fileFilter: filefilter,
 });
+
 const uploadPhotographerPortfolio = multer({
   storage: photographerPortfolioStorageEngine,
   fileFilter: filefilter,

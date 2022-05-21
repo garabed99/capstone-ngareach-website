@@ -73,7 +73,6 @@ router.patch(
     const { id } = req.params;
 
     console.log("img --cl.CONTROLLER====", req.file);
-    //req.file
     const result = await clients.update(id, {
       profilePicture: req.file.path,
     });

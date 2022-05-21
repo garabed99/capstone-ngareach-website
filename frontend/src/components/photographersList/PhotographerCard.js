@@ -47,51 +47,65 @@ export default function PhotographerCard() {
   const [profilePicture, setProfilePicture] = useState([]);
 
   useEffect(() => {
-    fetchPhotographers();
-  }, []);
-
-  function fetchPhotographers() {
     axios
       .get("http://localhost:4000/photographers")
       .then((res) => {
         console.log("array of photographers", res.data);
         setPhotographers(res.data);
-        return axios.get()
+        Promise.all(
+          res.data.map((value) => {
+            return fetchPhotographers(value);
+          })
+        ).then((values) => setProfilePicture(values));
+        // const imagesData = Promise.all(responses.map((r) => r.json()));
+        // console.log(imagesData);
+        // return axios.get();
+        // console.log("..", );
       })
+
       .catch((err) => {
         console.log(err);
       });
-    axios
-      .get(
-        `http://localhost:4000/photographers/profilepicture/${photographers.id}`,
-        {
-          responseType: "blob",
-        }
-      )
-      .then((res) => {
-        const url = window.URL.createObjectURL(new Blob([res.data]));
-        setProfilePicture(url);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  }, []);
+
+  async function fetchPhotographers(value) {
+    const imageres = await fetch(
+      `http://localhost:4000/photographers/profilepicture/${value._id}`
+    );
+    const blob = await imageres.blob();
+    const url = URL.createObjectURL(blob);
+    return url;
   }
+
+  // axios
+  //   .get(
+  //     `http://localhost:4000/photographers/profilepicture/${photographers.id}`
+  //   )
+  //   .then((res) => {
+  //     const url = window.URL.createObjectURL(new Blob([res.data]));
+  //     setProfilePicture(url);
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //   });
+  // }
 
   function handlePageClick({ selected: selectedPage }) {
     console.log("selectedPage: ", selectedPage);
     setCurrentPage(selectedPage);
   }
-
+  console.log("proofff", profilePicture);
   const offset = currentPage * PER_PAGE;
   const currentPagePhotographers = photographers
     .slice(offset, offset + PER_PAGE)
-    .map((photographer) => {
+    .map((photographer, index) => {
       return (
         <Grid item xs={12} sm={6} md={3} key={photographer._id}>
           <Card className={classes.root}>
             <CardMedia
+              // component="img"
               className={classes.profilePic}
-              image={photographer.profilePicture ? photographer.profilePicture : blankProfile}
+              image={profilePicture[index]}
               title={`${photographer.firstName} ${photographer.lastName}`}
             />
 

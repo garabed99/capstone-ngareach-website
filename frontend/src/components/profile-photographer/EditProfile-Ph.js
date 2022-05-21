@@ -83,6 +83,7 @@ export default function EditProfilePh() {
   const [newPortfolio, setNewPortfolio] = useState([]);
   const [successUpdateAlert, setSuccessUpdateAlert] = useState(false);
   const [errorUpdateAlert, setErrorUpdateAlert] = useState(false);
+
   const [successUploadAlert, setSuccessUploadAlert] = useState(false);
   const [errorUploadAlert, setErrorUploadAlert] = useState(false);
 
@@ -468,22 +469,22 @@ export default function EditProfilePh() {
 
               <div>
                 {successUpdateAlert ? (
-                  <Snackbar open={successUpdateAlert} autoHideDuration={1000}>
+                  <Snackbar open={successUpdateAlert} autoHideDuration={2000}>
                     <Alert severity="success">Successfully Updated!</Alert>
                   </Snackbar>
                 ) : (
-                  <Snackbar open={errorUpdateAlert} autoHideDuration={1000}>
+                  <Snackbar open={errorUpdateAlert} autoHideDuration={2000}>
                     <Alert severity="error">Something went wrong!</Alert>
                   </Snackbar>
                 )}
               </div>
               <div>
                 {successUploadAlert ? (
-                  <Snackbar open={successUploadAlert} autoHideDuration={1000}>
+                  <Snackbar open={successUploadAlert} autoHideDuration={2000}>
                     <Alert severity="success">Successfully Uploaded!</Alert>
                   </Snackbar>
                 ) : (
-                  <Snackbar open={errorUploadAlert} autoHideDuration={1000}>
+                  <Snackbar open={errorUploadAlert} autoHideDuration={2000}>
                     <Alert severity="error">Something went wrong!</Alert>
                   </Snackbar>
                 )}

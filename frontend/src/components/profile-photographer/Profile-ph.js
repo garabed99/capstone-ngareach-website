@@ -21,7 +21,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import blankProfile from "../../imgs/blank-profile.png";
-import itemData from "./itemData";
+// import itemData from "./itemData";
 
 const useStyles = makeStyles({
   mainContainer: {
@@ -74,6 +74,8 @@ const useStyles = makeStyles({
     alignItems: "center",
     overflow: "hidden",
     marginTop: "150px",
+    width: "500px",
+    hieght: "300px",
     // backgroundColor: theme.palette.background.paper,
   },
   imageList: {
@@ -99,8 +101,13 @@ export default function ProfilePh() {
   const [portfolio, setPortfolio] = useState([]);
   const param = useParams();
   const id = param.id;
-  // const portfolioObj = { ...portfolio };
+  // console.log("portfoliooo", portfolio);
+  const portfolioObj = { ...portfolio };
+  console.log("portfObj", portfolioObj);
+
+  // console.log("portfObj keys", Object.keys(portfolioObj));
   useEffect(() => {
+    // fetchPortfolio();
     fetchPhotographerData();
   }, []);
 
@@ -123,12 +130,8 @@ export default function ProfilePh() {
         responseType: "blob",
       })
       .then((res) => {
-        for(let i =0; i < res.length; i++) {
-          
-        }
         const url = window.URL.createObjectURL(new Blob([res.data]));
         setProfilePicture(url);
-        console.log(url);
       })
       .catch((err) => {
         console.log(err);
@@ -136,16 +139,40 @@ export default function ProfilePh() {
 
     axios
       .get(`http://localhost:4000/photographers/portfolio/${id}`, {
-        responseType: "blob",
+        headers: {
+          //   responseType: "blob",
+        },
+        // responseType: "arraybuffer",
       })
       .then((res) => {
-        const url = window.URL.createObjectURL(new Blob([res.data]));
+        console.log(res);
+        // const json = JSON.stringify(Object.assign({}, res.data));
+        // console.log("json", json);
+        let newURL = res.split("*");
+        let url = [];
+        for (let i = 0; i < newURL.length; i++) {
+          // url.push(res.data)
+          url.push(URL.createObjectURL(new Blob([newURL[i]])));
+        }
+        //const url = window.URL.createObjectURL(new Blob([res.data]));
         setPortfolio(url);
+        console.log("url", url);
       })
       .catch((err) => {
         console.log(err);
       });
   }
+
+  // async function fetchPortfolio() {
+  //   const portfolioRes = await fetch(
+  //     `http://localhost:4000/photographers/portfolio/${id}`
+  //   );
+  //   console.log(portfolioRes);
+  //   console.log(await fetch(portfolioRes.url));
+  //   const blob = await portfolioRes.blob();
+  //   const url = URL.createObjectURL(blob);
+  //   console.log(url);
+  // }
 
   function handleClickOpen() {
     setOpen(true);
@@ -169,7 +196,6 @@ export default function ProfilePh() {
                 image={profilePicture ? profilePicture : blankProfile}
                 title={`${photographerData.firstName} ${photographerData.lastName}`}
               />
-              {console.log(portfolio)}
               <Button
                 style={{
                   marginTop: "10px",
@@ -203,19 +229,19 @@ export default function ProfilePh() {
             </Grid> */}
           </Grid>
           <div className={classes.portfolioRoot}>
-            <ImageList className={classes.imageList} cols={2.5} gap={3}>
-              {/* {portfolio.map((item) => (
-                <ImageListItem key={item.img}>
-                  <img src={item.img} alt={item.title} />
+            <ImageList className={classes.imageList} cols={3}>
+              {portfolio.map((item) => (
+                <ImageListItem key={item}>
+                  <img src={item} alt={"portfolio"} />
                   <ImageListItemBar
-                    title={item.title}
+                    title={item}
                     classes={{
                       root: classes.titleBar,
                       title: classes.title,
                     }}
                   />
                 </ImageListItem>
-              ))} */}
+              ))}
             </ImageList>
           </div>
         </Paper>

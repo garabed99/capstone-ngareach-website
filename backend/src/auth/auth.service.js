@@ -5,6 +5,7 @@ const { Unauthorized } = require("http-errors");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 class AuthService {
+  
   async validate(email, password, role) {
     if (role === CLIENT_ROLE) {
       const client = await clients.findOne({ email });

@@ -57,7 +57,7 @@ const photographerSchema = new Schema({
     type: String,
   },
   portfolio: {
-    type: [String],
+    type: Object,
   },
   websiteLink: {
     type: String,

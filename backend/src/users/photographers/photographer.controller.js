@@ -99,9 +99,7 @@ router.patch(
 
     console.log("img --ph.CONTROLLER====", req.files);
     console.log("pathhhh --ph.CONTROLLER====", paths);
-    //req.file
     const result = await photographers.update(id, {
-      // portfolio: req.files.path,
       portfolio: paths,
     });
 
@@ -115,9 +113,10 @@ router.get(
   asyncHandler(async (req, res) => {
     const { id } = req.params;
     const result = await photographers.findOne(id);
-    // const image = URL.createObjectURL(result.profilePicture);
-    // console.log(result.profilePicture);
-    // console.log("result===", image);
+    // const image = window.URL.createObjectURL(result.portfolio);
+    console.log(result.portfolio);
+    console.log("result===", result);
+
     if (result.portfolio.length) {
       let photos = [];
       for (let i = 0; i < result.portfolio.length; i++) {
@@ -125,9 +124,10 @@ router.get(
         photos.push(result.portfolio[i]);
         // res.links(result.portfolio[i]);
       }
-      res.json(photos)
+      // res.json(photos);
       // console.log("testingg", res.sendFile(result.portfolio));
-      // res.sendFile(result.portfolio);
+      // res.sendFile(result.portfolio[0]);
+      res.send(result.portfolio.join("*"))
     }
   })
 );
