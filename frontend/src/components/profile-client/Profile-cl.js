@@ -1,10 +1,5 @@
 import {
-  Button,
   CardMedia,
-  Dialog,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
   Grid,
   makeStyles,
   Paper,
@@ -64,10 +59,9 @@ const useStyles = makeStyles({
   },
 });
 
-export default function ProfilePh() {
+export default function ProfileCl() {
   const classes = useStyles();
 
-  const [open, setOpen] = useState(false);
   const [clientData, setClientData] = useState([]);
   const [profilePicture, setProfilePicture] = useState("");
   const param = useParams();
@@ -104,13 +98,7 @@ export default function ProfilePh() {
       });
   }
 
-  function handleClickOpen() {
-    setOpen(true);
-  }
 
-  function handleClickClose() {
-    setOpen(false);
-  }
 
   return (
     <>
