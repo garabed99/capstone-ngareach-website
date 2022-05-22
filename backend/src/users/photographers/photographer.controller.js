@@ -23,7 +23,6 @@ router.get(
   "/",
   asyncHandler(async (req, res) => {
     const filters = req.query;
-    // console.log(req);
     console.log(filters);
     // filter
     const result = await photographers.findAll(filters);

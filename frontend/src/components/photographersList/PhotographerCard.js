@@ -44,7 +44,7 @@ export default function PhotographerCard() {
   const [currentPage, setCurrentPage] = useState(0);
   const [photographers, setPhotographers] = useState([]);
   const [profilePicture, setProfilePicture] = useState([]);
-  const PER_PAGE = 8;
+  const PER_PAGE = 15;
 
   useEffect(() => {
     axios
@@ -74,11 +74,11 @@ export default function PhotographerCard() {
   }
 
   function handlePageClick({ selected: selectedPage }) {
-    console.log("selectedPage: ", selectedPage);
+    // console.log("selectedPage: ", selectedPage);
     setCurrentPage(selectedPage);
   }
 
-  console.log("proofff", profilePicture);
+  // console.log("proofff", profilePicture);
   const offset = currentPage * PER_PAGE;
   const currentPagePhotographers = photographers
     .slice(offset, offset + PER_PAGE)

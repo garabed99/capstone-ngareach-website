@@ -15,9 +15,10 @@ import ContactUs from "./components/information-footer/ContactUs";
 import FAQ from "./components/information-footer/FAQ";
 import TermsAndConditions from "./components/information-footer/TermsAndConditions";
 import PrivacyPolicy from "./components/information-footer/PrivacyPolicy";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ErrorPage from "./components/ErrorPage"
 import Footer from "./components/Footer";
 import NavBar from "./components/navbar-section/NavBar";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 export default function App() {
   return (
@@ -59,6 +60,7 @@ export default function App() {
               element={<TermsAndConditions />}
             />
             <Route path="/privacypolicy" element={<PrivacyPolicy />} />
+            <Route path="*" element={<ErrorPage/>} />
           </Routes>
           
         </div>

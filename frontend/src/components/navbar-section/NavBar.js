@@ -49,7 +49,6 @@ export default function NavBar() {
   const navigate = useNavigate();
   const loggedUser = JSON.parse(localStorage.getItem("loggedUserInfo"));
   let isLogged = false;
-  let nameInitial;
 
   if (loggedUser) {
     isLogged = true;

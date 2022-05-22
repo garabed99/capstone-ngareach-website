@@ -8,6 +8,7 @@ import {
   Grid,
   makeStyles,
   Paper,
+  Typography,
 } from "@material-ui/core";
 
 import PhoneIcon from "@material-ui/icons/Phone";
@@ -56,9 +57,9 @@ const useStyles = makeStyles({
     paddingRight: 40,
     paddingLeft: 40,
     paddingTop: 20,
-    height: "100vh",
-    maxHeight: "160vh",
-    width: "70vw",
+    height: "80vh",
+    maxHeight: "130vh",
+    width: "40vw",
     margin: "40px auto",
   },
 });
@@ -125,42 +126,24 @@ export default function ProfilePh() {
                 image={profilePicture ? profilePicture : blankProfile}
                 title={`${clientData.firstName} ${clientData.lastName}`}
               />
-              <Button
-                style={{
-                  marginTop: "10px",
-                  background: "#42a5f5",
-                  color: "white",
-                  textDecoration: "inherit",
-                  width: "250px",
-                  variant: "contained",
-                }}
-                onClick={handleClickOpen}
-              >
-                Contact Info
-              </Button>
+            </Grid>
+            <Grid container item xs={6} direction="column">
+              <Typography style={{ marginBottom: "15px", fontSize: "24px" }}>
+                <b>Contact Info</b>
+              </Typography>
+              <div>
+                <EmailIcon fontSize="medium" />
+                &nbsp;
+                <b>Email:</b> {clientData.email}
+              </div>
+              <div>
+                <PhoneIcon fontSize="medium" />
+                &nbsp;
+                <b>Phone number:</b> {clientData.phone}
+              </div>
             </Grid>
           </Grid>
         </Paper>
-        <Dialog
-          open={open}
-          onClose={handleClickClose}
-          aria-labelledby="alert-dialog-title"
-          aria-describedby="alert-dialog-description"
-        >
-          <DialogTitle>{"Contact Info"}</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              <EmailIcon fontSize="medium" />
-              &nbsp;
-              <b>Email:</b> {clientData.email}
-              <br />
-              <PhoneIcon fontSize="medium" />
-              &nbsp;
-              <b>Phone number:</b> {clientData.phone}
-              <br />
-            </DialogContentText>
-          </DialogContent>
-        </Dialog>
       </div>
     </>
   );

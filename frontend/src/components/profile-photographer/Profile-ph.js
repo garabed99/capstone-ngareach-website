@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   CardMedia,
   Dialog,
@@ -74,15 +75,20 @@ const useStyles = makeStyles({
     overflow: "hidden",
     marginTop: "150px",
     width: "500px",
-    hieght: "300px",
+
   },
   imageList: {
     flexWrap: "nowrap",
     transform: "translateZ(0)",
+
   },
   titleBar: {
     background:
       "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
+  },
+  "& MuiImageList-root-makeStyles-imageList-11": {
+    width: "600px",
+    height: "600px",
   },
 });
 
@@ -101,8 +107,7 @@ export default function ProfilePh() {
     fetchPhotographerData();
   }, []);
 
-  useEffect(() => {
-  }, [portfolio]);
+  useEffect(() => {}, [portfolio]);
 
   function fetchPhotographerData() {
     axios
@@ -230,14 +235,15 @@ export default function ProfilePh() {
               <Typography variant="overline">
                 {photographerData.biography}
               </Typography>
-            </Grid>
-
-          </Grid>
-          <div className={classes.portfolioRoot}>
+              <Box className={classes.portfolioRoot}>
             <ImageList className={classes.imageList} cols={3}>
               {generateElements()}
             </ImageList>
-          </div>
+          </Box>
+            </Grid>
+
+          </Grid>
+
         </Paper>
         <Dialog
           open={open}
