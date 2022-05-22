@@ -38,13 +38,13 @@ const useStyles = makeStyles({
   },
 });
 
-const PER_PAGE = 8;
-
 export default function PhotographerCard() {
   const classes = useStyles();
+
   const [currentPage, setCurrentPage] = useState(0);
   const [photographers, setPhotographers] = useState([]);
   const [profilePicture, setProfilePicture] = useState([]);
+  const PER_PAGE = 8;
 
   useEffect(() => {
     axios
@@ -57,10 +57,6 @@ export default function PhotographerCard() {
             return fetchPhotographers(value);
           })
         ).then((values) => setProfilePicture(values));
-        // const imagesData = Promise.all(responses.map((r) => r.json()));
-        // console.log(imagesData);
-        // return axios.get();
-        // console.log("..", );
       })
 
       .catch((err) => {
@@ -77,23 +73,11 @@ export default function PhotographerCard() {
     return url;
   }
 
-  // axios
-  //   .get(
-  //     `http://localhost:4000/photographers/profilepicture/${photographers.id}`
-  //   )
-  //   .then((res) => {
-  //     const url = window.URL.createObjectURL(new Blob([res.data]));
-  //     setProfilePicture(url);
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //   });
-  // }
-
   function handlePageClick({ selected: selectedPage }) {
     console.log("selectedPage: ", selectedPage);
     setCurrentPage(selectedPage);
   }
+
   console.log("proofff", profilePicture);
   const offset = currentPage * PER_PAGE;
   const currentPagePhotographers = photographers
@@ -103,9 +87,10 @@ export default function PhotographerCard() {
         <Grid item xs={12} sm={6} md={3} key={photographer._id}>
           <Card className={classes.root}>
             <CardMedia
-              // component="img"
               className={classes.profilePic}
-              image={profilePicture[index]}
+              image={
+                profilePicture[index] ? profilePicture[index] : blankProfile
+              }
               title={`${photographer.firstName} ${photographer.lastName}`}
             />
 
@@ -113,6 +98,7 @@ export default function PhotographerCard() {
               <Typography gutterBottom variant="h5">
                 {photographer.firstName} {photographer.lastName}
               </Typography>
+
               <Typography
                 variant="subtitle2"
                 color="textSecondary"

@@ -9,35 +9,90 @@ import {
   Divider,
   Hidden,
   IconButton,
+  makeStyles,
   Menu,
   MenuItem,
   SwipeableDrawer,
   Toolbar,
-  Tooltip,
   Typography,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 
 import blankProfile from "../../imgs/blank-profile.png";
+
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/NavBar.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
+const useStyles = makeStyles({
+  clientLogo: {
+    borderRadius: "4px",
+    variant: "square",
+  },
+  photographerLogo: {
+    borderRadius: "4px",
+    variant: "square",
+  },
+});
+
 export default function NavBar() {
+  const classes = useStyles();
   const [openMenu, setOpenMenu] = useState(false);
   const [openDialog, setOpenDialog] = useState(false);
   const [openDrawer, setOpenDrawer] = useState(false);
-  // const [profilePicture, setProfilePicture] = useState([]);
-  const navigate = useNavigate();
 
+  const [clientProfPic, setClientProfPic] = useState("");
+  const [photographerProfPic, setPhotographerProfPic] = useState("");
+
+  const navigate = useNavigate();
   const loggedUser = JSON.parse(localStorage.getItem("loggedUserInfo"));
   let isLogged = false;
-  // const url = window.URL.createObjectURL(new Blob([loggedUser.profilePicture]));
+  let nameInitial;
 
   if (loggedUser) {
     isLogged = true;
+  }
+
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
+  function fetchUserData() {
+    if (isLogged) {
+      if (loggedUser.userInfo.role === "Client") {
+        axios
+          .get(
+            `http://localhost:4000/clients/profilepicture/${loggedUser.userInfo.id}`,
+            {
+              responseType: "blob",
+            }
+          )
+          .then((res) => {
+            const url = window.URL.createObjectURL(new Blob([res.data]));
+            setClientProfPic(url);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } else {
+        axios
+          .get(
+            `http://localhost:4000/photographers/profilepicture/${loggedUser.userInfo.id}`,
+            {
+              responseType: "blob",
+            }
+          )
+          .then((res) => {
+            const url = window.URL.createObjectURL(new Blob([res.data]));
+            setPhotographerProfPic(url);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      }
+    }
   }
 
   function handleLogout() {
@@ -131,13 +186,21 @@ export default function NavBar() {
                       aria-controls="simple-menu"
                       aria-haspopup="true"
                       startIcon={
-                        <Avatar
-                          src={
-                            !loggedUser.userInfo.profilePicture
-                              ? blankProfile
-                              : loggedUser.userInfo.profilePicture
-                          }
-                        />
+                        isLogged ? (
+                          loggedUser.userInfo.role === "Client" ? (
+                            <Avatar
+                              className={classes.photographerLogo}
+                              src={clientProfPic}
+                            />
+                          ) : (
+                            <Avatar
+                              className={classes.photographerLogo}
+                              src={photographerProfPic}
+                            />
+                          )
+                        ) : (
+                          <Avatar src={blankProfile} />
+                        )
                       }
                     >
                       {loggedUser.userInfo.firstName}
@@ -320,14 +383,21 @@ export default function NavBar() {
                   aria-controls="simple-menu"
                   aria-haspopup="true"
                   startIcon={
-                    <Avatar
-                      style={{ alignSelf: "center" }}
-                      src={
-                        !loggedUser.profilePicture
-                          ? blankProfile
-                          : loggedUser.profilePicture
-                      }
-                    />
+                    isLogged ? (
+                      loggedUser.userInfo.role === "Client" ? (
+                        <Avatar
+                          className={classes.photographerLogo}
+                          src={clientProfPic}
+                        />
+                      ) : (
+                        <Avatar
+                          className={classes.photographerLogo}
+                          src={photographerProfPic}
+                        />
+                      )
+                    ) : (
+                      <Avatar src={blankProfile} />
+                    )
                   }
                 >
                   {loggedUser.userInfo.firstName}

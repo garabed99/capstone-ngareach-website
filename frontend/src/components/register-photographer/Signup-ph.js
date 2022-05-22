@@ -160,13 +160,10 @@ export default function SignupPh() {
         setTimeout(() => {
           window.location.href = "/login";
         }, 800);
-        // alert("Successfully created an account!");
-        // window.location.href = "/";
       })
       .catch((err) => {
         console.log(err);
         setErrorAlert(true);
-        // alert(err);
       });
   }
 

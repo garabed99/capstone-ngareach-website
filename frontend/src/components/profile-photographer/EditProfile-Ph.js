@@ -147,7 +147,6 @@ export default function EditProfilePh() {
       .then((res) => {
         console.log(res.headers);
         console.log(res.data);
-        // console.log(data.profilePicture);
         setSuccessUploadAlert(true);
         window.location.reload();
       })
@@ -172,9 +171,8 @@ export default function EditProfilePh() {
       .then((res) => {
         console.log(res.headers);
         console.log(res.data);
-        // console.log(data.profilePicture);
         setSuccessUploadAlert(true);
-        // window.location.reload();
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
@@ -264,7 +262,6 @@ export default function EditProfilePh() {
                 <div style={{ marginTop: "20px" }}>
                   Upload Your Portfolio (max 15)
                   <Input
-                    // accept=".png, .jpg, .jpeg"
                     type="file"
                     inputProps={{
                       accept: "image/*",

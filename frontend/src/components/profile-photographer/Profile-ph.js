@@ -21,8 +21,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import blankProfile from "../../imgs/blank-profile.png";
-// import itemData from "./itemData";
-let images;
+
 const useStyles = makeStyles({
   mainContainer: {
     display: "grid",
@@ -76,16 +75,11 @@ const useStyles = makeStyles({
     marginTop: "150px",
     width: "500px",
     hieght: "300px",
-    // backgroundColor: theme.palette.background.paper,
   },
   imageList: {
     flexWrap: "nowrap",
-    // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
     transform: "translateZ(0)",
   },
-  // title: {
-  //   color: theme.palette.primary.light,
-  // },
   titleBar: {
     background:
       "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
@@ -98,23 +92,17 @@ export default function ProfilePh() {
   const [open, setOpen] = useState(false);
   const [photographerData, setPhotographerData] = useState([]);
   const [profilePicture, setProfilePicture] = useState("");
-  const [portfolio, setPortfolio] = useState([]);
-  const [testPortfolio, setTestPortfolio] = useState(null);
+  const [portfolio, setPortfolio] = useState(null);
   const param = useParams();
   const id = param.id;
-  // console.log("portfoliooo", portfolio);
-  const portfolioObj = { ...portfolio };
-  console.log("portfObj", portfolioObj);
+  let images;
 
-  // console.log("portfObj keys", Object.keys(portfolioObj));
   useEffect(() => {
-    // fetchPortfolio();
     fetchPhotographerData();
   }, []);
 
   useEffect(() => {
-    console.log("aaaaaaaaaaaa", testPortfolio);
-  }, [testPortfolio]);
+  }, [portfolio]);
 
   function fetchPhotographerData() {
     axios
@@ -143,30 +131,16 @@ export default function ProfilePh() {
       });
 
     axios
-      .get(`http://localhost:4000/photographers/portfolio/${id}`, {
-        headers: {
-          //   responseType: "blob",
-        },
-        // responseType: "arraybuffer",
-      })
+      .get(`http://localhost:4000/photographers/portfolio/${id}`)
       .then((res) => {
         console.log(res);
-        // const json = JSON.stringify(Object.assign({}, res.data));
-        // console.log("json", json);
         let newURL = res.data.split("*");
         let filenames = newURL.map(
           (cur) => "./" + cur.substring(cur.indexOf("portfolio") + 10)
         );
-        console.log("filenames", filenames);
-        // let url = [];
-        // for (let i = 0; i < newURL.length; i++) {
-        //   // url.push(res.data)
-        //   url.push(URL.createObjectURL(new Blob([newURL[i]])));
-        // }
-        //const url = window.URL.createObjectURL(new Blob([res.data]));
+
         function importAll(r) {
           let images = {};
-          console.log("keeey", r.keys());
           r.keys().map((item, index) => {
             if (filenames.includes(item)) {
               images[item.replace("./", "")] = r(item);
@@ -182,36 +156,23 @@ export default function ProfilePh() {
             /\.(png|jpe?g|svg)$/
           )
         );
-        setTestPortfolio(images);
-        setPortfolio(newURL);
+        setPortfolio(images);
       })
       .catch((err) => {
         console.log(err);
       });
   }
 
-  // async function fetchPortfolio() {
-  //   const portfolioRes = await fetch(
-  //     http://localhost:4000/photographers/portfolio/${id}
-  //   );
-  //   console.log(portfolioRes);
-  //   console.log(await fetch(portfolioRes.url));
-  //   const blob = await portfolioRes.blob();
-  //   const url = URL.createObjectURL(blob);
-  //   console.log(url);
-  // }
-
   function generateElements() {
     let photos = [];
-    for (let key in testPortfolio) {
+    for (let key in portfolio) {
       photos.push(
         <ImageListItem key={key}>
-          <img src={testPortfolio[key]} alt={"portfolio"} />
+          <img src={portfolio[key]} alt={"portfolio"} />
           <ImageListItemBar
             title={key}
             classes={{
               root: classes.titleBar,
-              title: classes.title,
             }}
           />
         </ImageListItem>
@@ -270,9 +231,7 @@ export default function ProfilePh() {
                 {photographerData.biography}
               </Typography>
             </Grid>
-            {/* <Grid container item xs={6} direction="column">
 
-            </Grid> */}
           </Grid>
           <div className={classes.portfolioRoot}>
             <ImageList className={classes.imageList} cols={3}>

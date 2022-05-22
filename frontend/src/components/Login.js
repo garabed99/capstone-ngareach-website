@@ -62,14 +62,10 @@ const useStyles = makeStyles({
   paperStyle: {
     padding: 20,
     height: "70vh",
-    // maxWidth: ,
     width: 400,
     margin: "40px auto",
   },
-  // alert: {
-  //   width: "100%",
-  //   "& > * + *": {},
-  // },
+
 });
 
 const validationSchema = yup.object({

@@ -5,7 +5,6 @@ import { useState } from "react";
 
 export default function Home() {
   const [photographers, setPhotographers] = useState([]);
-  const [type, setType] = useState("");
   const [currentGenre, setCurrentGenre] = useState(null);
 
   function fetchPhotographers(e) {

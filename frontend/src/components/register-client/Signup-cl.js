@@ -137,13 +137,10 @@ export default function SignupCl() {
         setTimeout(() => {
           window.location.href = "/login";
         }, 800);
-        // window.location.href = "/login";
-        // alert("Successfully created an account! Try to login now.");
       })
       .catch((err) => {
         console.log(err);
         setErrorAlert(true);
-        // alert(err);
       });
   }
 
@@ -371,7 +368,9 @@ export default function SignupCl() {
             <div>
               {successAlert ? (
                 <Snackbar open={successAlert} autoHideDuration={2000}>
-                  <Alert severity="success">Successfully created an account! Try to login now.</Alert>
+                  <Alert severity="success">
+                    Successfully created an account! Try to login now.
+                  </Alert>
                 </Snackbar>
               ) : (
                 <Snackbar open={errorAlert} autoHideDuration={2000}>

@@ -107,7 +107,6 @@ export default function EditProfileCl() {
         console.log(err);
       });
   }
-  // console.log(existingClientData.profilePicture);
 
   const [showOldPasswordValue, setOldPasswordValue] = useState({
     showOldPassword: false,
@@ -139,7 +138,6 @@ export default function EditProfileCl() {
       .then((res) => {
         console.log(res.headers);
         console.log(res.data);
-        // console.log(data.profilePicture);
         setSuccessAlert(true);
         window.location.reload();
       })
@@ -163,9 +161,7 @@ export default function EditProfileCl() {
       lastName: newLastName,
       phone: newPhone,
     };
-    // console.log("dataaaa", data);
 
-    // console.log("data profile", data.profilePicture);
     console.log("nameee", data.lastName);
     axios
       .patch(`http://localhost:4000/clients/${id}`, data, {
@@ -174,12 +170,10 @@ export default function EditProfileCl() {
         },
       })
       .then(() => {
-        console.log("nammee", data.lastName);
         setSuccessAlert(true);
         window.location.reload();
       })
       .catch((err) => {
-        console.log("dataaaa", data);
         console.log(err);
         setErrorAlert(true);
       });
