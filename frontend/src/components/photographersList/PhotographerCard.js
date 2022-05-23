@@ -109,7 +109,7 @@ export default function PhotographerCard() {
               </Typography>
               <br />
               <Typography>
-                <b>Photography type:</b> {photographer.photographyTypes}
+                <b>Photography type: </b> {photographer.photographyTypes}
               </Typography>
             </CardContent>
 

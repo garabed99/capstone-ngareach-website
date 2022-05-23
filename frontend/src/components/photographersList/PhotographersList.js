@@ -7,10 +7,10 @@ export default function PhotographersList() {
         <h1 style={{ marginLeft: "30px" }}>All Photographers</h1>
 
       </div>
-      <div>
-        
-      </div>
+    
       <PhotographerCard />
+        
+    
     </>
   );
 }

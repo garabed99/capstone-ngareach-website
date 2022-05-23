@@ -11,10 +11,16 @@ class PhotographerService {
   }
 
   async findAll(filters) {
-    const result = await Photographer.find(filters, {
-      __v: false,
-      password: false,
-    }).exec();
+    if (!filters.firstName) {
+      delete filters.firstName;
+    }
+    if (!filters.photographyTypes) {
+      delete filters.photographyTypes;
+    }
+    if (!filters.pricePerHour) {
+      delete filters.pricePerHour;
+    }
+    const result = await Photographer.find(filters, { password: false }).exec();
     return result;
   }
 

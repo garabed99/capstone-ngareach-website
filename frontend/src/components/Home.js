@@ -1,47 +1,77 @@
 import "./styles/Home.css";
 import background from "../imgs/background.jpg";
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
-import { Tooltip } from "@material-ui/core";
+import { useState } from "react";
+import { Link, useSearchParams } from "react-router-dom";
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Grid,
+  makeStyles,
+  Tooltip,
+  Typography,
+} from "@material-ui/core";
 
+const useStyles = makeStyles({
+  root: {
+    maxWidth: 350,
+    flexGrow: 1,
+    // display: "flex",
+  },
+  gridContainer: {
+    marginLeft: "10px",
+    marginBottom: "50px",
+    display: "flex",
+  },
+
+  btn: {
+    backgroundColor: "white",
+    color: "primary",
+    "&:hover": {
+      backgroundColor: "blue",
+      color: "white",
+    },
+  },
+});
 export default function Home() {
-  const [photographers, setPhotographers] = useState([]);
-  const [currentType, setCurrentType] = useState(null);
-  const [firstName, setFirstName] = useState();
-  const [searchParams, setSearchParams] = useSearchParams();
-  let photographerName = searchParams.get("photographer") || "";
-  let eventType = searchParams.get("eventType") || "";
+  const classes = useStyles();
 
-  useEffect(() => {
-    let abortController = new AbortController();
-    function fetchPhotographers() {
+  const [photographers, setPhotographers] = useState([]);
+  const [currentType, setCurrentType] = useState();
+  const [firstName, setFirstName] = useState();
+  const [pricePerHour, setPricePerHour] = useState();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  window.onunload = function () {
+    sessionStorage.clear();
+  };
+
+  const fetchPhotographers = () => {
+    if (currentType || firstName || pricePerHour) {
       axios
         .get("http://localhost:4000/photographers", {
           params: {
             photographyTypes: currentType,
             firstName: firstName,
+            pricePerHour: pricePerHour,
           },
-          signal: abortController.signal,
         })
         .then((res) => {
           console.log("array of photographers", res.data);
-          localStorage.setItem("searchedData", JSON.stringify(res.data));
+          sessionStorage.setItem("searchedData", JSON.stringify(res.data));
 
           setPhotographers(res.data);
+          console.log("successsssss", res.data);
         })
         .catch((err) => {
           console.log(err);
         });
     }
-    if (photographerName || eventType) {
-      fetchPhotographers();
-    }
+  };
 
-    return () => {
-      abortController.abort();
-    };
-  }, [photographerName, eventType, currentType]);
+  const searchedData = JSON.parse(sessionStorage.getItem("searchedData"));
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -49,14 +79,21 @@ export default function Home() {
     let fd = new FormData(e.currentTarget);
     let getPhotographer = fd.get("photographer");
     let getEventType = fd.get("eventType");
-    if (!getPhotographer || !getEventType) return;
+    let getPricePerHour = fd.get("pricePerHour");
+    // if (!getPhotographer || !getEventType || !getPricePerHour) return;
     if (getEventType === "Event Type") {
       getEventType = "";
     }
-    setSearchParams({ photographer: getPhotographer, eventType: getEventType });
+    if (pricePerHour === "") {
+      getPricePerHour = "";
+    }
+    setSearchParams({
+      photographer: getPhotographer,
+      eventType: getEventType,
+      pricePerHour: getPricePerHour,
+    });
   }
 
-  console.log(photographers);
   return (
     <>
       <div
@@ -87,33 +124,85 @@ export default function Home() {
                     type="search"
                     className="photographer-firstname"
                     placeholder="Photographer's First Name"
+                    value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                     // onSubmit={(e) => setFirstName(e.target.value)}
                   />
                 </Tooltip>
 
+                <Tooltip title="Price in AMD with colon" placement="bottom">
+                  <input
+                    name="pricePerHour"
+                    type="search"
+                    className="pricePerHour"
+                    placeholder="Price Per Hour"
+                    value={pricePerHour}
+                    onChange={(e) => setPricePerHour(e.target.value)}
+                    // onSubmit={(e) => setFirstName(e.target.value)}
+                  />
+                </Tooltip>
                 <select
                   name="eventType"
-                  onClick={(e) => setCurrentType(e.target.value)}
+                  onChange={(e) => setCurrentType(e.target.value)}
                 >
                   {photographyTypes.map((event) => (
                     <option value={event.genre}>{event.genre}</option>
                   ))}
                 </select>
 
-                <button id={"btn"} type="submit" onSubmit={handleSubmit}>
+                <button id={"btn"} onClick={fetchPhotographers}>
                   Search
                 </button>
               </div>
             </div>
           </form>
-          <div>
-            {photographers.map((person) => {
-              <h1>{person[0]}</h1>;
-            })}
-          </div>
         </div>
         {/* <h1>{firstName}</h1> */}
+
+        <Grid>
+          <Grid
+            container
+            spacing={3}
+            className={classes.gridContainer}
+            justifyContent="center"
+          >
+            {searchedData
+              ? searchedData.map((photographer) => {
+                  return (
+                    <Grid item xs={12} sm={6} md={3} key={photographer._id}>
+                      <Card className={classes.root}>
+                        <CardContent>
+                          <Typography gutterBottom variant="h5">
+                            {photographer.firstName} {photographer.lastName}
+                          </Typography>
+
+                          <br />
+                          <Typography>
+                            <b>Photography type: </b>
+                            {photographer.photographyTypes}
+                          </Typography>
+                        </CardContent>
+
+                        <CardActions>
+                          <Button fullWidth size="large" color="primary">
+                            <Link
+                              to={`/photographer/${photographer._id}`}
+                              style={{
+                                color: "primary",
+                                textDecoration: "inherit",
+                              }}
+                            >
+                              Visit Portfolio
+                            </Link>
+                          </Button>
+                        </CardActions>
+                      </Card>
+                    </Grid>
+                  );
+                })
+              : ""}
+          </Grid>
+        </Grid>
       </div>
     </>
   );

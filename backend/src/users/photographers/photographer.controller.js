@@ -24,7 +24,6 @@ router.get(
   asyncHandler(async (req, res) => {
     const filters = req.query;
     console.log(filters);
-    // filter
     const result = await photographers.findAll(filters);
     console.log("resuuuult", result);
     res.send(result);
