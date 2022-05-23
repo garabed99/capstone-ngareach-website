@@ -41,15 +41,19 @@ export default function Home() {
     return () => {
       abortController.abort();
     };
-  }, [photographerName, eventType]);
+  }, [photographerName, eventType, currentType]);
 
   function handleSubmit(e) {
     e.preventDefault();
 
     let fd = new FormData(e.currentTarget);
-    let newPhotographer = fd.get("photographer");
-    if (!newPhotographer) return;
-    setSearchParams({ photographer: newPhotographer });
+    let getPhotographer = fd.get("photographer");
+    let getEventType = fd.get("eventType");
+    if (!getPhotographer || !getEventType) return;
+    if (getEventType === "Event Type") {
+      getEventType = "";
+    }
+    setSearchParams({ photographer: getPhotographer, eventType: getEventType });
   }
 
   console.log(photographers);
@@ -70,7 +74,7 @@ export default function Home() {
         </div>
 
         <div className="container">
-          {/* <form onSubmit={handleSubmit}> */}
+          <form onSubmit={handleSubmit}>
             {/* <form> */}
             <div className="wrapper">
               <div
@@ -84,12 +88,13 @@ export default function Home() {
                     className="photographer-firstname"
                     placeholder="Photographer's First Name"
                     onChange={(e) => setFirstName(e.target.value)}
+                    // onSubmit={(e) => setFirstName(e.target.value)}
                   />
                 </Tooltip>
 
                 <select
                   name="eventType"
-                  onChange={(e) => setCurrentType(e.target.value)}
+                  onClick={(e) => setCurrentType(e.target.value)}
                 >
                   {photographyTypes.map((event) => (
                     <option value={event.genre}>{event.genre}</option>
@@ -101,14 +106,14 @@ export default function Home() {
                 </button>
               </div>
             </div>
-          {/* </form> */}
-          {/* <h1>{firstName}</h1> */}
+          </form>
           <div>
             {photographers.map((person) => {
               <h1>{person[0]}</h1>;
             })}
           </div>
         </div>
+        {/* <h1>{firstName}</h1> */}
       </div>
     </>
   );

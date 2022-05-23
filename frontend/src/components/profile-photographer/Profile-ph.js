@@ -75,12 +75,10 @@ const useStyles = makeStyles({
     overflow: "hidden",
     marginTop: "150px",
     width: "500px",
-
   },
   imageList: {
     flexWrap: "nowrap",
     transform: "translateZ(0)",
-
   },
   titleBar: {
     background:
@@ -174,12 +172,6 @@ export default function ProfilePh() {
       photos.push(
         <ImageListItem key={key}>
           <img src={portfolio[key]} alt={"portfolio"} />
-          <ImageListItemBar
-            title={key}
-            classes={{
-              root: classes.titleBar,
-            }}
-          />
         </ImageListItem>
       );
     }
@@ -236,14 +228,12 @@ export default function ProfilePh() {
                 {photographerData.biography}
               </Typography>
               <Box className={classes.portfolioRoot}>
-            <ImageList className={classes.imageList} cols={3}>
-              {generateElements()}
-            </ImageList>
-          </Box>
+                <ImageList className={classes.imageList} cols={3}>
+                  {generateElements()}
+                </ImageList>
+              </Box>
             </Grid>
-
           </Grid>
-
         </Paper>
         <Dialog
           open={open}
