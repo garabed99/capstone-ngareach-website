@@ -24,6 +24,7 @@ const useStyles = makeStyles({
     marginLeft: "10px",
     marginBottom: "50px",
     display: "flex",
+    marginTop: "20px",
   },
 
   btn: {
